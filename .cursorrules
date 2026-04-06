@@ -1,0 +1,32 @@
+# Workflow Guardrails
+
+Before any task, always:
+
+1. Check `TODO.md` for the current priority.
+2. Consult `MEMORY.md` for past pitfalls.
+3. Follow the Planner -> Generator -> Evaluator loop for every feature, as defined in `AGENTS.md`.
+# Agent Workflow Rules
+
+Before starting any task, always do the following:
+
+1. Check `TODO.md` to confirm the current highest-priority item.
+2. Consult `MEMORY.md` for known pitfalls, root causes, and prevention rules.
+3. Execute the feature work using the Planner -> Generator -> Evaluator loop defined in `AGENTS.md`:
+   - Planner: requirements and roadmap
+   - Generator: SwiftUI/SwiftData implementation
+   - Evaluator: unit testing and UI validation
+
+If new issues are found:
+- Log them in `MEMORY.md` with root cause and prevention rule.
+- Reflect progress and status updates in `TODO.md`.
+# Harness Engineering Workflow Rules
+
+Before starting any task, always:
+
+1. Check `TODO.md` and ensure work is mapped to the full checklist range `A1` through `C2`.
+2. Consult `MEMORY.md` for known pitfalls and prevention rules.
+3. For each feature (Flashcards, Dice Game, AI Dialogue), execute the full `A1` through `C2` flow using the Planner -> Generator -> Evaluator loop, without skipping.
+
+Additional expectations:
+- Keep `TODO.md` current as work progresses.
+- Log failures and prevention updates in `MEMORY.md` immediately after resolution.
