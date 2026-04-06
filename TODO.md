@@ -1,120 +1,53 @@
 # TODO
 
-Hierarchical checklist organized by feature.
+Hierarchical checklist by feature and execution phase.
+
+## Current Priority - Cross-Feature Design System (Planner)
+- [ ] Requirements freeze for visual language and UI consistency
+  - [ ] Color Palette
+    - [ ] `MendlsPink` = `#F8C1C1` (main background)
+    - [ ] `SocietyBlue` = `#A7C7E7` (selection/active state)
+    - [ ] `LobbyBoyPurple` = `#6D4C7D` (accents/text)
+    - [ ] `PastelYellow` = `#FDFD96` (article highlighting)
+  - [ ] Typography
+    - [ ] Rounded minimalist baseline
+    - [ ] Fallback: `design: .rounded`, `weight: .medium`
+  - [ ] Layout Rule
+    - [ ] Enforce centered composition and strict symmetry in every view
+  - [ ] Doodle Style
+    - [ ] Thin-stroke icons only (`SF Symbols` with `.ultraLight`) or custom SVG doodles
+  - [ ] Deliverable
+    - [ ] `Theme.swift` created and adopted as the canonical design token source
 
 ## Flashcards
-- [ ] Planning
+- [ ] Planner
   - [ ] Requirements
   - [ ] Roadmap
-- [ ] Implementation
-  - [ ] SwiftUI
-  - [ ] SwiftData
-- [ ] Validation
+- [ ] Generator
+  - [ ] SwiftUI implementation
+  - [ ] SwiftData integration
+- [ ] Evaluator
   - [ ] Unit tests
-  - [ ] UI checks
+  - [ ] UI validation
 
 ## Dice Game
-- [ ] Planning
+- [ ] Planner
   - [ ] Requirements
   - [ ] Roadmap
-- [ ] Implementation
-  - [ ] SwiftUI
-  - [ ] SwiftData
-- [ ] Validation
+- [ ] Generator
+  - [ ] SwiftUI implementation
+  - [ ] SwiftData integration
+- [ ] Evaluator
   - [ ] Unit tests
-  - [ ] UI checks
+  - [ ] UI validation
 
 ## AI Dialogue
-- [ ] Planning
+- [ ] Planner
   - [ ] Requirements
   - [ ] Roadmap
-- [ ] Implementation
-  - [ ] SwiftUI
-  - [ ] SwiftData
-- [ ] Validation
+- [ ] Generator
+  - [ ] SwiftUI implementation
+  - [ ] SwiftData integration
+- [ ] Evaluator
   - [ ] Unit tests
-  - [ ] UI checks
-# TODO
-
-Hierarchical checklist organized by feature area.
-
-## How to Use
-- Keep the highest-priority item clearly marked at the top of each section.
-- Use nested checkboxes for implementation and validation subtasks.
-- Update status continuously during Planner -> Generator -> Evaluator flow.
-
-## Flashcards
-- [ ] Feature goal and scope
-  - [ ] Planner: requirements and acceptance criteria
-  - [ ] Generator: SwiftUI/SwiftData implementation
-  - [ ] Evaluator: unit tests
-  - [ ] Evaluator: UI validation
-- [ ] Backlog item 1
-  - [ ] Subtask
-
-## Dice Game
-- [ ] Feature goal and scope
-  - [ ] Planner: requirements and acceptance criteria
-  - [ ] Generator: SwiftUI/SwiftData implementation
-  - [ ] Evaluator: unit tests
-  - [ ] Evaluator: UI validation
-- [ ] Backlog item 1
-  - [ ] Subtask
-
-## AI Dialogue
-- [ ] Feature goal and scope
-  - [ ] Planner: requirements and acceptance criteria
-  - [ ] Generator: SwiftUI/SwiftData implementation
-  - [ ] Evaluator: unit tests
-  - [ ] Evaluator: UI validation
-- [ ] Backlog item 1
-  - [ ] Subtask
-# Harness TODO Checklist
-
-Priority is top to bottom. Mark items with `[x]` when complete.
-Each feature must complete the full sequence `A1` through `C2`.
-
-## Flashcards (must complete A1 -> C2)
-
-- [ ] **A1 - Requirements & Scope**
-  - Define user stories and acceptance criteria
-- [ ] **A2 - Roadmap & Task Breakdown**
-  - Plan milestones and dependencies
-- [ ] **B1 - SwiftUI Implementation**
-  - Build feature UI and interaction states
-- [ ] **B2 - SwiftData Integration**
-  - Persist models, loading, and update flows
-- [ ] **C1 - Unit Testing**
-  - Add and run logic/model tests
-- [ ] **C2 - UI Validation & Regression**
-  - Validate UI paths and prevent regressions
-
-## Dice Game (must complete A1 -> C2)
-
-- [ ] **A1 - Requirements & Scope**
-  - Define game rules and acceptance criteria
-- [ ] **A2 - Roadmap & Task Breakdown**
-  - Plan milestones and dependencies
-- [ ] **B1 - SwiftUI Implementation**
-  - Build game UI, controls, and state transitions
-- [ ] **B2 - SwiftData Integration**
-  - Persist scores/history and state restoration
-- [ ] **C1 - Unit Testing**
-  - Add and run game-logic tests
-- [ ] **C2 - UI Validation & Regression**
-  - Validate gameplay flows and prevent regressions
-
-## AI Dialogue (must complete A1 -> C2)
-
-- [ ] **A1 - Requirements & Scope**
-  - Define dialogue goals and acceptance criteria
-- [ ] **A2 - Roadmap & Task Breakdown**
-  - Plan milestones and dependencies
-- [ ] **B1 - SwiftUI Implementation**
-  - Build dialogue UI and session states
-- [ ] **B2 - SwiftData Integration**
-  - Persist conversation metadata and recovery state
-- [ ] **C1 - Unit Testing**
-  - Add and run session/logic tests
-- [ ] **C2 - UI Validation & Regression**
-  - Validate conversation flows and prevent regressions
+  - [ ] UI validation
