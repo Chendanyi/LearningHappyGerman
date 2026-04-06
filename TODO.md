@@ -2,6 +2,24 @@
 
 Hierarchical checklist by feature and execution phase.
 
+## Current Priority - App Navigation Architecture (Planner)
+- [ ] Define "The Lobby" as mandatory app entrance
+  - [ ] First screen is CEFR check-in (`A1` to `C2`)
+  - [ ] Use Hotel Check-in metaphor in centered composition
+  - [ ] Block feature-room access until level is selected
+- [ ] Define "Feature Rooms" as module door hub
+  - [ ] Flashcards: Article + Noun matching
+  - [ ] Tense Training: Fill-in-the-blank + grammar feedback
+  - [ ] Sentence Dice: Randomized SVO generator
+  - [ ] AI Voice Dialogue: Scenario chat (Bakery, Station)
+  - [ ] Hangman: Doodle-style word guessing
+- [ ] Define global state management contract
+  - [ ] Introduce `UserSession` as global selected-level source of truth
+  - [ ] Ensure all modules query SwiftData using selected CEFR level
+  - [ ] Prevent per-module duplicate level state
+- [ ] Deliver Planner artifact
+  - [ ] Keep navigation spec in `NAVIGATION_ARCHITECTURE.md`
+
 ## Current Priority - Cross-Feature Design System (Planner)
 - [ ] Requirements freeze for visual language and UI consistency
   - [ ] Color Palette
