@@ -2,6 +2,13 @@
 
 Hierarchical checklist by feature and execution phase.
 
+## Prioritized Roadmap (Planner)
+- [ ] Phase 1: Foundation. SwiftData Model for `VocabularyWord` including `level` and `article` properties.
+- [ ] Phase 2: The Lobby. Symmetrical Main Entrance UI with Level Selection.
+- [ ] Phase 3: Core Flashcards. Basic card-flip logic with "Budapest" styling.
+- [ ] Phase 4: The Harness. Implement Evaluator tests to ensure A1 words do not leak into C2 views.
+- [ ] Phase 5: Minigames. Implement Dice Game and Hangman logic.
+
 ## Current Priority - App Navigation Architecture (Planner)
 - [ ] Define "The Lobby" as mandatory app entrance
   - [ ] First screen is CEFR check-in (`A1` to `C2`)
