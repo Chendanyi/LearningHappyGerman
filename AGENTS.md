@@ -78,6 +78,15 @@ For every feature, execute in order:
 - Before every git commit, simulate a pre-commit hook by running the full test suite.
 - Record the run outcome in `MEMORY.md` with explicit `Pass`/`Fail` status.
 
+## Git Workflow Refinement
+
+- For every new feature (for example, `A1 Flashcards`), create and use a temporary feature branch.
+- After implementation, Evaluator must run `./check_integrity.sh` before merge or release decisions.
+- If integrity check passes, append a `Verified` badge marker to the commit message.
+- Standard commit format for passed checks: `<type>: <short description> [Verified]` (example: `feat: add A1 flashcards flow [Verified]`).
+- If integrity check fails, Agent must analyze the error, log the failure pattern in `MEMORY.md`, and fix it immediately.
+- Do not ask the user for lint/test failure help until three autonomous fix attempts have been made and documented.
+
 ## Portability and Privacy Guardrails (All Personas)
 
 - Do not hardcode machine-specific paths in project code or scripts.
