@@ -150,3 +150,9 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 - **Change:** `VocabularyWord` uses `@Attribute(.unique) id: UUID`, `#Index` on `germanWord` and `level` (`String`), optional `article` (`String?`), `category` (`String`), `version`. `GrammarRule` uses `exampleSentences: [String]` and `level: String` (no vocabulary relationship). `CEFRLevel` remains a non-persisted enum for lobby routing.
 - **Prevention Rule(s):** Bump the versioned store filename when breaking schema changes; keep two `BundledData.json` copies in sync if both exist under the app tree.
 - **Validation Evidence:** `xcodebuild -scheme LearnHappyGerman -destination 'generic/platform=iOS Simulator' build` succeeded.
+
+### [2026-04-07] Evaluator: data integrity + symmetry tests
+
+- **Feature/Area:** `VocabularyDataIntegrityTests`, `VocabularySymmetryLayoutTests`, `Theme.VocabularyGrandBudapest`, `FlashcardView`.
+- **Behavior:** Tests assert every seeded noun has a non-empty der/die/das article, every row has `A1`–`C2` level, and `DataSeeder.seedIfNeeded` does not duplicate rows when invoked twice. `FlashcardView` wraps the main column in `Theme.VocabularyGrandBudapest.symmetricContent` (same as `wesSymmetricLayout`).
+- **Validation Evidence:** `xcodebuild` `build-for-testing` for generic iOS Simulator succeeded.

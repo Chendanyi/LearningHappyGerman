@@ -30,6 +30,8 @@
 		CF49D7942F84EFC90004A814 /* SyncServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7932F84EFC90004A814 /* SyncServiceTests.swift */; };
 		CF49D79A2F84EFCB0004A814 /* GrammarRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7982F84EFCB0004A814 /* GrammarRule.swift */; };
 		CF49D79B2F84EFCB0004A814 /* GrammarRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7982F84EFCB0004A814 /* GrammarRule.swift */; };
+		CF49D7A22F84EFD00004A820 /* VocabularyDataIntegrityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7A02F84EFD00004A820 /* VocabularyDataIntegrityTests.swift */; };
+		CF49D7A32F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7A12F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		CF49D78F2F84EFC90004A814 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
 		CF49D7932F84EFC90004A814 /* SyncServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncServiceTests.swift; sourceTree = "<group>"; };
 		CF49D7982F84EFCB0004A814 /* GrammarRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarRule.swift; sourceTree = "<group>"; };
+		CF49D7A02F84EFD00004A820 /* VocabularyDataIntegrityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDataIntegrityTests.swift; sourceTree = "<group>"; };
+		CF49D7A12F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularySymmetryLayoutTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -125,6 +129,8 @@
 				CF49D7882F84EFC70004A814 /* LocalSeeder.swift */,
 				CF49D78F2F84EFC90004A814 /* SyncService.swift */,
 				CF49D7932F84EFC90004A814 /* SyncServiceTests.swift */,
+				CF49D7A02F84EFD00004A820 /* VocabularyDataIntegrityTests.swift */,
+				CF49D7A12F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift */,
 				CF49D7812F84EFC50004A814 /* FlashcardView.swift */,
 				CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */,
 				CF49D7702F84EF9D0004A814 /* Theme.swift */,
@@ -309,6 +315,8 @@
 				CF49D7772F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */,
 				CF49D7942F84EFC90004A814 /* SyncServiceTests.swift in Sources */,
+				CF49D7A22F84EFD00004A820 /* VocabularyDataIntegrityTests.swift in Sources */,
+				CF49D7A32F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift in Sources */,
 				CF49D79A2F84EFCB0004A814 /* GrammarRule.swift in Sources */,
 				CF49D7782F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
 				CF49D7792F84EF9E0004A814 /* DataSeeder.swift in Sources */,

@@ -19,7 +19,8 @@ struct FlashcardView: View {
         ZStack {
             Theme.Colors.mendlsPink.ignoresSafeArea()
 
-            VStack(spacing: 18) {
+            Theme.VocabularyGrandBudapest.symmetricContent {
+                VStack(spacing: 18) {
                 Text("Flashcards")
                     .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
@@ -114,17 +115,17 @@ struct FlashcardView: View {
                 }
                 .font(Theme.Typography.rounded(.subheadline, weight: .medium))
                 .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                }
+                .padding(24)
+                .background(
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(Color.white.opacity(0.22))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
+                )
             }
-            .padding(24)
-            .background(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(Color.white.opacity(0.22))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
-            )
-            .wesSymmetricLayout()
         }
         .navigationTitle("Flashcards")
         .navigationBarTitleDisplayMode(.inline)

@@ -24,6 +24,8 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - `SyncService.swift`: Placeholder remote JSON fetch + merge into SwiftData (dedupe by word + level; preserves `isMastered`). See `SyncServiceTests`.
 - `BundledData.json`: Static corpus (vocabulary + grammar rules with `exampleSentences` arrays) shipped in the app bundle.
 - `VocabularyWordTests.swift`: Evaluator guard test for noun/article validity.
+- `VocabularyDataIntegrityTests.swift`: Article + CEFR level invariants on seeded data; `DataSeeder.seedIfNeeded` idempotency (no duplicates on second run).
+- `VocabularySymmetryLayoutTests.swift`: Grand Budapest symmetric layout tokens + `Theme.VocabularyGrandBudapest` contract used by vocabulary UI.
 - `SyncServiceTests.swift`: Remote merge test; updated gloss preserves `isMastered`.
 - `.swiftlint.yml`: strict lint configuration and custom style/symmetry checks.
 - `check_integrity.sh`: pipeline script (`swiftlint` + `swift test`) that fails fast on violations.
@@ -33,4 +35,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - If `ModelContainer` fails to create after a SwiftData schema or relationship change, delete the app from the simulator or device once so the on-disk store can be recreated (development builds do not always migrate every intermediate schema).
 - **Black simulator screen:** Confirm the `LearnHappyGerman` scheme (not a test target) is running; open the **Debug area** (⇧⌘Y) and look for a crash or `fatalError`. Try **Simulator → Device → Erase All Content and Settings**, or quit and relaunch the Simulator app. The app attaches `modelContainer` to the root view and yields once before bundled import so the lobby can draw first.
 
-Last updated: 2026-04-07 (SwiftData schema: string `level`/category, UUID + indexes on `VocabularyWord`; `GrammarRule` example arrays; store `v9`)
+Last updated: 2026-04-07 (Evaluator: `VocabularyDataIntegrityTests` + `VocabularySymmetryLayoutTests`; `Theme.VocabularyGrandBudapest` on `FlashcardView`)

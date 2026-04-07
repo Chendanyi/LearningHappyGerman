@@ -26,6 +26,13 @@ enum CEFRLevel: String, Codable, CaseIterable, Comparable {
     static func < (lhs: CEFRLevel, rhs: CEFRLevel) -> Bool {
         lhs.rank < rhs.rank
     }
+
+    /// Codes persisted on `VocabularyWord.level` (queries / integrity tests).
+    static let validLevelCodes: Set<String> = Set(allCases.map(\.rawValue))
+
+    static func isValidLevelCode(_ code: String) -> Bool {
+        validLevelCodes.contains(code)
+    }
 }
 
 // MARK: - SwiftData

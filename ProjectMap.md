@@ -11,7 +11,9 @@
 - `LocalSeeder.swift` - First-launch ingestion from `BundledData.json`; audit log for `MEMORY.md`.
 - `BundledData.json` (under `LearnHappyGerman/` and nested app folder) - Bundled vocabulary and grammar rules JSON (`exampleSentences` on rules).
 - `SyncService.swift` - Remote JSON merge placeholder; `SyncServiceTests.swift` - remote update preserves mastery.
-- `VocabularyWordTests.swift` - Test coverage for noun/article validation rule.
+- `VocabularyWordTests.swift` - Noun/article validity guard.
+- `VocabularyDataIntegrityTests.swift` - Seeded nouns + CEFR levels; seed-if-needed idempotency.
+- `VocabularySymmetryLayoutTests.swift` - Grand Budapest theme symmetry contract for vocabulary screens.
 - `NAVIGATION_ARCHITECTURE.md` - Planner navigation specification.
 - `AGENTS.md` - Persona loop and architecture guidelines.
 - `TODO.md` - Prioritized roadmap and feature checklists.
