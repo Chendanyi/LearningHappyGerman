@@ -10,7 +10,7 @@ import SwiftData
 
 @main
 struct LearnHappyGermanApp: App {
-    @State private var selectedLevel: CEFRLevel?
+    @StateObject private var appState = AppState()
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -28,7 +28,8 @@ struct LearnHappyGermanApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainLobbyView(selectedLevel: $selectedLevel)
+            MainLobbyView()
+                .environmentObject(appState)
         }
         .modelContainer(sharedModelContainer)
     }
