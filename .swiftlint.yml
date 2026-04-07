@@ -4,6 +4,8 @@ included:
 excluded:
   - LearnHappyGerman/LearnHappyGerman.xcodeproj
   - LearnHappyGerman/LearnHappyGerman.xcworkspace
+  # SwiftData / Swift macro expansions (ephemeral paths under /var/.../swift-generated-sources/)
+  - "**/swift-generated-sources"
 
 strict: true
 

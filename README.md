@@ -15,7 +15,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 
 ## Project Layout
 - `MainLobbyView.swift`: Main Entrance (Lobby) UI and level-selection interactions.
-- `FlashcardView.swift`: First classroom with card prompt, answer input, and article-aware validation feedback.
+- `FlashcardView.swift`: First classroom with `FetchDescriptor` vocabulary filtered by `AppState.currentLevel` (no `@Query`, to avoid macro temp-file tooling issues), Check (case-insensitive + article for noun-like rows), success sound/animation and `isMastered` on correct, LobbyBoyPurple wrong-answer hint, **Next** only after a check.
 - `Theme.swift`: App design tokens and layout/icon helpers.
 - `VocabularyWord.swift`: SwiftData vocabulary model (UUID, `version`, indexed `germanWord`/`level` strings) and `CEFRLevel` enum for UI routing only.
 - `GrammarRule.swift`: SwiftData grammar content (`title`, `explanation`, `level`, `exampleSentences`).
@@ -36,4 +36,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - If `ModelContainer` fails to create after a SwiftData schema or relationship change, delete the app from the simulator or device once so the on-disk store can be recreated (development builds do not always migrate every intermediate schema).
 - **Black simulator screen:** Confirm the `LearnHappyGerman` scheme (not a test target) is running; open the **Debug area** (⇧⌘Y) and look for a crash or `fatalError`. Try **Simulator → Device → Erase All Content and Settings**, or quit and relaunch the Simulator app. The app attaches `modelContainer` to the root view and yields once before bundled import so the lobby can draw first.
 
-Last updated: 2026-04-07 (`LocalSeeder.mergeInitialDataFromBundle` on bootstrap so A1 flashcards use `initial_data.json`, not only the two A1 rows in `BundledData.json`)
+Last updated: 2026-04-07 (FlashcardView: `FetchDescriptor` instead of `@Query` to avoid macro temp-path tooling errors; SwiftLint excludes `swift-generated-sources`)

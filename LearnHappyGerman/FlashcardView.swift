@@ -1,10 +1,14 @@
+import AudioToolbox
 import SwiftUI
 import SwiftData
 
 struct FlashcardView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.modelContext) private var modelContext
+
+    /// Loaded via `FetchDescriptor` (avoids `@Query` macro sidecars under `swift-generated-sources/`, which break SwiftLint / some editors).
     @State private var vocabularyWords: [VocabularyWord] = []
+
     @State private var currentWord: VocabularyWord?
     @State private var showSymbolSide = false
     @State private var userAnswer = ""
@@ -12,6 +16,7 @@ struct FlashcardView: View {
     @State private var checkPulse = false
     @State private var shakeBellboy = false
     @State private var hasAttemptedFallbackSeed = false
+    @State private var successScale: CGFloat = 1.0
 
     let level: CEFRLevel?
 
@@ -21,81 +26,60 @@ struct FlashcardView: View {
 
             Theme.VocabularyGrandBudapest.symmetricContent {
                 VStack(spacing: 18) {
-                Text("Flashcards")
-                    .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
-                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-
-                Text("Level: \(appState.currentLevel?.rawValue ?? "Not Selected")")
-                    .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                    .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
-
-                if let card = currentWord {
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.4)) {
-                            showSymbolSide.toggle()
-                        }
-                    } label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                .fill(Theme.Colors.societyBlue)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                        .stroke(Theme.Colors.lobbyBoyPurple, lineWidth: 6)
-                                )
-
-                            if showSymbolSide {
-                                Image(systemName: symbol(for: card))
-                                    .font(.system(size: 60, weight: .ultraLight))
-                                    .doodleSymbolStyle()
-                                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                                    .transition(.opacity.combined(with: .scale))
-                            } else {
-                                Text(card.englishTranslation.capitalized)
-                                    .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
-                                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                                    .transition(.opacity)
-                            }
-                        }
-                        .frame(maxWidth: .infinity, minHeight: 260)
-                    }
-                    .buttonStyle(.plain)
-                } else {
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(Theme.Colors.societyBlue.opacity(0.45))
-                        .overlay(
-                            Text("No vocabulary for selected level")
-                                .font(Theme.Typography.rounded(.headline, weight: .medium))
-                                .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                        )
-                        .frame(maxWidth: .infinity, minHeight: 260)
-                }
-
-                TextField("Type German answer (e.g., der Apfel)", text: $userAnswer)
-                    .font(Theme.Typography.rounded(.body, weight: .medium))
-                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                    .padding(.horizontal, 14)
-                    .frame(height: 52)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .fill(Color.white.opacity(0.45))
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .stroke(Theme.Colors.societyBlue, lineWidth: 2)
-                    )
-                    .multilineTextAlignment(.center)
-                    .autocorrectionDisabled()
-
-                Button {
-                    withAnimation(.easeInOut(duration: 0.22)) {
-                        checkPulse.toggle()
-                    }
-                    validateAnswer()
-                } label: {
-                    Text("Check")
-                        .font(Theme.Typography.rounded(.headline, weight: .medium))
+                    Text("Flashcards")
+                        .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                        .frame(maxWidth: .infinity, minHeight: 50)
+
+                    Text("Level: \(appState.currentLevel?.rawValue ?? "Not Selected")")
+                        .font(Theme.Typography.rounded(.subheadline, weight: .medium))
+                        .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
+
+                    if let card = currentWord {
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.4)) {
+                                showSymbolSide.toggle()
+                            }
+                        } label: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                    .fill(Theme.Colors.societyBlue)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                            .stroke(Theme.Colors.lobbyBoyPurple, lineWidth: 6)
+                                    )
+
+                                if showSymbolSide {
+                                    Image(systemName: symbol(for: card))
+                                        .font(.system(size: 60, weight: .ultraLight))
+                                        .doodleSymbolStyle()
+                                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                        .transition(.opacity.combined(with: .scale))
+                                } else {
+                                    Text(card.englishTranslation.capitalized)
+                                        .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
+                                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                        .transition(.opacity)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 260)
+                        }
+                        .buttonStyle(.plain)
+                    } else {
+                        RoundedRectangle(cornerRadius: 24, style: .continuous)
+                            .fill(Theme.Colors.societyBlue.opacity(0.45))
+                            .overlay(
+                                Text("No vocabulary for selected level")
+                                    .font(Theme.Typography.rounded(.headline, weight: .medium))
+                                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                            )
+                            .frame(maxWidth: .infinity, minHeight: 260)
+                    }
+
+                    TextField("Type German answer (e.g., der Apfel)", text: $userAnswer)
+                        .font(Theme.Typography.rounded(.body, weight: .medium))
+                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                        .padding(.horizontal, 14)
+                        .frame(height: 52)
                         .background(
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
                                 .fill(Color.white.opacity(0.45))
@@ -104,17 +88,42 @@ struct FlashcardView: View {
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
                                 .stroke(Theme.Colors.societyBlue, lineWidth: 2)
                         )
-                }
-                .buttonStyle(.plain)
-                .scaleEffect(checkPulse ? 1.02 : 1.0)
+                        .multilineTextAlignment(.center)
+                        .autocorrectionDisabled()
+                        .disabled(validationState != .idle)
 
-                feedbackView
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.22)) {
+                            checkPulse.toggle()
+                        }
+                        validateAnswer()
+                    } label: {
+                        Text("Check")
+                            .font(Theme.Typography.rounded(.headline, weight: .medium))
+                            .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                            .frame(maxWidth: .infinity, minHeight: 50)
+                            .background(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .fill(Color.white.opacity(0.45))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .stroke(Theme.Colors.societyBlue, lineWidth: 2)
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .scaleEffect(checkPulse ? 1.02 : 1.0)
+                    .disabled(validationState != .idle || currentWord == nil)
 
-                Button("Next Card") {
-                    nextCard()
-                }
-                .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                    feedbackView
+
+                    if validationState != .idle {
+                        Button("Next") {
+                            nextCard()
+                        }
+                        .font(Theme.Typography.rounded(.subheadline, weight: .medium))
+                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                    }
                 }
                 .padding(24)
                 .background(
@@ -132,15 +141,40 @@ struct FlashcardView: View {
         .onAppear {
             reloadVocabulary()
             ensureVocabularyAvailability()
-            if currentWord == nil {
-                nextCard()
-            }
+            pickCurrentWordIfNeeded()
         }
         .onChange(of: appState.currentLevel) {
+            validationState = .idle
+            userAnswer = ""
+            showSymbolSide = false
+            successScale = 1.0
             reloadVocabulary()
             ensureVocabularyAvailability()
             nextCard()
         }
+    }
+
+    private func reloadVocabulary() {
+        let targetLevel = appState.currentLevel ?? level
+        do {
+            let descriptor = FetchDescriptor<VocabularyWord>(
+                sortBy: [SortDescriptor(\.germanWord)]
+            )
+            let all = try modelContext.fetch(descriptor)
+            if let targetLevel {
+                vocabularyWords = all.filter { $0.level == targetLevel.rawValue }
+            } else {
+                vocabularyWords = all
+            }
+        } catch {
+            print("Vocabulary fetch failed: \(error)")
+            vocabularyWords = []
+        }
+    }
+
+    private func pickCurrentWordIfNeeded() {
+        guard currentWord == nil, !vocabularyWords.isEmpty else { return }
+        nextCard()
     }
 
     private func ensureVocabularyAvailability() {
@@ -155,31 +189,17 @@ struct FlashcardView: View {
         reloadVocabulary()
     }
 
-    private func reloadVocabulary() {
-        let targetLevel = appState.currentLevel ?? level
-        do {
-            let allWords = try modelContext.fetch(FetchDescriptor<VocabularyWord>())
-            if let targetLevel {
-                vocabularyWords = allWords.filter { $0.level == targetLevel.rawValue }
-            } else {
-                vocabularyWords = allWords
-            }
-        } catch {
-            print("Vocabulary fetch failed: \(error)")
-            vocabularyWords = []
-        }
-    }
-
     @ViewBuilder
     private var feedbackView: some View {
         switch validationState {
         case .idle:
             EmptyView()
         case .correct:
-            Image(systemName: "checkmark.circle")
-                .font(.system(size: 26, weight: .ultraLight))
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 32, weight: .ultraLight))
                 .foregroundStyle(.green)
-                .transition(.opacity)
+                .scaleEffect(successScale)
+                .transition(.scale.combined(with: .opacity))
         case .incorrect(let expected):
             VStack(spacing: 8) {
                 Image(systemName: "bellhop.fill")
@@ -187,9 +207,10 @@ struct FlashcardView: View {
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                     .offset(x: shakeBellboy ? -6 : 6)
                     .animation(.easeInOut(duration: 0.08).repeatCount(5, autoreverses: true), value: shakeBellboy)
-                Text("Correct: \(expected)")
+                Text("Correct answer: \(expected)")
                     .font(Theme.Typography.rounded(.subheadline, weight: .medium))
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                    .multilineTextAlignment(.center)
             }
             .transition(.opacity)
         }
@@ -197,27 +218,48 @@ struct FlashcardView: View {
 
     private func validateAnswer() {
         guard let card = currentWord else { return }
-        let normalizedInput = normalized(userAnswer)
-        let expected = normalized(expectedAnswer(for: card))
+        guard validationState == .idle else { return }
 
-        if normalizedInput == expected {
+        let normalizedInput = normalized(userAnswer)
+        let expectedNormalized = normalized(expectedAnswer(for: card))
+
+        if normalizedInput == expectedNormalized {
             validationState = .correct
+            card.isMastered = true
+            try? modelContext.save()
+            playSuccessDing()
+            successScale = 0.85
+            withAnimation(.spring(response: 0.38, dampingFraction: 0.62)) {
+                successScale = 1.15
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                    successScale = 1.0
+                }
+            }
             return
         }
 
-        // When the expected answer includes an article, require der/die/das in the user input.
-        let expectedNeedsArticle = expected.hasPrefix("der ")
-            || expected.hasPrefix("die ")
-            || expected.hasPrefix("das ")
-        if expectedNeedsArticle,
-           !normalizedInput.hasPrefix("der "),
-           !normalizedInput.hasPrefix("die "),
-           !normalizedInput.hasPrefix("das ") {
-            validationState = .incorrect(expected: expectedAnswer(for: card))
-        } else {
-            validationState = .incorrect(expected: expectedAnswer(for: card))
+        if card.requiresGermanArticle {
+            let needsArticlePrefix = expectedNormalized.hasPrefix("der ")
+                || expectedNormalized.hasPrefix("die ")
+                || expectedNormalized.hasPrefix("das ")
+            if needsArticlePrefix,
+               !normalizedInput.hasPrefix("der "),
+               !normalizedInput.hasPrefix("die "),
+               !normalizedInput.hasPrefix("das ") {
+                validationState = .incorrect(expected: expectedAnswer(for: card))
+                shakeBellboy.toggle()
+                return
+            }
         }
+
+        validationState = .incorrect(expected: expectedAnswer(for: card))
         shakeBellboy.toggle()
+    }
+
+    private func playSuccessDing() {
+        AudioServicesPlaySystemSound(1057)
     }
 
     private func nextCard() {
@@ -227,6 +269,7 @@ struct FlashcardView: View {
                 validationState = .idle
                 showSymbolSide = false
                 userAnswer = ""
+                successScale = 1.0
                 return
             }
 
@@ -235,6 +278,7 @@ struct FlashcardView: View {
             showSymbolSide = false
             validationState = .idle
             userAnswer = ""
+            successScale = 1.0
         }
     }
 
@@ -285,8 +329,27 @@ private enum ValidationState: Equatable {
 }
 
 #Preview {
-    NavigationStack {
-        FlashcardView(level: .a1)
-            .environmentObject(AppState())
+    FlashcardPreviewHost()
+}
+
+private struct FlashcardPreviewHost: View {
+    @StateObject private var appState = AppState()
+
+    private static let previewContainer: ModelContainer = {
+        let schema = Schema([VocabularyWord.self, GrammarRule.self])
+        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        // swiftlint:disable:next force_try
+        return try! ModelContainer(for: schema, configurations: [configuration])
+    }()
+
+    var body: some View {
+        NavigationStack {
+            FlashcardView(level: .a1)
+                .environmentObject(appState)
+                .modelContainer(Self.previewContainer)
+                .onAppear {
+                    appState.currentLevel = .a1
+                }
+        }
     }
 }
