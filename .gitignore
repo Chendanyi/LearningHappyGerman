@@ -1,0 +1,13 @@
+.DS_Store
+
+# Local build output
+build/
+.build/
+
+# Xcode — user-specific UI state (do not commit)
+xcuserdata/
+*.xcuserstate
+
+# Xcode / SwiftPM
+DerivedData/
+.swiftpm/
