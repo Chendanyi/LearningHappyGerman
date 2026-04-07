@@ -104,7 +104,7 @@ struct LearnHappyGermanApp: App {
         ).first!
         let folder = appSupport.appendingPathComponent("LearnHappyGerman", isDirectory: true)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        let storeURL = folder.appendingPathComponent("learnhappygerman-v8.store", isDirectory: false)
+        let storeURL = folder.appendingPathComponent("learnhappygerman-v9.store", isDirectory: false)
         let diskConfiguration = ModelConfiguration(schema: schema, url: storeURL)
 
         do {

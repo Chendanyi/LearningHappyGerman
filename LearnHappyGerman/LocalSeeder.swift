@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-// MARK: - Bundle JSON shapes (stringly-typed for stable decoding)
+// MARK: - Bundle JSON shapes
 
 private struct BundledDataPayload: Codable {
     let version: Int
@@ -22,10 +22,19 @@ private struct BundledWordDTO: Codable {
 private struct BundledRuleDTO: Codable {
     let title: String
     let explanation: String
-    let examples: String
-    let ruleText: String
-    let applicableLevelCode: String?
-    let relatedGermanWord: String?
+    let level: String
+    let exampleSentences: [String]
+}
+
+// MARK: - Article / level parsing
+
+private func parseBundledArticle(_ raw: String, germanWord: String) throws -> String? {
+    let t = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    if t.isEmpty || t == "none" { return nil }
+    guard t == "der" || t == "die" || t == "das" else {
+        throw LocalSeederError.invalidWord("unknown article \(raw) for \(germanWord)")
+    }
+    return t
 }
 
 // MARK: - Local seeder
@@ -80,25 +89,19 @@ final class LocalSeeder {
             throw LocalSeederError.emptyVocabulary
         }
 
-        var wordByHeadword: [String: VocabularyWord] = [:]
-
         for dto in payload.words {
-            guard let article = GermanArticle(rawValue: dto.article) else {
-                throw LocalSeederError.invalidWord("unknown article \(dto.article) for \(dto.germanWord)")
-            }
-            guard let level = CEFRLevel(rawValue: dto.level) else {
+            guard CEFRLevel(rawValue: dto.level) != nil else {
                 throw LocalSeederError.invalidWord("unknown level \(dto.level) for \(dto.germanWord)")
             }
-            guard let category = WordCategory(rawValue: dto.category) else {
-                throw LocalSeederError.invalidWord("unknown category \(dto.category) for \(dto.germanWord)")
-            }
+
+            let article = try parseBundledArticle(dto.article, germanWord: dto.germanWord)
 
             let word = VocabularyWord(
                 germanWord: dto.germanWord,
                 article: article,
                 englishTranslation: dto.englishTranslation,
-                level: level,
-                category: category,
+                level: dto.level,
+                category: dto.category,
                 isMastered: dto.isMastered ?? false,
                 version: dto.version ?? 1
             )
@@ -106,40 +109,22 @@ final class LocalSeeder {
                 throw LocalSeederError.invalidWord("noun \(dto.germanWord) must have der/die/das")
             }
             context.insert(word)
-            wordByHeadword[dto.germanWord] = word
         }
 
         var ruleCount = 0
         for dto in payload.rules {
-            let related: VocabularyWord?
-            if let key = dto.relatedGermanWord {
-                related = wordByHeadword[key]
-                if related == nil {
-                    throw LocalSeederError.invalidRule(
-                        "relatedGermanWord \(key) not found for rule \(dto.title)"
-                    )
-                }
-            } else {
-                related = nil
+            guard CEFRLevel(rawValue: dto.level) != nil else {
+                throw LocalSeederError.invalidRule("unknown level \(dto.level) for \(dto.title)")
             }
-
-            var applicable: CEFRLevel?
-            if let code = dto.applicableLevelCode {
-                guard let lvl = CEFRLevel(rawValue: code) else {
-                    throw LocalSeederError.invalidRule("bad applicableLevelCode \(code) for \(dto.title)")
-                }
-                applicable = lvl
-            } else {
-                applicable = nil
+            guard !dto.exampleSentences.isEmpty else {
+                throw LocalSeederError.invalidRule("exampleSentences empty for \(dto.title)")
             }
 
             let rule = GrammarRule(
                 title: dto.title,
                 explanation: dto.explanation,
-                examples: dto.examples,
-                ruleText: dto.ruleText,
-                applicableLevel: applicable,
-                relatedWord: related
+                level: dto.level,
+                exampleSentences: dto.exampleSentences
             )
             context.insert(rule)
             ruleCount += 1

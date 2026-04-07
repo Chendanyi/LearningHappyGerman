@@ -132,14 +132,21 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 - **Feature/Area:** Data ingestion engine (`BundledData.json` → SwiftData).
 - **Symptom/Error:** N/A (baseline run after implementation).
 - **Observability:** Expected counts from bundled payload v1: **7 words**, **1 grammar rule** (see `LearnHappyGerman/LearnHappyGerman/BundledData.json`). After a successful run on device/simulator, the app appends the same figures (plus timestamp) to `Application Support/.../MEMORY_ingestion_appendix.md` (copy that block here if it differs).
-- **Human Takeover:** Shown when `BundledData.json` is missing, invalid JSON, validation fails (e.g. noun without article, missing `relatedGermanWord`), or save fails.
+- **Human Takeover:** Shown when `BundledData.json` is missing, invalid JSON, validation fails (e.g. noun without article, unknown `level`, empty `exampleSentences`), or save fails.
 - **Prevention Rule(s):**
-  - Keep `BundledData.json` valid JSON; match `article` / `level` / `category` raw strings to `VocabularyWord` enums.
-  - For rules, `relatedGermanWord` must match a `germanWord` from the same file.
+  - Keep `BundledData.json` valid JSON; `level` must be `A1`…`C2`; `article` is `der`/`die`/`das`/`none`; `category` is a free-form string (e.g. `Noun`).
+  - Grammar rules require non-empty `exampleSentences` arrays.
 - **Validation Evidence:** `xcodebuild` build succeeded; run app once with fresh install and confirm lobby + flashcards; check console for `IngestionAudit:` path.
 
 ### [2026-04-07] SyncService remote merge + evaluator test
 
 - **Feature/Area:** `SyncService` placeholder (`SyncService.swift`, `SyncServiceTests.swift`).
-- **Behavior:** Merge key `(germanWord, level)`; remote updates change editorial fields; `isMastered` preserved on update.
-- **Validation Evidence:** `LearnHappyGermanTests` / `SyncServiceTests.testRemoteUpdatePreservesIsMastered` passes.
+- **Behavior:** Merge key `(germanWord, level)` as strings; remote updates change editorial fields; `isMastered` preserved on update.
+- **Validation Evidence:** `SyncServiceTests.testRemoteUpdatePreservesIsMastered` passes when run on a concrete simulator destination.
+
+### [2026-04-07] Planner schema: indexed strings + UUID vocabulary
+
+- **Feature/Area:** SwiftData models (`VocabularyWord`, `GrammarRule`), `BundledData.json`, `learnhappygerman-v9.store`.
+- **Change:** `VocabularyWord` uses `@Attribute(.unique) id: UUID`, `#Index` on `germanWord` and `level` (`String`), optional `article` (`String?`), `category` (`String`), `version`. `GrammarRule` uses `exampleSentences: [String]` and `level: String` (no vocabulary relationship). `CEFRLevel` remains a non-persisted enum for lobby routing.
+- **Prevention Rule(s):** Bump the versioned store filename when breaking schema changes; keep two `BundledData.json` copies in sync if both exist under the app tree.
+- **Validation Evidence:** `xcodebuild -scheme LearnHappyGerman -destination 'generic/platform=iOS Simulator' build` succeeded.

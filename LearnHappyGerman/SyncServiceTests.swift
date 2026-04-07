@@ -12,10 +12,10 @@ final class SyncServiceTests: XCTestCase {
 
         let local = VocabularyWord(
             germanWord: "Apfel",
-            article: .der,
+            article: "der",
             englishTranslation: "apple",
-            level: .a1,
-            category: .noun,
+            level: "A1",
+            category: "Noun",
             isMastered: true,
             version: 1
         )

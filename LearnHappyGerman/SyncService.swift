@@ -28,7 +28,7 @@ struct SyncMergeResult: Sendable {
 
 /// Placeholder sync pipeline: fetch remote JSON and merge into `ModelContext` without duplicate rows.
 ///
-/// **Merge key:** `(germanWord, CEFRLevel)` — one logical card per headword per level.
+/// **Merge key:** `(germanWord, level)` — one logical card per headword per level.
 /// - Existing rows: update editorial fields from remote; **preserve** `isMastered`.
 /// - New rows: insert with `isMastered == false`.
 enum SyncService {
@@ -62,23 +62,22 @@ enum SyncService {
         var updated = 0
 
         for dto in payload.words {
-            guard let article = GermanArticle(rawValue: dto.article) else {
-                throw SyncServiceError.invalidRemoteField("article for \(dto.germanWord)")
-            }
-            guard let level = CEFRLevel(rawValue: dto.level) else {
+            let article = try normalizedArticle(dto.article, germanWord: dto.germanWord)
+            guard CEFRLevel(rawValue: dto.level) != nil else {
                 throw SyncServiceError.invalidRemoteField("level for \(dto.germanWord)")
             }
-            guard let category = WordCategory(rawValue: dto.category) else {
+            let trimmedCategory = dto.category.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmedCategory.isEmpty else {
                 throw SyncServiceError.invalidRemoteField("category for \(dto.germanWord)")
             }
 
-            let key = Self.stableKey(germanWord: dto.germanWord, level: level)
+            let key = Self.stableKey(germanWord: dto.germanWord, level: dto.level)
             let remoteVersion = dto.version ?? payload.version
 
             if let local = byKey[key] {
                 local.article = article
                 local.englishTranslation = dto.englishTranslation
-                local.category = category
+                local.category = trimmedCategory
                 local.version = max(local.version, remoteVersion)
                 // isMastered intentionally not modified — user progress is preserved.
                 updated += 1
@@ -87,8 +86,8 @@ enum SyncService {
                     germanWord: dto.germanWord,
                     article: article,
                     englishTranslation: dto.englishTranslation,
-                    level: level,
-                    category: category,
+                    level: dto.level,
+                    category: trimmedCategory,
                     isMastered: false,
                     version: remoteVersion
                 )
@@ -102,8 +101,17 @@ enum SyncService {
         return SyncMergeResult(insertedCount: inserted, updatedCount: updated)
     }
 
-    static func stableKey(germanWord: String, level: CEFRLevel) -> String {
-        "\(germanWord)|\(level.rawValue)"
+    static func stableKey(germanWord: String, level: String) -> String {
+        "\(germanWord)|\(level)"
+    }
+
+    private static func normalizedArticle(_ raw: String, germanWord: String) throws -> String? {
+        let t = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if t.isEmpty || t == "none" { return nil }
+        guard t == "der" || t == "die" || t == "das" else {
+            throw SyncServiceError.invalidRemoteField("article for \(germanWord)")
+        }
+        return t
     }
 }
 

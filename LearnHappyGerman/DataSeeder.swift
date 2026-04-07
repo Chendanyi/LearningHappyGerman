@@ -3,10 +3,10 @@ import SwiftData
 
 struct VocabularySeedRecord: Codable {
     let germanWord: String
-    let article: GermanArticle
+    let article: String?
     let englishTranslation: String
-    let level: CEFRLevel
-    let category: WordCategory
+    let level: String
+    let category: String
 }
 
 final class DataSeeder {
@@ -15,52 +15,52 @@ final class DataSeeder {
     static let starterVocabulary: [VocabularySeedRecord] = [
         .init(
             germanWord: "Apfel",
-            article: .der,
+            article: "der",
             englishTranslation: "apple",
-            level: .a1,
-            category: .noun
+            level: "A1",
+            category: "Noun"
         ),
         .init(
             germanWord: "Buch",
-            article: .das,
+            article: "das",
             englishTranslation: "book",
-            level: .a1,
-            category: .noun
+            level: "A1",
+            category: "Noun"
         ),
         .init(
             germanWord: "Bahnhof",
-            article: .der,
+            article: "der",
             englishTranslation: "station",
-            level: .a2,
-            category: .noun
+            level: "A2",
+            category: "Noun"
         ),
         .init(
             germanWord: "lernen",
-            article: .none,
+            article: nil,
             englishTranslation: "to learn",
-            level: .b1,
-            category: .verb
+            level: "B1",
+            category: "Verb"
         ),
         .init(
             germanWord: "Rechnung",
-            article: .die,
+            article: "die",
             englishTranslation: "invoice",
-            level: .b2,
-            category: .noun
+            level: "B2",
+            category: "Noun"
         ),
         .init(
             germanWord: "vorzüglich",
-            article: .none,
+            article: nil,
             englishTranslation: "excellent",
-            level: .c1,
-            category: .adjective
+            level: "C1",
+            category: "Adjective"
         ),
         .init(
             germanWord: "Weltanschauung",
-            article: .die,
+            article: "die",
             englishTranslation: "worldview",
-            level: .c2,
-            category: .noun
+            level: "C2",
+            category: "Noun"
         )
     ]
 
@@ -76,7 +76,8 @@ final class DataSeeder {
     }
 
     func importLevel(_ level: CEFRLevel, from records: [VocabularySeedRecord]) throws {
-        let filtered = records.filter { $0.level == level }
+        let code = level.rawValue
+        let filtered = records.filter { $0.level == code }
         for record in filtered {
             let word = VocabularyWord(
                 germanWord: record.germanWord,
