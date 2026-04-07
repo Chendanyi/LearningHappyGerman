@@ -3,13 +3,15 @@
 Persistent log for errors, root causes, and prevention rules to avoid regression.
 
 ## Usage
+
 - Review before starting any task.
 - Add entries when a bug, failed test, or validation issue is discovered.
 - Record concrete prevention rules from each incident.
 
 ## Entry Template
 
-### [YYYY-MM-DD] <Short Title>
+### [YYYY-MM-DD] 
+
 - **Feature/Area:**
 - **Symptom/Error:**
 - **Root Cause:**
@@ -19,12 +21,15 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 - **Validation Evidence:** (unit test, UI validation, manual steps)
 
 ## Incident Log
-<!-- Add new incident entries below -->
+
+
+
 # MEMORY
 
 Persistent engineering memory to reduce repeated mistakes and regressions.
 
 ## How to Use
+
 - Read this file before starting any implementation task.
 - Add an entry whenever a bug, failure, or recurring issue is found.
 - Keep entries concise and action-oriented.
@@ -33,6 +38,7 @@ Persistent engineering memory to reduce repeated mistakes and regressions.
 ## Entry Template
 
 ### [YYYY-MM-DD] Short Title
+
 - **Area:** (feature/module)
 - **Symptom:** What failed and how it appeared
 - **Root cause:** Why it happened
@@ -41,11 +47,14 @@ Persistent engineering memory to reduce repeated mistakes and regressions.
 - **Validation:** How the fix was verified (unit/UI/manual)
 
 ## Prevention Rules (Living List)
+
 - Add global guardrails discovered from incidents here.
 - Promote high-frequency errors into explicit workflow checks.
 
 ## Incident Log
-<!-- Add new entries below this line -->
+
+
+
 # MEMORY - Regression Prevention Log
 
 Persistent record of failures, root causes, and prevention rules.
@@ -61,6 +70,7 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ## Entry Template
 
 ### [ID] Short Issue Title
+
 - **Date:**
 - **Feature:** Flashcards | Dice Game | AI Dialogue | Cross-cutting
 - **Related TODO:**
@@ -85,9 +95,10 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 
 ## Issue History
 
-<!-- Add new entries below this line -->
+
 
 ### [AUDIT-2026-04-06] MainLobbyView Visual and Logic Audit
+
 - **Date:** 2026-04-06
 - **Feature:** Cross-cutting (Lobby + Navigation)
 - **Related TODO:** App Navigation Architecture / Design System

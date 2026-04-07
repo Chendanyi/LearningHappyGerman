@@ -1,0 +1,45 @@
+included:
+  - LearnHappyGerman
+
+excluded:
+  - LearnHappyGerman/LearnHappyGerman.xcodeproj
+  - LearnHappyGerman/LearnHappyGerman.xcworkspace
+
+strict: true
+
+opt_in_rules:
+  - force_unwrapping
+
+force_unwrapping:
+  severity: error
+
+identifier_name:
+  min_length: 2
+  max_length:
+    warning: 40
+    error: 50
+  validates_start_with_lowercase: true
+  allowed_symbols:
+    - _
+
+type_name:
+  min_length: 3
+  max_length:
+    warning: 45
+    error: 55
+
+custom_rules:
+  grand_budapest_naming:
+    name: "Grand Budapest Naming"
+    regex: '\b(let|var|func|class|struct|enum|protocol)\s+[A-Za-z0-9]*_[A-Za-z0-9_]*\b'
+    message: "Use Grand Budapest naming: lowerCamelCase for members/functions, UpperCamelCase for types; avoid snake_case."
+    severity: error
+
+  symmetry_exception_marker:
+    name: "Symmetry Exception Marker"
+    regex: '\.padding\(\.(top|bottom|leading|trailing)'
+    message: "Directional padding requires a symmetry exception comment: // SYMMETRY-EXCEPTION: <reason>"
+    severity: warning
+
+disabled_rules:
+  - inclusive_language

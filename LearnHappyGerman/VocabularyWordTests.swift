@@ -1,5 +1,5 @@
 import XCTest
-@testable import LearningHappyGerman
+@testable import LearnHappyGerman
 
 final class VocabularyWordTests: XCTestCase {
     func testNounMustHaveValidArticle() {

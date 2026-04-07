@@ -205,7 +205,10 @@ struct FlashcardView: View {
         }
 
         // Noun constraint: article is mandatory.
-        if card.category == .noun, !normalizedInput.hasPrefix("der "), !normalizedInput.hasPrefix("die "), !normalizedInput.hasPrefix("das ") {
+        if card.category == .noun,
+           !normalizedInput.hasPrefix("der "),
+           !normalizedInput.hasPrefix("die "),
+           !normalizedInput.hasPrefix("das ") {
             validationState = .incorrect(expected: expectedAnswer(for: card))
         } else {
             validationState = .incorrect(expected: expectedAnswer(for: card))
@@ -232,7 +235,10 @@ struct FlashcardView: View {
     }
 
     private func expectedAnswer(for word: VocabularyWord) -> String {
-        word.category == .noun && word.article != .none ? "\(word.article.rawValue) \(word.germanWord)" : word.germanWord
+        if word.category == .noun && word.article != .none {
+            return "\(word.article.rawValue) \(word.germanWord)"
+        }
+        return word.germanWord
     }
 
     private func symbol(for word: VocabularyWord) -> String {

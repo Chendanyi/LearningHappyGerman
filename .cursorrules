@@ -30,3 +30,9 @@ Before starting any task, always:
 Additional expectations:
 - Keep `TODO.md` current as work progresses.
 - Log failures and prevention updates in `MEMORY.md` immediately after resolution.
+
+# Portability and Privacy Rules
+
+- Do not hardcode machine-specific paths (for example `/Users/...`, `/opt/...`) in project scripts, config, or source files.
+- Prefer portable discovery (`command -v`, environment variables, dynamic runtime detection) over fixed local paths.
+- Do not introduce personal or sensitive local identifiers into the repository (usernames, home directories, device IDs, private tokens, or machine-specific metadata).

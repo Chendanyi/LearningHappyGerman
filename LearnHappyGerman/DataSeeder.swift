@@ -13,13 +13,55 @@ final class DataSeeder {
     private let context: ModelContext
 
     static let starterVocabulary: [VocabularySeedRecord] = [
-        .init(germanWord: "Apfel", article: .der, englishTranslation: "apple", level: .a1, category: .noun),
-        .init(germanWord: "Buch", article: .das, englishTranslation: "book", level: .a1, category: .noun),
-        .init(germanWord: "Bahnhof", article: .der, englishTranslation: "station", level: .a2, category: .noun),
-        .init(germanWord: "lernen", article: .none, englishTranslation: "to learn", level: .b1, category: .verb),
-        .init(germanWord: "Rechnung", article: .die, englishTranslation: "invoice", level: .b2, category: .noun),
-        .init(germanWord: "vorzüglich", article: .none, englishTranslation: "excellent", level: .c1, category: .adjective),
-        .init(germanWord: "Weltanschauung", article: .die, englishTranslation: "worldview", level: .c2, category: .noun)
+        .init(
+            germanWord: "Apfel",
+            article: .der,
+            englishTranslation: "apple",
+            level: .a1,
+            category: .noun
+        ),
+        .init(
+            germanWord: "Buch",
+            article: .das,
+            englishTranslation: "book",
+            level: .a1,
+            category: .noun
+        ),
+        .init(
+            germanWord: "Bahnhof",
+            article: .der,
+            englishTranslation: "station",
+            level: .a2,
+            category: .noun
+        ),
+        .init(
+            germanWord: "lernen",
+            article: .none,
+            englishTranslation: "to learn",
+            level: .b1,
+            category: .verb
+        ),
+        .init(
+            germanWord: "Rechnung",
+            article: .die,
+            englishTranslation: "invoice",
+            level: .b2,
+            category: .noun
+        ),
+        .init(
+            germanWord: "vorzüglich",
+            article: .none,
+            englishTranslation: "excellent",
+            level: .c1,
+            category: .adjective
+        ),
+        .init(
+            germanWord: "Weltanschauung",
+            article: .die,
+            englishTranslation: "worldview",
+            level: .c2,
+            category: .noun
+        )
     ]
 
     init(context: ModelContext) {
