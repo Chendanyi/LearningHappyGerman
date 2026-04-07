@@ -114,3 +114,15 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
   - State check: tapping `B1` sets `AppState.currentLevel = .b1` and hallway displays `Current Level: B1`.
   - Color check: `MainLobbyView` uses `Theme.Colors.mendlsPink`, `Theme.Colors.lobbyBoyPurple`, and `Theme.Colors.societyBlue`, matching `Theme.swift` hex values (`#F8C1C1`, `#6D4C7D`, `#A7C7E7`).
   - Scope note: vocabulary filtering is ready via `AppState.currentLevel`; module-level SwiftData query filtering is pending classroom implementation.
+
+### [2026-04-07] SwiftData `ModelContainer` init failure / fatalError
+
+- **Feature/Area:** SwiftData schema (`VocabularyWord`, `GrammarRule`, store configuration).
+- **Symptom/Error:** App dies in `LearnHappyGermanApp` when creating `ModelContainer` (same line as `fatalError` / store open).
+- **Root Cause:** Combination of fragile pieces: `#Index` with enum-heavy models, optional persisted enum (`CEFRLevel?`) on `GrammarRule`, default store path reusing a DB from earlier incompatible schema versions, and relationship wiring.
+- **Fix Applied:** Removed `#Index` from `VocabularyWord`; replaced `applicableLevel` with stored `applicableLevelCode: String?` plus `applicableLevel` computed accessor; use explicit Application Support URL `learnhappygerman-v8.store`; try persistent container then fall back to in-memory with console logging; `fatalError` only if both fail.
+- **Prevention Rule(s):**
+  - Prefer plain `String` (or `Int`) for persisted optional “enum-like” fields until SwiftData support is verified.
+  - Bump versioned store filename when making breaking schema changes during development.
+  - Avoid `#Index` until the model set is stable; enums and indexes interact badly (see composite index errors).
+- **Validation Evidence:** `xcodebuild` build succeeded; run on simulator and confirm console: no persistent error, or fallback message then app runs.

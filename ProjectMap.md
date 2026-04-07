@@ -4,7 +4,9 @@
 - `MainLobbyView.swift` - Lobby entrance UI with CEFR selector.
 - `FlashcardView.swift` - First classroom screen with answer validation and feedback animation.
 - `Theme.swift` - Shared color, typography, symmetry, and icon styling utilities.
-- `VocabularyWord.swift` - SwiftData vocabulary model and related enums.
+- `VocabularyWord.swift` - SwiftData vocabulary model (version field) and related enums.
+- `GrammarRule.swift` - Grammar explanations, examples, and rules; optional link to a `VocabularyWord`.
+- `HYBRID_DATA_ARCHITECTURE.md` - Planner notes on vocabulary + grammar SwiftData layout.
 - `DataSeeder.swift` - Seed pipeline for CEFR A1-C2 data imports.
 - `VocabularyWordTests.swift` - Test coverage for noun/article validation rule.
 - `NAVIGATION_ARCHITECTURE.md` - Planner navigation specification.

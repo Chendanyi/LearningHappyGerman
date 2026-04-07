@@ -50,6 +50,11 @@ final class VocabularyWord {
     var level: CEFRLevel
     var category: WordCategory
     var isMastered: Bool
+    /// Increment when the row’s pedagogical content or metadata changes (import pipelines, editorial fixes).
+    var version: Int
+
+    @Relationship(deleteRule: .cascade)
+    var grammarRules: [GrammarRule] = []
 
     init(
         germanWord: String,
@@ -57,7 +62,8 @@ final class VocabularyWord {
         englishTranslation: String,
         level: CEFRLevel,
         category: WordCategory,
-        isMastered: Bool = false
+        isMastered: Bool = false,
+        version: Int = 1
     ) {
         self.germanWord = germanWord
         self.article = article
@@ -65,6 +71,7 @@ final class VocabularyWord {
         self.level = level
         self.category = category
         self.isMastered = isMastered
+        self.version = version
     }
 }
 

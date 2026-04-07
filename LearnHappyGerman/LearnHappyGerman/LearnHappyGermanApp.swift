@@ -14,17 +14,7 @@ struct LearnHappyGermanApp: App {
     @State private var hasSeeded = false
 
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-            VocabularyWord.self
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
+        makeModelContainer()
     }()
 
     var body: some Scene {
@@ -47,6 +37,45 @@ struct LearnHappyGermanApp: App {
             try seeder.seedIfNeeded(records: DataSeeder.starterVocabulary)
         } catch {
             print("Vocabulary seed failed: \(error)")
+        }
+    }
+
+    /// Uses a **versioned** store filename so simulator installs stuck on a broken migration can open a fresh file.
+    /// If the on-disk store still fails (schema edge cases), falls back to an in-memory container so the app runs.
+    private static func makeModelContainer() -> ModelContainer {
+        let schema = Schema([
+            Item.self,
+            VocabularyWord.self,
+            GrammarRule.self
+        ])
+
+        let memoryConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+
+        let appSupport = FileManager.default.urls(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask
+        ).first!
+        let folder = appSupport.appendingPathComponent("LearnHappyGerman", isDirectory: true)
+        try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        let storeURL = folder.appendingPathComponent("learnhappygerman-v8.store", isDirectory: false)
+        let diskConfiguration = ModelConfiguration(schema: schema, url: storeURL)
+
+        do {
+            return try ModelContainer(for: schema, configurations: [diskConfiguration])
+        } catch let diskError {
+            print(
+                "SwiftData persistent ModelContainer failed: \(diskError). "
+                    + "Trying in-memory store."
+            )
+            do {
+                return try ModelContainer(for: schema, configurations: [memoryConfiguration])
+            } catch let memoryError {
+                fatalError(
+                    "SwiftData could not create ModelContainer. "
+                        + "Persistent error: \(diskError). "
+                        + "In-memory error: \(memoryError)"
+                )
+            }
         }
     }
 }
