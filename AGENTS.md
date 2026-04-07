@@ -61,6 +61,32 @@ For every feature, execute in order:
 2. Generator
 3. Evaluator
 
+## Zero-Failure Merge Policy
+
+### Generator Constraint
+
+- Merging code into `main` is forbidden if `./check_integrity.sh` fails.
+- A passing integrity run is mandatory before any merge decision.
+
+### Evaluator Veto Power
+
+- Evaluator has veto power over release readiness.
+- If any UI component violates symmetry or a German grammar test fails, Evaluator must trigger an automatic revert of the last commit.
+
+### Pre-commit Logic
+
+- Before every git commit, simulate a pre-commit hook by running the full test suite.
+- Record the run outcome in `MEMORY.md` with explicit `Pass`/`Fail` status.
+
+## Git Workflow Refinement
+
+- For every new feature (for example, `A1 Flashcards`), create and use a temporary feature branch.
+- After implementation, Evaluator must run `./check_integrity.sh` before merge or release decisions.
+- If integrity check passes, append a `Verified` badge marker to the commit message.
+- Standard commit format for passed checks: `<type>: <short description> [Verified]` (example: `feat: add A1 flashcards flow [Verified]`).
+- If integrity check fails, Agent must analyze the error, log the failure pattern in `MEMORY.md`, and fix it immediately.
+- Do not ask the user for lint/test failure help until three autonomous fix attempts have been made and documented.
+
 ## Portability and Privacy Guardrails (All Personas)
 
 - Do not hardcode machine-specific paths in project code or scripts.
