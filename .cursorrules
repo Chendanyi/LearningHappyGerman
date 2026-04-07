@@ -36,3 +36,9 @@ Additional expectations:
 - Do not hardcode machine-specific paths (for example `/Users/...`, `/opt/...`) in project scripts, config, or source files.
 - Prefer portable discovery (`command -v`, environment variables, dynamic runtime detection) over fixed local paths.
 - Do not introduce personal or sensitive local identifiers into the repository (usernames, home directories, device IDs, private tokens, or machine-specific metadata).
+
+# Zero-Failure Merge Policy
+
+- Generator constraint: do not merge code into `main` if `./check_integrity.sh` fails.
+- Evaluator veto power: if UI symmetry fails or a German grammar test fails, automatically revert the last commit.
+- Pre-commit simulation: before every commit, run the full test suite and log explicit `Pass/Fail` status in `MEMORY.md`.
