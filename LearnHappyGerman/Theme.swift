@@ -29,6 +29,14 @@ enum Theme {
         static let symbolWeight: Font.Weight = .ultraLight
         static let renderingMode: SymbolRenderingMode = .hierarchical
     }
+
+    /// Grand Budapest Hotel “concierge board” symmetry for screens that render vocabulary from SwiftData.
+    enum VocabularyGrandBudapest {
+        @ViewBuilder
+        static func symmetricContent<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+            content().wesSymmetricLayout()
+        }
+    }
 }
 
 extension View {

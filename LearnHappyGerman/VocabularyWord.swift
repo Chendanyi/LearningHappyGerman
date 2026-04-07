@@ -1,13 +1,9 @@
 import Foundation
 import SwiftData
 
-enum GermanArticle: String, Codable, CaseIterable {
-    case der
-    case die
-    case das
-    case none
-}
+// MARK: - UI / routing (not persisted)
 
+/// CEFR labels for lobby and filters; persisted `VocabularyWord.level` is a matching `String` (e.g. `"A1"`).
 enum CEFRLevel: String, Codable, CaseIterable, Comparable {
     case a1 = "A1"
     case a2 = "A2"
@@ -30,47 +26,66 @@ enum CEFRLevel: String, Codable, CaseIterable, Comparable {
     static func < (lhs: CEFRLevel, rhs: CEFRLevel) -> Bool {
         lhs.rank < rhs.rank
     }
+
+    /// Codes persisted on `VocabularyWord.level` (queries / integrity tests).
+    static let validLevelCodes: Set<String> = Set(allCases.map(\.rawValue))
+
+    static func isValidLevelCode(_ code: String) -> Bool {
+        validLevelCodes.contains(code)
+    }
 }
 
-enum WordCategory: String, Codable, CaseIterable {
-    case noun = "Noun"
-    case verb = "Verb"
-    case adjective = "Adjective"
-    case adverb = "Adverb"
-    case phrase = "Phrase"
-    case expression = "Expression"
-    case other = "Other"
-}
+// MARK: - SwiftData
 
 @Model
 final class VocabularyWord {
+    #Index<VocabularyWord>([\.germanWord], [\.level])
+    @Attribute(.unique) var id: UUID
     var germanWord: String
-    var article: GermanArticle
+    /// `der` / `die` / `das`, or `nil` / `"none"` when no article applies (verbs, adjectives).
+    var article: String?
     var englishTranslation: String
-    var level: CEFRLevel
-    var category: WordCategory
+    /// CEFR band as plain text, e.g. `A1`…`C2` (indexed for queries).
+    var level: String
+    /// Domain or part-of-speech tag, e.g. `Bakery`, `Office`, `Noun`.
+    var category: String
     var isMastered: Bool
+    var version: Int
 
     init(
+        id: UUID = UUID(),
         germanWord: String,
-        article: GermanArticle = .none,
+        article: String?,
         englishTranslation: String,
-        level: CEFRLevel,
-        category: WordCategory,
-        isMastered: Bool = false
+        level: String,
+        category: String,
+        isMastered: Bool = false,
+        version: Int = 1
     ) {
+        self.id = id
         self.germanWord = germanWord
         self.article = article
         self.englishTranslation = englishTranslation
         self.level = level
         self.category = category
         self.isMastered = isMastered
+        self.version = version
     }
 }
 
 extension VocabularyWord {
+    /// Noun rows must carry der/die/das (not `none` / empty).
     var hasValidArticleForNoun: Bool {
-        guard category == .noun else { return true }
-        return article != .none
+        guard category.caseInsensitiveCompare("Noun") == .orderedSame else { return true }
+        guard let art = normalizedArticle else { return false }
+        return art == "der" || art == "die" || art == "das"
+    }
+
+    /// Collapses `"none"` and blanks to `nil` for checks.
+    private var normalizedArticle: String? {
+        guard let article else { return nil }
+        let trimmed = article.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty || trimmed.lowercased() == "none" { return nil }
+        return trimmed.lowercased()
     }
 }

@@ -2,6 +2,8 @@ import SwiftUI
 
 final class AppState: ObservableObject {
     @Published var currentLevel: CEFRLevel?
+    /// Set when bundled data import fails; shows a Human Takeover alert on the lobby.
+    @Published var humanTakeoverMessage: String?
 }
 
 struct MainLobbyView: View {
@@ -72,6 +74,16 @@ struct MainLobbyView: View {
             .navigationDestination(isPresented: $showHallway) {
                 ClassroomHallwayView()
             }
+        }
+        .alert("Human Takeover", isPresented: Binding(
+            get: { appState.humanTakeoverMessage != nil },
+            set: { if !$0 { appState.humanTakeoverMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) {
+                appState.humanTakeoverMessage = nil
+            }
+        } message: {
+            Text(appState.humanTakeoverMessage ?? "Data import failed.")
         }
     }
 }

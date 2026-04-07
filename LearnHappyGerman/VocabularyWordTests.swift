@@ -5,10 +5,10 @@ final class VocabularyWordTests: XCTestCase {
     func testNounMustHaveValidArticle() {
         let nounWithoutArticle = VocabularyWord(
             germanWord: "Haus",
-            article: .none,
+            article: nil,
             englishTranslation: "house",
-            level: .a1,
-            category: .noun
+            level: "A1",
+            category: "Noun"
         )
 
         XCTAssertFalse(
@@ -18,10 +18,10 @@ final class VocabularyWordTests: XCTestCase {
 
         let nounWithArticle = VocabularyWord(
             germanWord: "Mann",
-            article: .der,
+            article: "der",
             englishTranslation: "man",
-            level: .a1,
-            category: .noun
+            level: "A1",
+            category: "Noun"
         )
 
         XCTAssertTrue(nounWithArticle.hasValidArticleForNoun)

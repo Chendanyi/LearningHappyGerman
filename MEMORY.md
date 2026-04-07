@@ -114,3 +114,45 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
   - State check: tapping `B1` sets `AppState.currentLevel = .b1` and hallway displays `Current Level: B1`.
   - Color check: `MainLobbyView` uses `Theme.Colors.mendlsPink`, `Theme.Colors.lobbyBoyPurple`, and `Theme.Colors.societyBlue`, matching `Theme.swift` hex values (`#F8C1C1`, `#6D4C7D`, `#A7C7E7`).
   - Scope note: vocabulary filtering is ready via `AppState.currentLevel`; module-level SwiftData query filtering is pending classroom implementation.
+
+### [2026-04-07] SwiftData `ModelContainer` init failure / fatalError
+
+- **Feature/Area:** SwiftData schema (`VocabularyWord`, `GrammarRule`, store configuration).
+- **Symptom/Error:** App dies in `LearnHappyGermanApp` when creating `ModelContainer` (same line as `fatalError` / store open).
+- **Root Cause:** Combination of fragile pieces: `#Index` with enum-heavy models, optional persisted enum (`CEFRLevel?`) on `GrammarRule`, default store path reusing a DB from earlier incompatible schema versions, and relationship wiring.
+- **Fix Applied:** Removed `#Index` from `VocabularyWord`; replaced `applicableLevel` with stored `applicableLevelCode: String?` plus `applicableLevel` computed accessor; use explicit Application Support URL `learnhappygerman-v8.store`; try persistent container then fall back to in-memory with console logging; `fatalError` only if both fail.
+- **Prevention Rule(s):**
+  - Prefer plain `String` (or `Int`) for persisted optional “enum-like” fields until SwiftData support is verified.
+  - Bump versioned store filename when making breaking schema changes during development.
+  - Avoid `#Index` until the model set is stable; enums and indexes interact badly (see composite index errors).
+- **Validation Evidence:** `xcodebuild` build succeeded; run on simulator and confirm console: no persistent error, or fallback message then app runs.
+
+### [2026-04-07] Bundled data ingestion (`LocalSeeder`)
+
+- **Feature/Area:** Data ingestion engine (`BundledData.json` → SwiftData).
+- **Symptom/Error:** N/A (baseline run after implementation).
+- **Observability:** Expected counts from bundled payload v1: **7 words**, **1 grammar rule** (see `LearnHappyGerman/LearnHappyGerman/BundledData.json`). After a successful run on device/simulator, the app appends the same figures (plus timestamp) to `Application Support/.../MEMORY_ingestion_appendix.md` (copy that block here if it differs).
+- **Human Takeover:** Shown when `BundledData.json` is missing, invalid JSON, validation fails (e.g. noun without article, unknown `level`, empty `exampleSentences`), or save fails.
+- **Prevention Rule(s):**
+  - Keep `BundledData.json` valid JSON; `level` must be `A1`…`C2`; `article` is `der`/`die`/`das`/`none`; `category` is a free-form string (e.g. `Noun`).
+  - Grammar rules require non-empty `exampleSentences` arrays.
+- **Validation Evidence:** `xcodebuild` build succeeded; run app once with fresh install and confirm lobby + flashcards; check console for `IngestionAudit:` path.
+
+### [2026-04-07] SyncService remote merge + evaluator test
+
+- **Feature/Area:** `SyncService` placeholder (`SyncService.swift`, `SyncServiceTests.swift`).
+- **Behavior:** Merge key `(germanWord, level)` as strings; remote updates change editorial fields; `isMastered` preserved on update.
+- **Validation Evidence:** `SyncServiceTests.testRemoteUpdatePreservesIsMastered` passes when run on a concrete simulator destination.
+
+### [2026-04-07] Planner schema: indexed strings + UUID vocabulary
+
+- **Feature/Area:** SwiftData models (`VocabularyWord`, `GrammarRule`), `BundledData.json`, `learnhappygerman-v9.store`.
+- **Change:** `VocabularyWord` uses `@Attribute(.unique) id: UUID`, `#Index` on `germanWord` and `level` (`String`), optional `article` (`String?`), `category` (`String`), `version`. `GrammarRule` uses `exampleSentences: [String]` and `level: String` (no vocabulary relationship). `CEFRLevel` remains a non-persisted enum for lobby routing.
+- **Prevention Rule(s):** Bump the versioned store filename when breaking schema changes; keep two `BundledData.json` copies in sync if both exist under the app tree.
+- **Validation Evidence:** `xcodebuild -scheme LearnHappyGerman -destination 'generic/platform=iOS Simulator' build` succeeded.
+
+### [2026-04-07] Evaluator: data integrity + symmetry tests
+
+- **Feature/Area:** `VocabularyDataIntegrityTests`, `VocabularySymmetryLayoutTests`, `Theme.VocabularyGrandBudapest`, `FlashcardView`.
+- **Behavior:** Tests assert every seeded noun has a non-empty der/die/das article, every row has `A1`–`C2` level, and `DataSeeder.seedIfNeeded` does not duplicate rows when invoked twice. `FlashcardView` wraps the main column in `Theme.VocabularyGrandBudapest.symmetricContent` (same as `wesSymmetricLayout`).
+- **Validation Evidence:** `xcodebuild` `build-for-testing` for generic iOS Simulator succeeded.

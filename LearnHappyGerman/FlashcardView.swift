@@ -19,7 +19,8 @@ struct FlashcardView: View {
         ZStack {
             Theme.Colors.mendlsPink.ignoresSafeArea()
 
-            VStack(spacing: 18) {
+            Theme.VocabularyGrandBudapest.symmetricContent {
+                VStack(spacing: 18) {
                 Text("Flashcards")
                     .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
@@ -114,17 +115,17 @@ struct FlashcardView: View {
                 }
                 .font(Theme.Typography.rounded(.subheadline, weight: .medium))
                 .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                }
+                .padding(24)
+                .background(
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(Color.white.opacity(0.22))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
+                )
             }
-            .padding(24)
-            .background(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(Color.white.opacity(0.22))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
-            )
-            .wesSymmetricLayout()
         }
         .navigationTitle("Flashcards")
         .navigationBarTitleDisplayMode(.inline)
@@ -159,7 +160,7 @@ struct FlashcardView: View {
         do {
             let allWords = try modelContext.fetch(FetchDescriptor<VocabularyWord>())
             if let targetLevel {
-                vocabularyWords = allWords.filter { $0.level == targetLevel }
+                vocabularyWords = allWords.filter { $0.level == targetLevel.rawValue }
             } else {
                 vocabularyWords = allWords
             }
@@ -205,7 +206,7 @@ struct FlashcardView: View {
         }
 
         // Noun constraint: article is mandatory.
-        if card.category == .noun,
+        if card.category.caseInsensitiveCompare("Noun") == .orderedSame,
            !normalizedInput.hasPrefix("der "),
            !normalizedInput.hasPrefix("die "),
            !normalizedInput.hasPrefix("das ") {
@@ -235,21 +236,26 @@ struct FlashcardView: View {
     }
 
     private func expectedAnswer(for word: VocabularyWord) -> String {
-        if word.category == .noun && word.article != .none {
-            return "\(word.article.rawValue) \(word.germanWord)"
+        guard word.category.caseInsensitiveCompare("Noun") == .orderedSame else {
+            return word.germanWord
         }
-        return word.germanWord
+        guard let art = word.article?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !art.isEmpty,
+              art.lowercased() != "none" else {
+            return word.germanWord
+        }
+        return "\(art) \(word.germanWord)"
     }
 
     private func symbol(for word: VocabularyWord) -> String {
-        switch word.category {
-        case .noun: return "tag"
-        case .verb: return "figure.walk"
-        case .adjective: return "paintpalette"
-        case .adverb: return "speedometer"
-        case .phrase: return "text.quote"
-        case .expression: return "ellipsis.bubble"
-        case .other: return "sparkles"
+        switch word.category.lowercased() {
+        case "noun": return "tag"
+        case "verb": return "figure.walk"
+        case "adjective": return "paintpalette"
+        case "adverb": return "speedometer"
+        case "phrase": return "text.quote"
+        case "expression": return "ellipsis.bubble"
+        default: return "sparkles"
         }
     }
 
