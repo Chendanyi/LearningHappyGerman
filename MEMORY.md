@@ -168,3 +168,14 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 - **Symptom:** A1 flashcards only showed apple/book because `BundledData.json` listed only two A1 words; `initial_data.json` was never imported.
 - **Fix:** `LocalSeeder.mergeInitialDataFromBundle()` + `LearnHappyGermanApp.mergeInitialDataFromBundle` after bundled import / legacy paths; idempotent on `(germanWord, level)`.
 - **Prevention Rule:** Any new corpus file must be wired into bootstrap, not only added to the bundle.
+
+### [2026-04-07] Flashcard answer checks vs umlauts and ß
+
+- **Feature/Area:** `FlashcardView` typed-answer validation, `GermanFlashcardAnswerNormalization`.
+- **Symptom/Error:** Learners typing ASCII substitutes (e.g. `Kase` for `Käse`) or `strasse` for `Straße` could be marked wrong when compared with naive lowercasing.
+- **Root Cause:** String comparison did not use German-aware folding or eszett normalization.
+- **Fix Applied:** Centralize normalization in `GermanFlashcardAnswerNormalization.normalized(_:)`: map **ß** / **ẞ** to `ss`, then `folding(options: .diacriticInsensitive, locale: de_DE)`, then lowercased; `FlashcardView` compares normalized input to normalized expected.
+- **Prevention Rule(s):**
+  - Never compare German learner input with raw `lowercased()` only; use shared `GermanFlashcardAnswerNormalization` (or equivalent) for flashcards and any future typed German checks.
+  - When adding new corpus fields that users type, add a regression test that covers ä/ö/ü and ß.
+- **Validation Evidence:** `FlashcardRegressionTests.testGermanAnswerNormalizationTreatsUmlautsAsEquivalent`, `testGermanAnswerNormalizationMapsEszettForComparison`; lobby A1 filter test `testLobbyA1SelectionFiltersToInitialDataA1CorpusOnly`.

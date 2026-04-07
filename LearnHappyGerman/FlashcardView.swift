@@ -115,15 +115,7 @@ struct FlashcardView: View {
                     .scaleEffect(checkPulse ? 1.02 : 1.0)
                     .disabled(validationState != .idle || currentWord == nil)
 
-                    feedbackView
-
-                    if validationState != .idle {
-                        Button("Next") {
-                            nextCard()
-                        }
-                        .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                    }
+                    feedbackAndNextColumn
                 }
                 .padding(24)
                 .background(
@@ -189,6 +181,23 @@ struct FlashcardView: View {
         reloadVocabulary()
     }
 
+    /// Grand Budapest: feedback + **Next** share a full-width centered column under the card stack.
+    private var feedbackAndNextColumn: some View {
+        VStack(spacing: 14) {
+            feedbackView
+            if validationState != .idle {
+                Button("Next") {
+                    nextCard()
+                }
+                .font(Theme.Typography.rounded(.subheadline, weight: .medium))
+                .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+
     @ViewBuilder
     private var feedbackView: some View {
         switch validationState {
@@ -199,19 +208,23 @@ struct FlashcardView: View {
                 .font(.system(size: 32, weight: .ultraLight))
                 .foregroundStyle(.green)
                 .scaleEffect(successScale)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .transition(.scale.combined(with: .opacity))
         case .incorrect(let expected):
             VStack(spacing: 8) {
                 Image(systemName: "bellhop.fill")
                     .font(.system(size: 30, weight: .ultraLight))
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .offset(x: shakeBellboy ? -6 : 6)
                     .animation(.easeInOut(duration: 0.08).repeatCount(5, autoreverses: true), value: shakeBellboy)
                 Text("Correct answer: \(expected)")
                     .font(Theme.Typography.rounded(.subheadline, weight: .medium))
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                     .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
+            .frame(maxWidth: .infinity, alignment: .center)
             .transition(.opacity)
         }
     }
@@ -220,8 +233,8 @@ struct FlashcardView: View {
         guard let card = currentWord else { return }
         guard validationState == .idle else { return }
 
-        let normalizedInput = normalized(userAnswer)
-        let expectedNormalized = normalized(expectedAnswer(for: card))
+        let normalizedInput = GermanFlashcardAnswerNormalization.normalized(userAnswer)
+        let expectedNormalized = GermanFlashcardAnswerNormalization.normalized(expectedAnswer(for: card))
 
         if normalizedInput == expectedNormalized {
             validationState = .correct
@@ -314,12 +327,6 @@ struct FlashcardView: View {
         }
     }
 
-    private func normalized(_ value: String) -> String {
-        value
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .folding(options: .diacriticInsensitive, locale: .current)
-            .lowercased()
-    }
 }
 
 private enum ValidationState: Equatable {

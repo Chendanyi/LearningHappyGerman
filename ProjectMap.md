@@ -2,7 +2,8 @@
 
 ## Root Files
 - `MainLobbyView.swift` - Lobby entrance UI with CEFR selector.
-- `FlashcardView.swift` - First classroom screen with answer validation and feedback animation.
+- `FlashcardView.swift` - First classroom screen with answer validation (shared German normalization), centered feedback/`Next` column, and feedback animation.
+- `GermanFlashcardAnswerNormalization.swift` - Typed-answer comparison helper (de_DE folding, ß→`ss`).
 - `Theme.swift` - Shared color, typography, symmetry, and icon styling utilities.
 - `VocabularyWord.swift` - SwiftData vocabulary model (UUID `id`, `version`, indexed `germanWord`/`level` strings, optional `article`, `category` string) and `CEFRLevel` for UI only.
 - `GrammarRule.swift` - Grammar rules (`title`, `explanation`, `level`, `exampleSentences`).
@@ -15,6 +16,7 @@
 - `VocabularyWordTests.swift` - Noun/article validity guard.
 - `VocabularyDataIntegrityTests.swift` - Seeded nouns + CEFR levels; seed-if-needed idempotency.
 - `VocabularySymmetryLayoutTests.swift` - Grand Budapest theme symmetry contract for vocabulary screens.
+- `FlashcardRegressionTests.swift` - A1 filter integration after `initial_data` merge; umlaut/ß normalization tests.
 - `NAVIGATION_ARCHITECTURE.md` - Planner navigation specification.
 - `AGENTS.md` - Persona loop and architecture guidelines.
 - `TODO.md` - Prioritized roadmap and feature checklists.

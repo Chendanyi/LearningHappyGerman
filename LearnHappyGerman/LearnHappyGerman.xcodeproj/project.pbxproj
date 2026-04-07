@@ -32,6 +32,10 @@
 		CF49D79B2F84EFCB0004A814 /* GrammarRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7982F84EFCB0004A814 /* GrammarRule.swift */; };
 		CF49D7A22F84EFD00004A820 /* VocabularyDataIntegrityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7A02F84EFD00004A820 /* VocabularyDataIntegrityTests.swift */; };
 		CF49D7A32F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7A12F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift */; };
+		CF49D7B42F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */; };
+		CF49D7B52F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */; };
+		CF49D7B62F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */; };
+		CF49D7B82F84EFE00004A830 /* FlashcardRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7B92F84EFE00004A830 /* FlashcardRegressionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +71,8 @@
 		CF49D7982F84EFCB0004A814 /* GrammarRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarRule.swift; sourceTree = "<group>"; };
 		CF49D7A02F84EFD00004A820 /* VocabularyDataIntegrityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyDataIntegrityTests.swift; sourceTree = "<group>"; };
 		CF49D7A12F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularySymmetryLayoutTests.swift; sourceTree = "<group>"; };
+		CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GermanFlashcardAnswerNormalization.swift; sourceTree = "<group>"; };
+		CF49D7B92F84EFE00004A830 /* FlashcardRegressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardRegressionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -123,6 +129,8 @@
 				CF49D7932F84EFC90004A814 /* SyncServiceTests.swift */,
 				CF49D7A02F84EFD00004A820 /* VocabularyDataIntegrityTests.swift */,
 				CF49D7A12F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift */,
+				CF49D7B92F84EFE00004A830 /* FlashcardRegressionTests.swift */,
+				CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */,
 				CF49D7812F84EFC50004A814 /* FlashcardView.swift */,
 				CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */,
 				CF49D7702F84EF9D0004A814 /* Theme.swift */,
@@ -303,6 +311,7 @@
 				CF49D7892F84EFC70004A814 /* LocalSeeder.swift in Sources */,
 				CF49D7902F84EFC90004A814 /* SyncService.swift in Sources */,
 				CF49D7802F84EFC50004A814 /* FlashcardView.swift in Sources */,
+				CF49D7B42F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +330,8 @@
 				CF49D7782F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
 				CF49D7792F84EF9E0004A814 /* DataSeeder.swift in Sources */,
 				CF49D7912F84EFC90004A814 /* SyncService.swift in Sources */,
+				CF49D7B52F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */,
+				CF49D7B82F84EFE00004A830 /* FlashcardRegressionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +346,7 @@
 				CF49D77D2F84EF9E0004A814 /* DataSeeder.swift in Sources */,
 				CF49D7922F84EFC90004A814 /* SyncService.swift in Sources */,
 				CF49D79B2F84EFCB0004A814 /* GrammarRule.swift in Sources */,
+				CF49D7B62F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

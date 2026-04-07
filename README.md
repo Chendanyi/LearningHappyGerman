@@ -3,6 +3,7 @@
 SwiftUI + SwiftData learning app structured around a lobby-and-classroom experience.
 
 ## What It Does
+
 - Shows a Main Entrance lobby (`MainLobbyView`) for CEFR level check-in (`A1` to `C2`).
 - Uses a symmetrical "Hotel Concierge Board" composition for level selection.
 - Routes the Hallway "Flashcards" door to `FlashcardView` as the first classroom.
@@ -14,8 +15,9 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
   - Runs `swiftlint` and `xcodebuild test` for the `LearnHappyGerman` scheme.
 
 ## Project Layout
+
 - `MainLobbyView.swift`: Main Entrance (Lobby) UI and level-selection interactions.
-- `FlashcardView.swift`: First classroom with `FetchDescriptor` vocabulary filtered by `AppState.currentLevel` (no `@Query`, to avoid macro temp-file tooling issues), Check (case-insensitive + article for noun-like rows), success sound/animation and `isMastered` on correct, LobbyBoyPurple wrong-answer hint, **Next** only after a check.
+- `FlashcardView.swift`: First classroom with `FetchDescriptor` vocabulary filtered by `AppState.currentLevel` (no `@Query`, to avoid macro temp-file tooling issues), Check using `GermanFlashcardAnswerNormalization` (German folding + ß→`ss` + lowercase; article rules for noun-like rows), success sound/animation and `isMastered` on correct, LobbyBoyPurple wrong-answer hint, centered feedback column and **Next** only after a check.
 - `Theme.swift`: App design tokens and layout/icon helpers.
 - `VocabularyWord.swift`: SwiftData vocabulary model (UUID, `version`, indexed `germanWord`/`level` strings) and `CEFRLevel` enum for UI routing only.
 - `GrammarRule.swift`: SwiftData grammar content (`title`, `explanation`, `level`, `exampleSentences`).
@@ -27,13 +29,16 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - `VocabularyWordTests.swift`: Evaluator guard test for noun/article validity.
 - `VocabularyDataIntegrityTests.swift`: Article + CEFR level invariants on seeded data; `DataSeeder.seedIfNeeded` idempotency (no duplicates on second run).
 - `VocabularySymmetryLayoutTests.swift`: Grand Budapest symmetric layout tokens + `Theme.VocabularyGrandBudapest` contract used by vocabulary UI.
+- `GermanFlashcardAnswerNormalization.swift`: Shared normalization for typed German answers (umlaut folding, eszett).
+- `FlashcardRegressionTests.swift`: A1 lobby filter vs `initial_data.json` after merge + umlaut/ß normalization regressions.
 - `SyncServiceTests.swift`: Remote merge test; updated gloss preserves `isMastered`.
 - `.swiftlint.yml`: strict lint configuration and custom style/symmetry checks.
-- `check_integrity.sh`: pipeline script (`swiftlint` + `swift test`) that fails fast on violations.
+- `check_integrity.sh`: pipeline script (`swiftlint` + `xcodebuild test` for the `LearnHappyGerman` scheme) that fails fast on violations.
 - `AGENTS.md` / `TODO.md` / `MEMORY.md`: Planner-Generator-Evaluator process docs.
 
 ## Troubleshooting
+
 - If `ModelContainer` fails to create after a SwiftData schema or relationship change, delete the app from the simulator or device once so the on-disk store can be recreated (development builds do not always migrate every intermediate schema).
 - **Black simulator screen:** Confirm the `LearnHappyGerman` scheme (not a test target) is running; open the **Debug area** (⇧⌘Y) and look for a crash or `fatalError`. Try **Simulator → Device → Erase All Content and Settings**, or quit and relaunch the Simulator app. The app attaches `modelContainer` to the root view and yields once before bundled import so the lobby can draw first.
 
-Last updated: 2026-04-07 (FlashcardView: `FetchDescriptor` instead of `@Query` to avoid macro temp-path tooling errors; SwiftLint excludes `swift-generated-sources`)
+Last updated: 2026-04-07 (Flashcard answer normalization + `FlashcardRegressionTests`; flashcard feedback/Next centered column)
