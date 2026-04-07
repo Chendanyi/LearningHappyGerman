@@ -126,3 +126,14 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
   - Bump versioned store filename when making breaking schema changes during development.
   - Avoid `#Index` until the model set is stable; enums and indexes interact badly (see composite index errors).
 - **Validation Evidence:** `xcodebuild` build succeeded; run on simulator and confirm console: no persistent error, or fallback message then app runs.
+
+### [2026-04-07] Bundled data ingestion (`LocalSeeder`)
+
+- **Feature/Area:** Data ingestion engine (`BundledData.json` → SwiftData).
+- **Symptom/Error:** N/A (baseline run after implementation).
+- **Observability:** Expected counts from bundled payload v1: **7 words**, **1 grammar rule** (see `LearnHappyGerman/LearnHappyGerman/BundledData.json`). After a successful run on device/simulator, the app appends the same figures (plus timestamp) to `Application Support/.../MEMORY_ingestion_appendix.md` (copy that block here if it differs).
+- **Human Takeover:** Shown when `BundledData.json` is missing, invalid JSON, validation fails (e.g. noun without article, missing `relatedGermanWord`), or save fails.
+- **Prevention Rule(s):**
+  - Keep `BundledData.json` valid JSON; match `article` / `level` / `category` raw strings to `VocabularyWord` enums.
+  - For rules, `relatedGermanWord` must match a `germanWord` from the same file.
+- **Validation Evidence:** `xcodebuild` build succeeded; run app once with fresh install and confirm lobby + flashcards; check console for `IngestionAudit:` path.

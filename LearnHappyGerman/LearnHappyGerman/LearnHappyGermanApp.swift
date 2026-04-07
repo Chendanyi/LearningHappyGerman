@@ -21,17 +21,64 @@ struct LearnHappyGermanApp: App {
         WindowGroup {
             MainLobbyView()
                 .environmentObject(appState)
+                // Attach the container to the root view so SwiftData’s environment reaches all screens
+                // (Scene-only attachment can contribute to a blank first frame in some setups).
+                .modelContainer(sharedModelContainer)
                 .task {
                     guard !hasSeeded else { return }
                     hasSeeded = true
-                    seedVocabularyIfNeeded()
+                    // Let the first frame paint before SwiftData import work runs on the main actor.
+                    await Task.yield()
+                    await runInitialBootstrap()
                 }
         }
-        .modelContainer(sharedModelContainer)
     }
 
-    private func seedVocabularyIfNeeded() {
+    @MainActor
+    private func runInitialBootstrap() async {
         let context = ModelContext(sharedModelContainer)
+        let importKey = LocalSeeder.importCompletedDefaultsKey
+
+        if UserDefaults.standard.bool(forKey: importKey) {
+            seedFallbackIfEmpty(context: context)
+            return
+        }
+
+        let existingWords = (try? context.fetchCount(FetchDescriptor<VocabularyWord>())) ?? 0
+        if existingWords > 0 {
+            UserDefaults.standard.set(true, forKey: importKey)
+            try? IngestionAuditLogger.appendLegacyStoreLog(existingWordCount: existingWords)
+            seedFallbackIfEmpty(context: context)
+            return
+        }
+
+        let seeder = LocalSeeder(context: context)
+        do {
+            let result = try seeder.importFromBundle()
+            UserDefaults.standard.set(true, forKey: importKey)
+            do {
+                try IngestionAuditLogger.appendIngestionLog(
+                    wordCount: result.wordCount,
+                    ruleCount: result.ruleCount,
+                    bundleVersion: result.bundleVersion
+                )
+            } catch {
+                print("Ingestion audit log failed (non-fatal): \(error)")
+            }
+        } catch {
+            let message = (error as? LocalizedError)?.errorDescription ?? String(describing: error)
+            appState.humanTakeoverMessage = """
+            Bundled data import failed. \(message)
+
+            Fix BundledData.json, reset the app, or reinstall. Developer: copy MEMORY_ingestion_appendix.md from the app container when import succeeds.
+            """
+            return
+        }
+
+        seedFallbackIfEmpty(context: context)
+    }
+
+    private func seedFallbackIfEmpty(context: ModelContext) {
         let seeder = DataSeeder(context: context)
         do {
             try seeder.seedIfNeeded(records: DataSeeder.starterVocabulary)

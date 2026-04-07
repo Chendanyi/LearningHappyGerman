@@ -7,7 +7,9 @@
 - `VocabularyWord.swift` - SwiftData vocabulary model (version field) and related enums.
 - `GrammarRule.swift` - Grammar explanations, examples, and rules; optional link to a `VocabularyWord`.
 - `HYBRID_DATA_ARCHITECTURE.md` - Planner notes on vocabulary + grammar SwiftData layout.
-- `DataSeeder.swift` - Seed pipeline for CEFR A1-C2 data imports.
+- `DataSeeder.swift` - Seed pipeline for CEFR A1-C2 data imports (fallback when bundled import did not populate the store).
+- `LocalSeeder.swift` - First-launch ingestion from `BundledData.json`; audit log for `MEMORY.md`.
+- `BundledData.json` (under `LearnHappyGerman/LearnHappyGerman/`) - Bundled vocabulary and grammar rules JSON.
 - `VocabularyWordTests.swift` - Test coverage for noun/article validation rule.
 - `NAVIGATION_ARCHITECTURE.md` - Planner navigation specification.
 - `AGENTS.md` - Persona loop and architecture guidelines.
