@@ -21,8 +21,10 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - `GrammarRule.swift`: SwiftData grammar content (explanations, examples, rules) with optional link to a vocabulary word.
 - `DataSeeder.swift`: A1-C2 import and seed-if-needed logic (fallback when bundled import did not fill the store).
 - `LocalSeeder.swift`: Loads `BundledData.json` on first launch and writes ingestion audit lines for `MEMORY.md`.
+- `SyncService.swift`: Placeholder remote JSON fetch + merge into SwiftData (dedupe by word + level; preserves `isMastered`). See `SyncServiceTests`.
 - `BundledData.json`: Static corpus (vocabulary + optional grammar rules) shipped in the app bundle.
 - `VocabularyWordTests.swift`: Evaluator guard test for noun/article validity.
+- `SyncServiceTests.swift`: Remote merge test; updated gloss preserves `isMastered`.
 - `.swiftlint.yml`: strict lint configuration and custom style/symmetry checks.
 - `check_integrity.sh`: pipeline script (`swiftlint` + `swift test`) that fails fast on violations.
 - `AGENTS.md` / `TODO.md` / `MEMORY.md`: Planner-Generator-Evaluator process docs.
@@ -31,4 +33,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - If `ModelContainer` fails to create after a SwiftData schema or relationship change, delete the app from the simulator or device once so the on-disk store can be recreated (development builds do not always migrate every intermediate schema).
 - **Black simulator screen:** Confirm the `LearnHappyGerman` scheme (not a test target) is running; open the **Debug area** (⇧⌘Y) and look for a crash or `fatalError`. Try **Simulator → Device → Erase All Content and Settings**, or quit and relaunch the Simulator app. The app attaches `modelContainer` to the root view and yields once before bundled import so the lobby can draw first.
 
-Last updated: 2026-04-07 (SwiftData `modelContainer` on root view; first-frame yield before ingestion)
+Last updated: 2026-04-07 (SyncService merge placeholder + SyncServiceTests remote-update mastery check)

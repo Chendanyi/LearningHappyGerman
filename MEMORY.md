@@ -137,3 +137,9 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
   - Keep `BundledData.json` valid JSON; match `article` / `level` / `category` raw strings to `VocabularyWord` enums.
   - For rules, `relatedGermanWord` must match a `germanWord` from the same file.
 - **Validation Evidence:** `xcodebuild` build succeeded; run app once with fresh install and confirm lobby + flashcards; check console for `IngestionAudit:` path.
+
+### [2026-04-07] SyncService remote merge + evaluator test
+
+- **Feature/Area:** `SyncService` placeholder (`SyncService.swift`, `SyncServiceTests.swift`).
+- **Behavior:** Merge key `(germanWord, level)`; remote updates change editorial fields; `isMastered` preserved on update.
+- **Validation Evidence:** `LearnHappyGermanTests` / `SyncServiceTests.testRemoteUpdatePreservesIsMastered` passes.

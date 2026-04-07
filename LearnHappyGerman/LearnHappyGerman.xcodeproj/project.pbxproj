@@ -24,8 +24,12 @@
 		CF49D7822F84EFD60004A814 /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7812F84EFC50004A814 /* FlashcardView.swift */; };
 		CF49D7832F84EFD60004A814 /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7812F84EFC50004A814 /* FlashcardView.swift */; };
 		CF49D7892F84EFC70004A814 /* LocalSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7882F84EFC70004A814 /* LocalSeeder.swift */; };
-		CF49D78A2F84EFC70004A814 /* LocalSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7882F84EFC70004A814 /* LocalSeeder.swift */; };
-		CF49D78B2F84EFC70004A814 /* LocalSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7882F84EFC70004A814 /* LocalSeeder.swift */; };
+		CF49D7902F84EFC90004A814 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D78F2F84EFC90004A814 /* SyncService.swift */; };
+		CF49D7912F84EFC90004A814 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D78F2F84EFC90004A814 /* SyncService.swift */; };
+		CF49D7922F84EFC90004A814 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D78F2F84EFC90004A814 /* SyncService.swift */; };
+		CF49D7942F84EFC90004A814 /* SyncServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7932F84EFC90004A814 /* SyncServiceTests.swift */; };
+		CF49D79A2F84EFCB0004A814 /* GrammarRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7982F84EFCB0004A814 /* GrammarRule.swift */; };
+		CF49D79B2F84EFCB0004A814 /* GrammarRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7982F84EFCB0004A814 /* GrammarRule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +60,9 @@
 		CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWordTests.swift; sourceTree = "<group>"; };
 		CF49D7812F84EFC50004A814 /* FlashcardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardView.swift; sourceTree = "<group>"; };
 		CF49D7882F84EFC70004A814 /* LocalSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSeeder.swift; sourceTree = "<group>"; };
+		CF49D78F2F84EFC90004A814 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		CF49D7932F84EFC90004A814 /* SyncServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncServiceTests.swift; sourceTree = "<group>"; };
+		CF49D7982F84EFCB0004A814 /* GrammarRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarRule.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -101,12 +108,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF49D7992F84EFCB0004A814 /* LearnHappyGerman */ = {
+			isa = PBXGroup;
+			children = (
+				CF49D7982F84EFCB0004A814 /* GrammarRule.swift */,
+			);
+			path = LearnHappyGerman;
+			sourceTree = "<group>";
+		};
 		CF49D7362F84EEBB0004A814 = {
 			isa = PBXGroup;
 			children = (
+				CF49D7992F84EFCB0004A814 /* LearnHappyGerman */,
 				CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */,
 				CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */,
 				CF49D7882F84EFC70004A814 /* LocalSeeder.swift */,
+				CF49D78F2F84EFC90004A814 /* SyncService.swift */,
+				CF49D7932F84EFC90004A814 /* SyncServiceTests.swift */,
 				CF49D7812F84EFC50004A814 /* FlashcardView.swift */,
 				CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */,
 				CF49D7702F84EF9D0004A814 /* Theme.swift */,
@@ -277,6 +295,7 @@
 				CF49D7742F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
 				CF49D7752F84EF9E0004A814 /* DataSeeder.swift in Sources */,
 				CF49D7892F84EFC70004A814 /* LocalSeeder.swift in Sources */,
+				CF49D7902F84EFC90004A814 /* SyncService.swift in Sources */,
 				CF49D7802F84EFC50004A814 /* FlashcardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,9 +308,11 @@
 				CF49D7762F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
 				CF49D7772F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */,
+				CF49D7942F84EFC90004A814 /* SyncServiceTests.swift in Sources */,
+				CF49D79A2F84EFCB0004A814 /* GrammarRule.swift in Sources */,
 				CF49D7782F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
 				CF49D7792F84EF9E0004A814 /* DataSeeder.swift in Sources */,
-				CF49D78A2F84EFC70004A814 /* LocalSeeder.swift in Sources */,
+				CF49D7912F84EFC90004A814 /* SyncService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +325,8 @@
 				CF49D77B2F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77C2F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
 				CF49D77D2F84EF9E0004A814 /* DataSeeder.swift in Sources */,
-				CF49D78B2F84EFC70004A814 /* LocalSeeder.swift in Sources */,
+				CF49D7922F84EFC90004A814 /* SyncService.swift in Sources */,
+				CF49D79B2F84EFCB0004A814 /* GrammarRule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

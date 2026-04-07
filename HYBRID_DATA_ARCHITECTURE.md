@@ -15,6 +15,12 @@ The app uses a single SwiftData store with two complementary model families:
 - **Relationship:** Optional `relatedWord` on `GrammarRule` uses `@Relationship(inverse: \VocabularyWord.grammarRules)`; `VocabularyWord.grammarRules` uses `@Relationship(deleteRule: .cascade)`.
 - **Optional level on rules:** Persist `applicableLevelCode: String?` (not `CEFRLevel?`) to avoid optional-enum persistence issues; use `GrammarRule.applicableLevel` for `CEFRLevel?` access when needed.
 
+## Remote sync placeholder (`SyncService`)
+
+- **Contract:** `RemoteVocabularyPayload` / `RemoteWordDTO` (no `isMastered` in JSON — server must not own user progress).
+- **Merge key:** `germanWord` + `CEFRLevel` (see `SyncService.stableKey`). Updates refresh article, gloss, category, and `version`; **never** overwrites `isMastered` on existing rows.
+- **Fetch:** `fetchRemotePayload(from:)` uses `URLSession` (wire authentication and ETags later).
+
 ## Bundled ingestion (`LocalSeeder`)
 
 - **Source:** `BundledData.json` in the app target (copied with the bundle).

@@ -10,6 +10,7 @@
 - `DataSeeder.swift` - Seed pipeline for CEFR A1-C2 data imports (fallback when bundled import did not populate the store).
 - `LocalSeeder.swift` - First-launch ingestion from `BundledData.json`; audit log for `MEMORY.md`.
 - `BundledData.json` (under `LearnHappyGerman/LearnHappyGerman/`) - Bundled vocabulary and grammar rules JSON.
+- `SyncService.swift` - Remote JSON merge placeholder; `SyncServiceTests.swift` - remote update preserves mastery.
 - `VocabularyWordTests.swift` - Test coverage for noun/article validation rule.
 - `NAVIGATION_ARCHITECTURE.md` - Planner navigation specification.
 - `AGENTS.md` - Persona loop and architecture guidelines.
