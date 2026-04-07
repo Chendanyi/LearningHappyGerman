@@ -6,6 +6,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - Shows a Main Entrance lobby (`MainLobbyView`) for CEFR level check-in (`A1` to `C2`).
 - Uses a symmetrical "Hotel Concierge Board" composition for level selection.
 - Routes the Hallway "Flashcards" door to `FlashcardView` as the first classroom.
+- Seeds starter CEFR vocabulary (`A1` to `C2`) on first launch if the local store is empty.
 - Applies shared design tokens from `Theme.swift` (palette, typography, symmetry, icon style).
 
 ## Project Layout

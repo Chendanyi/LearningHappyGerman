@@ -11,6 +11,7 @@ import SwiftData
 @main
 struct LearnHappyGermanApp: App {
     @StateObject private var appState = AppState()
+    @State private var hasSeeded = false
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -30,7 +31,22 @@ struct LearnHappyGermanApp: App {
         WindowGroup {
             MainLobbyView()
                 .environmentObject(appState)
+                .task {
+                    guard !hasSeeded else { return }
+                    hasSeeded = true
+                    seedVocabularyIfNeeded()
+                }
         }
         .modelContainer(sharedModelContainer)
+    }
+
+    private func seedVocabularyIfNeeded() {
+        let context = ModelContext(sharedModelContainer)
+        let seeder = DataSeeder(context: context)
+        do {
+            try seeder.seedIfNeeded(records: DataSeeder.starterVocabulary)
+        } catch {
+            print("Vocabulary seed failed: \(error)")
+        }
     }
 }

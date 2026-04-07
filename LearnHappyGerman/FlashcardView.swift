@@ -1,23 +1,19 @@
 import SwiftUI
+import SwiftData
 
 struct FlashcardView: View {
     @EnvironmentObject private var appState: AppState
-    @State private var currentIndex = 0
+    @Environment(\.modelContext) private var modelContext
+    @State private var vocabularyWords: [VocabularyWord] = []
+    @State private var currentWord: VocabularyWord?
     @State private var showSymbolSide = false
     @State private var userAnswer = ""
     @State private var validationState: ValidationState = .idle
     @State private var checkPulse = false
     @State private var shakeBellboy = false
+    @State private var hasAttemptedFallbackSeed = false
 
-    private let cards: [FlashcardItem] = [
-        .init(englishWord: "apple", symbol: "apple.logo", germanWord: "Apfel", article: .der, category: .noun),
-        .init(englishWord: "station", symbol: "tram", germanWord: "Bahnhof", article: .der, category: .noun),
-        .init(englishWord: "to learn", symbol: "book.closed", germanWord: "lernen", article: .none, category: .verb)
-    ]
-
-    private var card: FlashcardItem {
-        cards[currentIndex % cards.count]
-    }
+    let level: CEFRLevel?
 
     var body: some View {
         ZStack {
@@ -32,35 +28,46 @@ struct FlashcardView: View {
                     .font(Theme.Typography.rounded(.subheadline, weight: .medium))
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
 
-                Button {
-                    withAnimation(.easeInOut(duration: 0.4)) {
-                        showSymbolSide.toggle()
-                    }
-                } label: {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 24, style: .continuous)
-                            .fill(Theme.Colors.societyBlue)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                    .stroke(Theme.Colors.lobbyBoyPurple, lineWidth: 6)
-                            )
-
-                        if showSymbolSide {
-                            Image(systemName: card.symbol)
-                                .font(.system(size: 60, weight: .ultraLight))
-                                .doodleSymbolStyle()
-                                .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                                .transition(.opacity.combined(with: .scale))
-                        } else {
-                            Text(card.englishWord.capitalized)
-                                .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
-                                .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                                .transition(.opacity)
+                if let card = currentWord {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            showSymbolSide.toggle()
                         }
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                .fill(Theme.Colors.societyBlue)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                        .stroke(Theme.Colors.lobbyBoyPurple, lineWidth: 6)
+                                )
+
+                            if showSymbolSide {
+                                Image(systemName: symbol(for: card))
+                                    .font(.system(size: 60, weight: .ultraLight))
+                                    .doodleSymbolStyle()
+                                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                    .transition(.opacity.combined(with: .scale))
+                            } else {
+                                Text(card.englishTranslation.capitalized)
+                                    .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
+                                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                    .transition(.opacity)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 260)
                     }
-                    .frame(maxWidth: .infinity, minHeight: 260)
+                    .buttonStyle(.plain)
+                } else {
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(Theme.Colors.societyBlue.opacity(0.45))
+                        .overlay(
+                            Text("No vocabulary for selected level")
+                                .font(Theme.Typography.rounded(.headline, weight: .medium))
+                                .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                        )
+                        .frame(maxWidth: .infinity, minHeight: 260)
                 }
-                .buttonStyle(.plain)
 
                 TextField("Type German answer (e.g., der Apfel)", text: $userAnswer)
                     .font(Theme.Typography.rounded(.body, weight: .medium))
@@ -103,12 +110,7 @@ struct FlashcardView: View {
                 feedbackView
 
                 Button("Next Card") {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        currentIndex += 1
-                        showSymbolSide = false
-                        validationState = .idle
-                        userAnswer = ""
-                    }
+                    nextCard()
                 }
                 .font(Theme.Typography.rounded(.subheadline, weight: .medium))
                 .foregroundStyle(Theme.Colors.lobbyBoyPurple)
@@ -126,6 +128,45 @@ struct FlashcardView: View {
         }
         .navigationTitle("Flashcards")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            reloadVocabulary()
+            ensureVocabularyAvailability()
+            if currentWord == nil {
+                nextCard()
+            }
+        }
+        .onChange(of: appState.currentLevel) {
+            reloadVocabulary()
+            ensureVocabularyAvailability()
+            nextCard()
+        }
+    }
+
+    private func ensureVocabularyAvailability() {
+        guard !hasAttemptedFallbackSeed, vocabularyWords.isEmpty else { return }
+        hasAttemptedFallbackSeed = true
+        let seeder = DataSeeder(context: modelContext)
+        do {
+            try seeder.seedIfNeeded(records: DataSeeder.starterVocabulary)
+        } catch {
+            print("Flashcard fallback seed failed: \(error)")
+        }
+        reloadVocabulary()
+    }
+
+    private func reloadVocabulary() {
+        let targetLevel = appState.currentLevel ?? level
+        do {
+            let allWords = try modelContext.fetch(FetchDescriptor<VocabularyWord>())
+            if let targetLevel {
+                vocabularyWords = allWords.filter { $0.level == targetLevel }
+            } else {
+                vocabularyWords = allWords
+            }
+        } catch {
+            print("Vocabulary fetch failed: \(error)")
+            vocabularyWords = []
+        }
     }
 
     @ViewBuilder
@@ -154,8 +195,9 @@ struct FlashcardView: View {
     }
 
     private func validateAnswer() {
+        guard let card = currentWord else { return }
         let normalizedInput = normalized(userAnswer)
-        let expected = normalized(card.expectedAnswer)
+        let expected = normalized(expectedAnswer(for: card))
 
         if normalizedInput == expected {
             validationState = .correct
@@ -164,11 +206,45 @@ struct FlashcardView: View {
 
         // Noun constraint: article is mandatory.
         if card.category == .noun, !normalizedInput.hasPrefix("der "), !normalizedInput.hasPrefix("die "), !normalizedInput.hasPrefix("das ") {
-            validationState = .incorrect(expected: card.expectedAnswer)
+            validationState = .incorrect(expected: expectedAnswer(for: card))
         } else {
-            validationState = .incorrect(expected: card.expectedAnswer)
+            validationState = .incorrect(expected: expectedAnswer(for: card))
         }
         shakeBellboy.toggle()
+    }
+
+    private func nextCard() {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            guard !vocabularyWords.isEmpty else {
+                currentWord = nil
+                validationState = .idle
+                showSymbolSide = false
+                userAnswer = ""
+                return
+            }
+
+            let candidates = vocabularyWords.filter { $0.persistentModelID != currentWord?.persistentModelID }
+            currentWord = (candidates.isEmpty ? vocabularyWords : candidates).randomElement()
+            showSymbolSide = false
+            validationState = .idle
+            userAnswer = ""
+        }
+    }
+
+    private func expectedAnswer(for word: VocabularyWord) -> String {
+        word.category == .noun && word.article != .none ? "\(word.article.rawValue) \(word.germanWord)" : word.germanWord
+    }
+
+    private func symbol(for word: VocabularyWord) -> String {
+        switch word.category {
+        case .noun: return "tag"
+        case .verb: return "figure.walk"
+        case .adjective: return "paintpalette"
+        case .adverb: return "speedometer"
+        case .phrase: return "text.quote"
+        case .expression: return "ellipsis.bubble"
+        case .other: return "sparkles"
+        }
     }
 
     private func normalized(_ value: String) -> String {
@@ -176,18 +252,6 @@ struct FlashcardView: View {
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .folding(options: .diacriticInsensitive, locale: .current)
             .lowercased()
-    }
-}
-
-private struct FlashcardItem {
-    let englishWord: String
-    let symbol: String
-    let germanWord: String
-    let article: GermanArticle
-    let category: WordCategory
-
-    var expectedAnswer: String {
-        category == .noun && article != .none ? "\(article.rawValue) \(germanWord)" : germanWord
     }
 }
 
@@ -199,7 +263,7 @@ private enum ValidationState: Equatable {
 
 #Preview {
     NavigationStack {
-        FlashcardView()
+        FlashcardView(level: .a1)
             .environmentObject(AppState())
     }
 }
