@@ -97,7 +97,7 @@ struct ClassroomHallwayView: View {
 
                 ForEach(classroomDoors, id: \.self) { door in
                     NavigationLink {
-                        ClassroomPlaceholderView(door: door)
+                        classroomDestination(for: door, level: appState.currentLevel)
                     } label: {
                         HStack(spacing: 10) {
                             Image(systemName: "door.left.hand.open")
@@ -149,6 +149,16 @@ enum ClassroomDoor: String, CaseIterable, Hashable {
     case hangman = "Hangman"
 
     var title: String { rawValue }
+}
+
+@ViewBuilder
+private func classroomDestination(for door: ClassroomDoor, level: CEFRLevel?) -> some View {
+    switch door {
+    case .flashcards:
+        FlashcardView(level: level)
+    default:
+        ClassroomPlaceholderView(door: door)
+    }
 }
 
 struct ClassroomPlaceholderView: View {

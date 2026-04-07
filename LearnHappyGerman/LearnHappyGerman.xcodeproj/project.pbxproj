@@ -20,6 +20,7 @@
 		CF49D77C2F84EF9E0004A814 /* VocabularyWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */; };
 		CF49D77D2F84EF9E0004A814 /* DataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */; };
 		CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */; };
+		CF49D7802F84EFC50004A814 /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7812F84EFC50004A814 /* FlashcardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		CF49D7702F84EF9D0004A814 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWord.swift; sourceTree = "<group>"; };
 		CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWordTests.swift; sourceTree = "<group>"; };
+		CF49D7812F84EFC50004A814 /* FlashcardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -98,6 +100,7 @@
 			children = (
 				CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */,
 				CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */,
+				CF49D7812F84EFC50004A814 /* FlashcardView.swift */,
 				CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */,
 				CF49D7702F84EF9D0004A814 /* Theme.swift */,
 				CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */,
@@ -266,6 +269,7 @@
 				CF49D7732F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D7742F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
 				CF49D7752F84EF9E0004A814 /* DataSeeder.swift in Sources */,
+				CF49D7802F84EFC50004A814 /* FlashcardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
