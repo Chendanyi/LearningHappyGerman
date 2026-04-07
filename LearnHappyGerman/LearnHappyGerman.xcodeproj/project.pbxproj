@@ -1,0 +1,596 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CF49D7722F84EF9E0004A814 /* MainLobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */; };
+		CF49D7732F84EF9E0004A814 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7702F84EF9D0004A814 /* Theme.swift */; };
+		CF49D7742F84EF9E0004A814 /* VocabularyWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */; };
+		CF49D7752F84EF9E0004A814 /* DataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */; };
+		CF49D7762F84EF9E0004A814 /* MainLobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */; };
+		CF49D7772F84EF9E0004A814 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7702F84EF9D0004A814 /* Theme.swift */; };
+		CF49D7782F84EF9E0004A814 /* VocabularyWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */; };
+		CF49D7792F84EF9E0004A814 /* DataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */; };
+		CF49D77A2F84EF9E0004A814 /* MainLobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */; };
+		CF49D77B2F84EF9E0004A814 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7702F84EF9D0004A814 /* Theme.swift */; };
+		CF49D77C2F84EF9E0004A814 /* VocabularyWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */; };
+		CF49D77D2F84EF9E0004A814 /* DataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */; };
+		CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CF49D7522F84EEBD0004A814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF49D7372F84EEBB0004A814 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CF49D73E2F84EEBB0004A814;
+			remoteInfo = LearnHappyGerman;
+		};
+		CF49D75C2F84EEBD0004A814 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF49D7372F84EEBB0004A814 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CF49D73E2F84EEBB0004A814;
+			remoteInfo = LearnHappyGerman;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CF49D73F2F84EEBB0004A814 /* LearnHappyGerman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearnHappyGerman.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF49D7512F84EEBD0004A814 /* LearnHappyGermanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnHappyGermanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF49D75B2F84EEBD0004A814 /* LearnHappyGermanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnHappyGermanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSeeder.swift; sourceTree = "<group>"; };
+		CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLobbyView.swift; sourceTree = "<group>"; };
+		CF49D7702F84EF9D0004A814 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWord.swift; sourceTree = "<group>"; };
+		CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWordTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CF49D7412F84EEBB0004A814 /* LearnHappyGerman */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LearnHappyGerman;
+			sourceTree = "<group>";
+		};
+		CF49D7542F84EEBD0004A814 /* LearnHappyGermanTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LearnHappyGermanTests;
+			sourceTree = "<group>";
+		};
+		CF49D75E2F84EEBD0004A814 /* LearnHappyGermanUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LearnHappyGermanUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CF49D73C2F84EEBB0004A814 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF49D74E2F84EEBD0004A814 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF49D7582F84EEBD0004A814 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CF49D7362F84EEBB0004A814 = {
+			isa = PBXGroup;
+			children = (
+				CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */,
+				CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */,
+				CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */,
+				CF49D7702F84EF9D0004A814 /* Theme.swift */,
+				CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */,
+				CF49D7412F84EEBB0004A814 /* LearnHappyGerman */,
+				CF49D7542F84EEBD0004A814 /* LearnHappyGermanTests */,
+				CF49D75E2F84EEBD0004A814 /* LearnHappyGermanUITests */,
+				CF49D7402F84EEBB0004A814 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CF49D7402F84EEBB0004A814 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF49D73F2F84EEBB0004A814 /* LearnHappyGerman.app */,
+				CF49D7512F84EEBD0004A814 /* LearnHappyGermanTests.xctest */,
+				CF49D75B2F84EEBD0004A814 /* LearnHappyGermanUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CF49D73E2F84EEBB0004A814 /* LearnHappyGerman */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF49D7652F84EEBD0004A814 /* Build configuration list for PBXNativeTarget "LearnHappyGerman" */;
+			buildPhases = (
+				CF49D73B2F84EEBB0004A814 /* Sources */,
+				CF49D73C2F84EEBB0004A814 /* Frameworks */,
+				CF49D73D2F84EEBB0004A814 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CF49D7412F84EEBB0004A814 /* LearnHappyGerman */,
+			);
+			name = LearnHappyGerman;
+			packageProductDependencies = (
+			);
+			productName = LearnHappyGerman;
+			productReference = CF49D73F2F84EEBB0004A814 /* LearnHappyGerman.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CF49D7502F84EEBD0004A814 /* LearnHappyGermanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF49D7682F84EEBD0004A814 /* Build configuration list for PBXNativeTarget "LearnHappyGermanTests" */;
+			buildPhases = (
+				CF49D74D2F84EEBD0004A814 /* Sources */,
+				CF49D74E2F84EEBD0004A814 /* Frameworks */,
+				CF49D74F2F84EEBD0004A814 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CF49D7532F84EEBD0004A814 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CF49D7542F84EEBD0004A814 /* LearnHappyGermanTests */,
+			);
+			name = LearnHappyGermanTests;
+			packageProductDependencies = (
+			);
+			productName = LearnHappyGermanTests;
+			productReference = CF49D7512F84EEBD0004A814 /* LearnHappyGermanTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CF49D75A2F84EEBD0004A814 /* LearnHappyGermanUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF49D76B2F84EEBD0004A814 /* Build configuration list for PBXNativeTarget "LearnHappyGermanUITests" */;
+			buildPhases = (
+				CF49D7572F84EEBD0004A814 /* Sources */,
+				CF49D7582F84EEBD0004A814 /* Frameworks */,
+				CF49D7592F84EEBD0004A814 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CF49D75D2F84EEBD0004A814 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CF49D75E2F84EEBD0004A814 /* LearnHappyGermanUITests */,
+			);
+			name = LearnHappyGermanUITests;
+			packageProductDependencies = (
+			);
+			productName = LearnHappyGermanUITests;
+			productReference = CF49D75B2F84EEBD0004A814 /* LearnHappyGermanUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CF49D7372F84EEBB0004A814 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					CF49D73E2F84EEBB0004A814 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					CF49D7502F84EEBD0004A814 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = CF49D73E2F84EEBB0004A814;
+					};
+					CF49D75A2F84EEBD0004A814 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = CF49D73E2F84EEBB0004A814;
+					};
+				};
+			};
+			buildConfigurationList = CF49D73A2F84EEBB0004A814 /* Build configuration list for PBXProject "LearnHappyGerman" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF49D7362F84EEBB0004A814;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = CF49D7402F84EEBB0004A814 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CF49D73E2F84EEBB0004A814 /* LearnHappyGerman */,
+				CF49D7502F84EEBD0004A814 /* LearnHappyGermanTests */,
+				CF49D75A2F84EEBD0004A814 /* LearnHappyGermanUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CF49D73D2F84EEBB0004A814 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF49D74F2F84EEBD0004A814 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF49D7592F84EEBD0004A814 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CF49D73B2F84EEBB0004A814 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF49D7722F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
+				CF49D7732F84EF9E0004A814 /* Theme.swift in Sources */,
+				CF49D7742F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
+				CF49D7752F84EF9E0004A814 /* DataSeeder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF49D74D2F84EEBD0004A814 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF49D7762F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
+				CF49D7772F84EF9E0004A814 /* Theme.swift in Sources */,
+				CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */,
+				CF49D7782F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
+				CF49D7792F84EF9E0004A814 /* DataSeeder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF49D7572F84EEBD0004A814 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF49D77A2F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
+				CF49D77B2F84EF9E0004A814 /* Theme.swift in Sources */,
+				CF49D77C2F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
+				CF49D77D2F84EF9E0004A814 /* DataSeeder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CF49D7532F84EEBD0004A814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CF49D73E2F84EEBB0004A814 /* LearnHappyGerman */;
+			targetProxy = CF49D7522F84EEBD0004A814 /* PBXContainerItemProxy */;
+		};
+		CF49D75D2F84EEBD0004A814 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CF49D73E2F84EEBB0004A814 /* LearnHappyGerman */;
+			targetProxy = CF49D75C2F84EEBD0004A814 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CF49D7632F84EEBD0004A814 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CF49D7642F84EEBD0004A814 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CF49D7662F84EEBD0004A814 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LearnHappyGerman/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ddblue.LearnHappyGerman;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CF49D7672F84EEBD0004A814 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LearnHappyGerman/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ddblue.LearnHappyGerman;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CF49D7692F84EEBD0004A814 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ddblue.LearnHappyGermanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LearnHappyGerman.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LearnHappyGerman";
+			};
+			name = Debug;
+		};
+		CF49D76A2F84EEBD0004A814 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ddblue.LearnHappyGermanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LearnHappyGerman.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LearnHappyGerman";
+			};
+			name = Release;
+		};
+		CF49D76C2F84EEBD0004A814 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ddblue.LearnHappyGermanUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LearnHappyGerman;
+			};
+			name = Debug;
+		};
+		CF49D76D2F84EEBD0004A814 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ddblue.LearnHappyGermanUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LearnHappyGerman;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CF49D73A2F84EEBB0004A814 /* Build configuration list for PBXProject "LearnHappyGerman" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF49D7632F84EEBD0004A814 /* Debug */,
+				CF49D7642F84EEBD0004A814 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF49D7652F84EEBD0004A814 /* Build configuration list for PBXNativeTarget "LearnHappyGerman" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF49D7662F84EEBD0004A814 /* Debug */,
+				CF49D7672F84EEBD0004A814 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF49D7682F84EEBD0004A814 /* Build configuration list for PBXNativeTarget "LearnHappyGermanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF49D7692F84EEBD0004A814 /* Debug */,
+				CF49D76A2F84EEBD0004A814 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF49D76B2F84EEBD0004A814 /* Build configuration list for PBXNativeTarget "LearnHappyGermanUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF49D76C2F84EEBD0004A814 /* Debug */,
+				CF49D76D2F84EEBD0004A814 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CF49D7372F84EEBB0004A814 /* Project object */;
+}
