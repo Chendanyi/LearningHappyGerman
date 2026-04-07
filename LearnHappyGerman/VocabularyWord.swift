@@ -74,9 +74,19 @@ final class VocabularyWord {
 }
 
 extension VocabularyWord {
-    /// Noun rows must carry der/die/das (not `none` / empty).
+    /// POS buckets that do not take a definite article in the stored lemma (verbs, etc.).
+    static let categoriesWithoutArticle: Set<String> = [
+        "verb", "adjective", "adverb", "phrase", "expression", "other"
+    ]
+
+    /// Words that take **der/die/das** in German (nouns and thematic buckets like “Daily Life”, “Travel”).
+    var requiresGermanArticle: Bool {
+        !Self.categoriesWithoutArticle.contains(category.lowercased())
+    }
+
+    /// Rows that need an article must carry der/die/das (not `none` / empty).
     var hasValidArticleForNoun: Bool {
-        guard category.caseInsensitiveCompare("Noun") == .orderedSame else { return true }
+        guard requiresGermanArticle else { return true }
         guard let art = normalizedArticle else { return false }
         return art == "der" || art == "die" || art == "das"
     }

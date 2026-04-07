@@ -80,4 +80,85 @@ final class VocabularyDataIntegrityTests: XCTestCase {
         XCTAssertEqual(keysFirst.count, keysSecond.count)
         XCTAssertEqual(keysFirst, keysSecond, "Stable (germanWord, level) keys must not change after second seed pass.")
     }
+
+    // MARK: - initial_data.json (A1 corpus in app bundle)
+
+    func testInitialDataJSONPassesArticleAndLevelIntegrity() throws {
+        let bundle = try XCTUnwrap(
+            Self.bundleContainingInitialDataJSON(),
+            "initial_data.json must be in the app target bundle (Copy Bundle Resources)."
+        )
+        let url = try XCTUnwrap(
+            bundle.url(forResource: "initial_data", withExtension: "json"),
+            "initial_data.json URL missing in bundle \(bundle.bundlePath)."
+        )
+        let data = try Data(contentsOf: url)
+        let payload = try JSONDecoder().decode(InitialDataPayload.self, from: data)
+
+        XCTAssertEqual(payload.words.count, 30, "A1 initial corpus must contain 30 entries.")
+        XCTAssertEqual(Set(payload.words.map(\.id)).count, 30, "Each row needs a unique id (UUID).")
+        XCTAssertEqual(
+            Set(payload.words.map { "\($0.germanWord)|\($0.level)" }).count,
+            30,
+            "Each row needs a unique (germanWord, level) pair."
+        )
+
+        for dto in payload.words {
+            XCTAssertEqual(dto.level, "A1")
+            XCTAssertTrue(CEFRLevel.isValidLevelCode(dto.level))
+
+            let articleOpt = Self.normalizedArticleFromJSON(dto.article)
+            if dto.article.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != "none",
+               dto.article.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != "" {
+                XCTAssertNotNil(
+                    articleOpt,
+                    "Article for '\(dto.germanWord)' must be der, die, das, or none."
+                )
+            }
+
+            let word = VocabularyWord(
+                id: dto.id,
+                germanWord: dto.germanWord,
+                article: articleOpt,
+                englishTranslation: dto.englishTranslation,
+                level: dto.level,
+                category: dto.category,
+                isMastered: dto.isMastered ?? false,
+                version: dto.version ?? 1
+            )
+            XCTAssertTrue(
+                word.hasValidArticleForNoun,
+                "Integrity: nouns/thematic entries must have der/die/das; verbs use category Verb with article none (\(dto.germanWord))."
+            )
+        }
+    }
+
+    private static func normalizedArticleFromJSON(_ raw: String) -> String? {
+        let t = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if t.isEmpty || t == "none" { return nil }
+        guard t == "der" || t == "die" || t == "das" else { return nil }
+        return t
+    }
+
+    /// Unit tests may resolve `Bundle(for:)` differently than the host app; prefer any bundle that ships `initial_data.json`.
+    private static func bundleContainingInitialDataJSON() -> Bundle? {
+        let candidates: [Bundle] = [Bundle(for: VocabularyWord.self), Bundle.main] + Bundle.allBundles
+        return candidates.first { $0.url(forResource: "initial_data", withExtension: "json") != nil }
+    }
+}
+
+private struct InitialDataPayload: Codable {
+    let version: Int
+    let words: [InitialDataWordRecord]
+}
+
+private struct InitialDataWordRecord: Codable {
+    let id: UUID
+    let germanWord: String
+    let article: String
+    let englishTranslation: String
+    let level: String
+    let category: String
+    let isMastered: Bool?
+    let version: Int?
 }

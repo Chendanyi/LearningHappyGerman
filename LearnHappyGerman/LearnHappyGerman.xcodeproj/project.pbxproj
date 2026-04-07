@@ -112,14 +112,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CF49D7992F84EFCB0004A814 /* LearnHappyGerman */ = {
-			isa = PBXGroup;
-			children = (
-				CF49D7982F84EFCB0004A814 /* GrammarRule.swift */,
-			);
-			path = LearnHappyGerman;
-			sourceTree = "<group>";
-		};
 		CF49D7362F84EEBB0004A814 = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +142,14 @@
 				CF49D75B2F84EEBD0004A814 /* LearnHappyGermanUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CF49D7992F84EFCB0004A814 /* LearnHappyGerman */ = {
+			isa = PBXGroup;
+			children = (
+				CF49D7982F84EFCB0004A814 /* GrammarRule.swift */,
+			);
+			path = LearnHappyGerman;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

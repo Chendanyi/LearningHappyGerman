@@ -26,6 +26,22 @@ private struct BundledRuleDTO: Codable {
     let exampleSentences: [String]
 }
 
+private struct InitialDataFilePayload: Codable {
+    let version: Int
+    let words: [InitialDataWordDTO]
+}
+
+private struct InitialDataWordDTO: Codable {
+    let id: UUID
+    let germanWord: String
+    let article: String
+    let englishTranslation: String
+    let level: String
+    let category: String
+    let isMastered: Bool?
+    let version: Int?
+}
+
 // MARK: - Article / level parsing
 
 private func parseBundledArticle(_ raw: String, germanWord: String) throws -> String? {
@@ -65,6 +81,8 @@ final class LocalSeeder {
 
     static let bundledFileName = "BundledData"
     static let bundledFileExtension = "json"
+    static let initialDataFileName = "initial_data"
+    static let initialDataFileExtension = "json"
     /// UserDefaults key: set after first successful bundled import (or legacy store skip).
     static let importCompletedDefaultsKey = "hasImportedBundledData.v1"
 
@@ -132,6 +150,52 @@ final class LocalSeeder {
 
         try context.save()
         return (payload.words.count, ruleCount, payload.version)
+    }
+
+    /// Merges `initial_data.json` (30 A1 words, etc.): inserts rows whose `(germanWord, level)` is not yet stored. Idempotent.
+    func mergeInitialDataFromBundle() throws -> Int {
+        guard let url = Bundle.main.url(
+            forResource: Self.initialDataFileName,
+            withExtension: Self.initialDataFileExtension
+        ) else {
+            return 0
+        }
+
+        let data = try Data(contentsOf: url)
+        let payload = try JSONDecoder().decode(InitialDataFilePayload.self, from: data)
+
+        let existing = try context.fetch(FetchDescriptor<VocabularyWord>())
+        var existingKeys = Set(existing.map { "\($0.germanWord)|\($0.level)" })
+
+        var inserted = 0
+        for dto in payload.words {
+            let key = "\(dto.germanWord)|\(dto.level)"
+            guard !existingKeys.contains(key) else { continue }
+
+            let article = try parseBundledArticle(dto.article, germanWord: dto.germanWord)
+
+            let word = VocabularyWord(
+                id: dto.id,
+                germanWord: dto.germanWord,
+                article: article,
+                englishTranslation: dto.englishTranslation,
+                level: dto.level,
+                category: dto.category,
+                isMastered: dto.isMastered ?? false,
+                version: dto.version ?? 1
+            )
+            guard word.hasValidArticleForNoun else {
+                throw LocalSeederError.invalidWord("initial_data: \(dto.germanWord) failed article/category validation")
+            }
+            context.insert(word)
+            existingKeys.insert(key)
+            inserted += 1
+        }
+
+        if inserted > 0 {
+            try context.save()
+        }
+        return inserted
     }
 }
 

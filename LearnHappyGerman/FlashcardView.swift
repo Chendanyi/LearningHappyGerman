@@ -205,8 +205,11 @@ struct FlashcardView: View {
             return
         }
 
-        // Noun constraint: article is mandatory.
-        if card.category.caseInsensitiveCompare("Noun") == .orderedSame,
+        // When the expected answer includes an article, require der/die/das in the user input.
+        let expectedNeedsArticle = expected.hasPrefix("der ")
+            || expected.hasPrefix("die ")
+            || expected.hasPrefix("das ")
+        if expectedNeedsArticle,
            !normalizedInput.hasPrefix("der "),
            !normalizedInput.hasPrefix("die "),
            !normalizedInput.hasPrefix("das ") {
@@ -236,12 +239,13 @@ struct FlashcardView: View {
     }
 
     private func expectedAnswer(for word: VocabularyWord) -> String {
-        guard word.category.caseInsensitiveCompare("Noun") == .orderedSame else {
-            return word.germanWord
-        }
         guard let art = word.article?.trimmingCharacters(in: .whitespacesAndNewlines),
               !art.isEmpty,
               art.lowercased() != "none" else {
+            return word.germanWord
+        }
+        let lower = art.lowercased()
+        guard lower == "der" || lower == "die" || lower == "das" else {
             return word.germanWord
         }
         return "\(art) \(word.germanWord)"
@@ -249,7 +253,14 @@ struct FlashcardView: View {
 
     private func symbol(for word: VocabularyWord) -> String {
         switch word.category.lowercased() {
-        case "noun": return "tag"
+        case "noun",
+             "daily life",
+             "activities",
+             "travel",
+             "home",
+             "people",
+             "time":
+            return "tag"
         case "verb": return "figure.walk"
         case "adjective": return "paintpalette"
         case "adverb": return "speedometer"

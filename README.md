@@ -23,6 +23,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - `LocalSeeder.swift`: Loads `BundledData.json` on first launch and writes ingestion audit lines for `MEMORY.md`.
 - `SyncService.swift`: Placeholder remote JSON fetch + merge into SwiftData (dedupe by word + level; preserves `isMastered`). See `SyncServiceTests`.
 - `BundledData.json`: Static corpus (vocabulary + grammar rules with `exampleSentences` arrays) shipped in the app bundle.
+- `initial_data.json`: 30 A1 vocabulary rows (themes `Daily Life`, `Activities`, `Travel`, `Home`, `People`, `Time`, plus verbs); merged into SwiftData on launch via `LocalSeeder.mergeInitialDataFromBundle()` (skips rows already present for the same `germanWord` + `level`). `BundledData.json` still ships the smaller cross-level sample; A1 richness comes from this merge.
 - `VocabularyWordTests.swift`: Evaluator guard test for noun/article validity.
 - `VocabularyDataIntegrityTests.swift`: Article + CEFR level invariants on seeded data; `DataSeeder.seedIfNeeded` idempotency (no duplicates on second run).
 - `VocabularySymmetryLayoutTests.swift`: Grand Budapest symmetric layout tokens + `Theme.VocabularyGrandBudapest` contract used by vocabulary UI.
@@ -35,4 +36,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - If `ModelContainer` fails to create after a SwiftData schema or relationship change, delete the app from the simulator or device once so the on-disk store can be recreated (development builds do not always migrate every intermediate schema).
 - **Black simulator screen:** Confirm the `LearnHappyGerman` scheme (not a test target) is running; open the **Debug area** (⇧⌘Y) and look for a crash or `fatalError`. Try **Simulator → Device → Erase All Content and Settings**, or quit and relaunch the Simulator app. The app attaches `modelContainer` to the root view and yields once before bundled import so the lobby can draw first.
 
-Last updated: 2026-04-07 (Evaluator: `VocabularyDataIntegrityTests` + `VocabularySymmetryLayoutTests`; `Theme.VocabularyGrandBudapest` on `FlashcardView`)
+Last updated: 2026-04-07 (`LocalSeeder.mergeInitialDataFromBundle` on bootstrap so A1 flashcards use `initial_data.json`, not only the two A1 rows in `BundledData.json`)
