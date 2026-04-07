@@ -86,3 +86,20 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ## Issue History
 
 <!-- Add new entries below this line -->
+
+### [AUDIT-2026-04-06] MainLobbyView Visual and Logic Audit
+- **Date:** 2026-04-06
+- **Feature:** Cross-cutting (Lobby + Navigation)
+- **Related TODO:** App Navigation Architecture / Design System
+- **Symptom/Error:** Lobby header used directional spacing (`top` on bell, `bottom` on subtitle), which breaks strict symmetry guidance.
+- **Root Cause:** Vertical rhythm was tuned with element-specific padding instead of a single symmetric stack spacing system.
+- **Fix Applied:** Removed directional paddings and kept consistent `VStack(spacing: 16)` to preserve centered composition.
+- **Prevention Rule(s):**
+  - For symmetric hero sections, avoid per-element directional padding; prefer one parent stack spacing rule.
+  - If directional padding is required, pair it with equivalent opposite-side compensation and document why.
+  - During review, check for `.padding(.top|.bottom|.leading|.trailing)` on individual header elements.
+- **Validation Evidence:** 
+  - Visual check: Lobby content remains centered and balanced.
+  - State check: tapping `B1` sets `AppState.currentLevel = .b1` and hallway displays `Current Level: B1`.
+  - Color check: `MainLobbyView` uses `Theme.Colors.mendlsPink`, `Theme.Colors.lobbyBoyPurple`, and `Theme.Colors.societyBlue`, matching `Theme.swift` hex values (`#F8C1C1`, `#6D4C7D`, `#A7C7E7`).
+  - Scope note: vocabulary filtering is ready via `AppState.currentLevel`; module-level SwiftData query filtering is pending classroom implementation.

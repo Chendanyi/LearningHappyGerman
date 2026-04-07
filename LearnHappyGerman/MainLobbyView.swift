@@ -22,7 +22,6 @@ struct MainLobbyView: View {
                         .font(.system(size: 17, weight: .ultraLight))
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                         .doodleSymbolStyle()
-                        .padding(.top, 8)
 
                     Text("Grand Budapest Deutsch")
                         .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
@@ -32,7 +31,6 @@ struct MainLobbyView: View {
                     Text("Select Your CEFR Level")
                         .font(Theme.Typography.rounded(.headline, weight: .medium))
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.9))
-                        .padding(.bottom, 6)
 
                     LazyVGrid(columns: columns, spacing: 14) {
                         ForEach(levels, id: \.self) { level in
