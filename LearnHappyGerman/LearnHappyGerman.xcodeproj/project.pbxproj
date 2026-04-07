@@ -21,6 +21,8 @@
 		CF49D77D2F84EF9E0004A814 /* DataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D76E2F84EF9D0004A814 /* DataSeeder.swift */; };
 		CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D77E2F84EFB40004A814 /* VocabularyWordTests.swift */; };
 		CF49D7802F84EFC50004A814 /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7812F84EFC50004A814 /* FlashcardView.swift */; };
+		CF49D7822F84EFD60004A814 /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7812F84EFC50004A814 /* FlashcardView.swift */; };
+		CF49D7832F84EFD60004A814 /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7812F84EFC50004A814 /* FlashcardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF49D7822F84EFD60004A814 /* FlashcardView.swift in Sources */,
 				CF49D7762F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
 				CF49D7772F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */,
@@ -289,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF49D7832F84EFD60004A814 /* FlashcardView.swift in Sources */,
 				CF49D77A2F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
 				CF49D77B2F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77C2F84EF9E0004A814 /* VocabularyWord.swift in Sources */,

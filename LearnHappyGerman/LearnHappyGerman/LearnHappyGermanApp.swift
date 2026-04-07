@@ -16,7 +16,7 @@ struct LearnHappyGermanApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
-            VocabularyWord.self,
+            VocabularyWord.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

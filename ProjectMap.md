@@ -12,3 +12,5 @@
 - `TODO.md` - Prioritized roadmap and feature checklists.
 - `MEMORY.md` - Regression-prevention log.
 - `.cursorrules` - Pre-task workflow constraints.
+- `.swiftlint.yml` - Strict lint policy, naming rules, and symmetry exception checks.
+- `check_integrity.sh` - Local quality gate script for lint + tests.
