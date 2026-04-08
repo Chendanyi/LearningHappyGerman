@@ -77,6 +77,8 @@ For every feature, execute in order:
 
 - Before every git commit, simulate a pre-commit hook by running the full test suite.
 - Record the run outcome in `MEMORY.md` with explicit `Pass`/`Fail` status.
+- No agent is allowed to bypass the pre-commit hook.
+- Every commit must be a **Verified Commit**.
 
 ## Git Workflow Refinement
 

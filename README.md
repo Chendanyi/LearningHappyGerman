@@ -37,6 +37,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - `.swiftlint.yml`: strict lint configuration and custom style/symmetry checks.
 - `check_integrity.sh`: pipeline script (`swiftlint` + `xcodebuild test` for the `LearnHappyGerman` scheme) that fails fast on violations.
 - `scripts/pipeline.sh`: CI quality gate script that runs `swiftlint` and `swift test` (returns exit code `1` on failure).
+- `.git/hooks/pre-commit`: local hook that runs `./scripts/pipeline.sh`; commit is aborted if quality gate fails.
 - `AGENTS.md` / `TODO.md` / `MEMORY.md`: Planner-Generator-Evaluator process docs.
 
 ## Troubleshooting
@@ -56,4 +57,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
     - `--mapping-json '{"germanWord":"lemma","englishTranslation":"en","level":"cefr","category":"pos","article":"artikel"}'`
 - Generated payload is minified and shaped as `{"version":1,"words":[...]}` with fields used by `VocabularyWord`.
 
-Last updated: 2026-04-08 (quality gate: strict SwiftLint config + `scripts/pipeline.sh`)
+Last updated: 2026-04-08 (quality gate + enforced local pre-commit hook)
