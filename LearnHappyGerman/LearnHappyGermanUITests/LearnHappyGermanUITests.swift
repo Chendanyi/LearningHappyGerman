@@ -60,4 +60,22 @@ final class LearnHappyGermanUITests: XCTestCase {
             }
         }
     }
+
+    @MainActor
+    func testHangmanCakeBoxStaysCentered() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("UITEST_HANGMAN_DIRECT")
+        app.launch()
+
+        let cakeBox = app.otherElements["hangman.cakeBox"]
+        XCTAssertTrue(cakeBox.waitForExistence(timeout: 10))
+
+        let windowMidX = app.windows.firstMatch.frame.midX
+        XCTAssertEqual(
+            cakeBox.frame.midX,
+            windowMidX,
+            accuracy: 12.0,
+            "Cake Box doodle should remain centered."
+        )
+    }
 }

@@ -19,10 +19,9 @@ struct LearnHappyGermanApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainLobbyView()
+            rootView
                 .environmentObject(appState)
-                // Attach the container to the root view so SwiftData’s environment reaches all screens
-                // (Scene-only attachment can contribute to a blank first frame in some setups).
+                // Attach the container to the root view so SwiftData's environment reaches all screens.
                 .modelContainer(sharedModelContainer)
                 .task {
                     guard !hasSeeded else { return }
@@ -31,6 +30,17 @@ struct LearnHappyGermanApp: App {
                     await Task.yield()
                     await runInitialBootstrap()
                 }
+        }
+    }
+
+    @ViewBuilder
+    private var rootView: some View {
+        if ProcessInfo.processInfo.arguments.contains("UITEST_HANGMAN_DIRECT") {
+            NavigationStack {
+                HangmanGameView()
+            }
+        } else {
+            MainLobbyView()
         }
     }
 

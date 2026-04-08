@@ -1,6 +1,27 @@
 import SwiftUI
 import SwiftData
 
+struct HangmanGameLogic {
+    static func isWin(word: String, guessedLetters: Set<Character>) -> Bool {
+        word.allSatisfy { !($0.isLetter) || guessedLetters.contains($0) }
+    }
+
+    @discardableResult
+    static func applyGuess(
+        _ letter: Character,
+        targetWord: String,
+        guessedLetters: inout Set<Character>,
+        remainingAttempts: inout Int
+    ) -> Bool {
+        guard !guessedLetters.contains(letter) else { return false }
+        guessedLetters.insert(letter)
+        if !targetWord.contains(letter) {
+            remainingAttempts -= 1
+        }
+        return true
+    }
+}
+
 struct HangmanGameView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.modelContext) private var modelContext
@@ -116,7 +137,7 @@ struct HangmanGameView: View {
     }
 
     private var isWon: Bool {
-        targetWord.allSatisfy { !($0.isLetter) || guessedLetters.contains($0) }
+        HangmanGameLogic.isWin(word: targetWord, guessedLetters: guessedLetters)
     }
 
     private var isLost: Bool {
@@ -181,6 +202,7 @@ struct HangmanGameView: View {
                 .frame(width: 116, height: 16)
                 .offset(y: 44)
         }
+        .accessibilityIdentifier("hangman.cakeBox")
     }
 
     private var keyboardGrid: some View {
@@ -214,11 +236,12 @@ struct HangmanGameView: View {
 
     private func handleGuess(_ letter: Character) {
         guard !isWon, !isLost else { return }
-        guard !guessedLetters.contains(letter) else { return }
-        guessedLetters.insert(letter)
-        if !targetWord.contains(letter) {
-            remainingAttempts -= 1
-        }
+        _ = HangmanGameLogic.applyGuess(
+            letter,
+            targetWord: targetWord,
+            guessedLetters: &guessedLetters,
+            remainingAttempts: &remainingAttempts
+        )
     }
 
     private func decorationVisible(at index: Int) -> Bool {
