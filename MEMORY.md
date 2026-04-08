@@ -10,7 +10,7 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 
 ## Entry Template
 
-### [YYYY-MM-DD] 
+### [YYYY-MM-DD]
 
 - **Feature/Area:**
 - **Symptom/Error:**
@@ -21,8 +21,6 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 - **Validation Evidence:** (unit test, UI validation, manual steps)
 
 ## Incident Log
-
-
 
 # MEMORY
 
@@ -52,8 +50,6 @@ Persistent engineering memory to reduce repeated mistakes and regressions.
 - Promote high-frequency errors into explicit workflow checks.
 
 ## Incident Log
-
-
 
 # MEMORY - Regression Prevention Log
 
@@ -94,8 +90,6 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ---
 
 ## Issue History
-
-
 
 ### [AUDIT-2026-04-06] MainLobbyView Visual and Logic Audit
 
@@ -156,3 +150,27 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 - **Feature/Area:** `VocabularyDataIntegrityTests`, `VocabularySymmetryLayoutTests`, `Theme.VocabularyGrandBudapest`, `FlashcardView`.
 - **Behavior:** Tests assert every seeded noun has a non-empty der/die/das article, every row has `A1`–`C2` level, and `DataSeeder.seedIfNeeded` does not duplicate rows when invoked twice. `FlashcardView` wraps the main column in `Theme.VocabularyGrandBudapest.symmetricContent` (same as `wesSymmetricLayout`).
 - **Validation Evidence:** `xcodebuild` `build-for-testing` for generic iOS Simulator succeeded.
+
+### [2026-04-07] Generator: `initial_data.json` (30 A1 words)
+
+- **Feature/Area:** `LearnHappyGerman/initial_data.json`, `VocabularyWord.requiresGermanArticle`, `FlashcardView` expected answers.
+- **Behavior:** Bundle JSON lists 30 `A1` rows with UUID `id`, `article`, thematic `category` (`Daily Life`, `Activities`, `Travel`, …, `Verb`). `VocabularyWord.categoriesWithoutArticle` treats `Verb`/`Adjective`/… as lemma types without der/die/das; thematic buckets require articles. `testInitialDataJSONPassesArticleAndLevelIntegrity` loads the file from the host app bundle.
+- **Validation Evidence:** `VocabularyDataIntegrityTests` suite passed on iOS Simulator (iPhone 16).
+
+### [2026-04-07] `initial_data.json` merged at launch
+
+- **Symptom:** A1 flashcards only showed apple/book because `BundledData.json` listed only two A1 words; `initial_data.json` was never imported.
+- **Fix:** `LocalSeeder.mergeInitialDataFromBundle()` + `LearnHappyGermanApp.mergeInitialDataFromBundle` after bundled import / legacy paths; idempotent on `(germanWord, level)`.
+- **Prevention Rule:** Any new corpus file must be wired into bootstrap, not only added to the bundle.
+
+### [2026-04-07] Flashcard answer checks vs umlauts and ß
+
+- **Feature/Area:** `FlashcardView` typed-answer validation, `GermanFlashcardAnswerNormalization`.
+- **Symptom/Error:** Learners typing ASCII substitutes (e.g. `Kase` for `Käse`) or `strasse` for `Straße` could be marked wrong when compared with naive lowercasing.
+- **Root Cause:** String comparison did not use German-aware folding or eszett normalization.
+- **Fix Applied:** Centralize normalization in `GermanFlashcardAnswerNormalization.normalized(_:)`: map **ß** / **ẞ** to `ss`, then `folding(options: .diacriticInsensitive, locale: de_DE)`, then lowercased; `FlashcardView` compares normalized input to normalized expected.
+- **Prevention Rule(s):**
+  - Never compare German learner input with raw `lowercased()` only; use shared `GermanFlashcardAnswerNormalization` (or equivalent) for flashcards and any future typed German checks.
+  - When adding new corpus fields that users type, add a regression test that covers ä/ö/ü and ß.
+- **Validation Evidence:** `FlashcardRegressionTests.testGermanAnswerNormalizationTreatsUmlautsAsEquivalent`, `testGermanAnswerNormalizationMapsEszettForComparison`; lobby A1 filter test `testLobbyA1SelectionFiltersToInitialDataA1CorpusOnly`.
+

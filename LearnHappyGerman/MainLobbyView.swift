@@ -4,6 +4,10 @@ final class AppState: ObservableObject {
     @Published var currentLevel: CEFRLevel?
     /// Set when bundled data import fails; shows a Human Takeover alert on the lobby.
     @Published var humanTakeoverMessage: String?
+    /// `true` while first-run data bootstrap is importing on background actor.
+    @Published var isInitializingVocabulary = false
+    /// 0...1 progress for lobby loading indicator.
+    @Published var initializationProgress: Double = 0
 }
 
 struct MainLobbyView: View {
@@ -34,6 +38,26 @@ struct MainLobbyView: View {
                         .font(Theme.Typography.rounded(.headline, weight: .medium))
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.9))
 
+                    if appState.isInitializingVocabulary {
+                        VStack(spacing: 8) {
+                            Text("Preparing Vocabulary \(Int((appState.initializationProgress * 100).rounded()))%")
+                                .font(Theme.Typography.rounded(.subheadline, weight: .medium))
+                                .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.88))
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            GeometryReader { proxy in
+                                ZStack(alignment: .leading) {
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                        .fill(Color.white.opacity(0.45))
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                        .fill(Theme.Colors.societyBlue)
+                                        .frame(width: proxy.size.width * max(0, min(1, appState.initializationProgress)))
+                                }
+                            }
+                            .frame(height: 10)
+                            .frame(maxWidth: .infinity)
+                        }
+                    }
+
                     LazyVGrid(columns: columns, spacing: 14) {
                         ForEach(levels, id: \.self) { level in
                             Button {
@@ -56,6 +80,7 @@ struct MainLobbyView: View {
                                     )
                             }
                             .buttonStyle(.plain)
+                            .disabled(appState.isInitializingVocabulary)
                         }
                     }
                 }
