@@ -85,6 +85,7 @@ struct MainLobbyView: View {
                             }
                             .buttonStyle(.plain)
                             .disabled(appState.isInitializingVocabulary)
+                            .accessibilityIdentifier("mainLobby.level.\(level.rawValue)")
                         }
                     }
                 }
@@ -165,6 +166,7 @@ struct ClassroomHallwayView: View {
                             .stroke(Theme.Colors.societyBlue, lineWidth: 2)
                     )
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("hallway.door.\(door.rawValue)")
                 }
             }
             .padding(24)
@@ -198,6 +200,8 @@ private func classroomDestination(for door: ClassroomDoor, level: CEFRLevel?) ->
     switch door {
     case .flashcards:
         FlashcardView(level: level)
+    case .hangman:
+        HangmanGameView()
     default:
         ClassroomPlaceholderView(door: door)
     }

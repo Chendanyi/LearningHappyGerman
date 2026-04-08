@@ -36,6 +36,9 @@
 		CF49D7B52F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */; };
 		CF49D7B62F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */; };
 		CF49D7B82F84EFE00004A830 /* FlashcardRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7B92F84EFE00004A830 /* FlashcardRegressionTests.swift */; };
+		CF49D7C02F84EFF00004A840 /* HangmanGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7C32F84EFF00004A840 /* HangmanGameView.swift */; };
+		CF49D7C12F84EFF00004A840 /* HangmanGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7C32F84EFF00004A840 /* HangmanGameView.swift */; };
+		CF49D7C22F84EFF00004A840 /* HangmanGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7C32F84EFF00004A840 /* HangmanGameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,7 @@
 		CF49D7A12F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularySymmetryLayoutTests.swift; sourceTree = "<group>"; };
 		CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GermanFlashcardAnswerNormalization.swift; sourceTree = "<group>"; };
 		CF49D7B92F84EFE00004A830 /* FlashcardRegressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardRegressionTests.swift; sourceTree = "<group>"; };
+		CF49D7C32F84EFF00004A840 /* HangmanGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanGameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -131,6 +135,7 @@
 				CF49D7A12F84EFD00004A820 /* VocabularySymmetryLayoutTests.swift */,
 				CF49D7B92F84EFE00004A830 /* FlashcardRegressionTests.swift */,
 				CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */,
+				CF49D7C32F84EFF00004A840 /* HangmanGameView.swift */,
 				CF49D7812F84EFC50004A814 /* FlashcardView.swift */,
 				CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */,
 				CF49D7702F84EF9D0004A814 /* Theme.swift */,
@@ -312,6 +317,7 @@
 				CF49D7902F84EFC90004A814 /* SyncService.swift in Sources */,
 				CF49D7802F84EFC50004A814 /* FlashcardView.swift in Sources */,
 				CF49D7B42F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */,
+				CF49D7C02F84EFF00004A840 /* HangmanGameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +338,7 @@
 				CF49D7912F84EFC90004A814 /* SyncService.swift in Sources */,
 				CF49D7B52F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */,
 				CF49D7B82F84EFE00004A830 /* FlashcardRegressionTests.swift in Sources */,
+				CF49D7C12F84EFF00004A840 /* HangmanGameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +354,7 @@
 				CF49D7922F84EFC90004A814 /* SyncService.swift in Sources */,
 				CF49D79B2F84EFCB0004A814 /* GrammarRule.swift in Sources */,
 				CF49D7B62F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */,
+				CF49D7C22F84EFF00004A840 /* HangmanGameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
