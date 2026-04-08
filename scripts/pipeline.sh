@@ -131,6 +131,12 @@ if ! "${SWIFTLINT_BIN}" 2>&1 | tee "${LINT_LOG}"; then
   exit 1
 fi
 
+echo "==> Data audit (full_vocabulary.json)"
+if ! swift scripts/audit_data.swift 2>&1 | tee -a "${LINT_LOG}"; then
+  echo "Data audit failed."
+  exit 1
+fi
+
 CHANGED_FILES="$(collect_changed_files)"
 if should_run_full_suite "${CHANGED_FILES}"; then
   RUN_MODE="full"
@@ -143,7 +149,8 @@ echo "==> Cleaning simulator environment"
 xcrun simctl shutdown all >/dev/null 2>&1 || true
 xcrun simctl erase all >/dev/null 2>&1 || true
 
-if [[ -f "Package.swift" ]] && [[ "${RUN_MODE}" == "full" ]]; then
+# Prefer Xcode tests when the iOS app project exists; root Package.swift is for tooling (e.g. SnapshotTesting).
+if [[ -f "Package.swift" ]] && [[ "${RUN_MODE}" == "full" ]] && [[ ! -f "LearnHappyGerman/LearnHappyGerman.xcodeproj/project.pbxproj" ]]; then
   echo "==> Running Swift tests with timeout (${TEST_TIMEOUT_SECONDS}s)"
   if ! run_with_timeout "${TEST_TIMEOUT_SECONDS}" swift test 2>&1 | tee "${TEST_LOG}"; then
     if grep -q "Timed out after" "${TEST_LOG}" 2>/dev/null; then

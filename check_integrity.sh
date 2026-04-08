@@ -4,6 +4,9 @@ set -euo pipefail
 echo "==> Running SwiftLint"
 swiftlint
 
+echo "==> Data audit (full_vocabulary.json)"
+swift scripts/audit_data.swift
+
 echo "==> Running Xcode tests"
 DESTINATION_ID="$(
 python3 - <<'PY'
