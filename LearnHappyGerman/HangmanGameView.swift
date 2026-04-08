@@ -1,13 +1,16 @@
 import SwiftUI
+import SwiftData
 
 struct HangmanGameView: View {
     @EnvironmentObject private var appState: AppState
+    @Environment(\.modelContext) private var modelContext
 
+    @State private var currentWord: VocabularyWord?
     @State private var targetWord = "KUCHEN"
     @State private var guessedLetters: Set<Character> = []
-    @State private var wrongGuessCount = 0
+    @State private var remainingAttempts = 7
 
-    private let maxWrongGuesses = 6
+    private let maxAttempts = 7
     private let keyboardRows: [[Character]] = [
         Array("QWERTZUIOP"),
         Array("ASDFGHJKL"),
@@ -34,9 +37,15 @@ struct HangmanGameView: View {
                         .font(Theme.Typography.rounded(.subheadline, weight: .medium))
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
 
-                    cakeBoxDoodle
+                    if isWon {
+                        conciergeCelebration
+                    } else if isLost {
+                        roomServiceLoss
+                    } else {
+                        cakeBoxDoodle
+                    }
 
-                    Text(maskedWord)
+                    Text(revealedPrompt)
                         .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                         .tracking(4)
@@ -84,19 +93,58 @@ struct HangmanGameView: View {
         .joined(separator: " ")
     }
 
+    private var isNoun: Bool {
+        currentWord?.category.lowercased() == "noun"
+    }
+
+    private var shownArticle: String {
+        guard isNoun else { return "" }
+        guard let article = currentWord?.article?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !article.isEmpty,
+              article.lowercased() != "none"
+        else {
+            return ""
+        }
+        return article.lowercased()
+    }
+
+    private var revealedPrompt: String {
+        if isNoun, !shownArticle.isEmpty {
+            return "\(shownArticle) \(isLost ? targetWord : maskedWord)"
+        }
+        return isLost ? targetWord : maskedWord
+    }
+
     private var isWon: Bool {
         targetWord.allSatisfy { !($0.isLetter) || guessedLetters.contains($0) }
     }
 
     private var isLost: Bool {
-        wrongGuessCount >= maxWrongGuesses
+        remainingAttempts <= 0
     }
 
     private var statusMessage: String {
-        if isWon { return "Wunderbar! You saved the cake box." }
-        if isLost { return "Oh no! The word was \(targetWord)." }
-        let remaining = maxWrongGuesses - wrongGuessCount
-        return "Wrong guesses left: \(remaining)"
+        if isWon {
+            return "Wunderbar! The concierge celebrates your perfect German."
+        }
+        if isLost {
+            return "Room Service cleared the broken cake box. Word: \(targetWord)"
+        }
+        return "Attempts left: \(remainingAttempts)"
+    }
+
+    private var conciergeCelebration: some View {
+        Label("Concierge Congratulates You", systemImage: "person.crop.circle.badge.checkmark")
+            .font(Theme.Typography.rounded(.headline, weight: .medium))
+            .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+            .padding(.vertical, 10)
+    }
+
+    private var roomServiceLoss: some View {
+        Label("Room Service Tray Arrived", systemImage: "takeoutbag.and.cup.and.straw")
+            .font(Theme.Typography.rounded(.headline, weight: .medium))
+            .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+            .padding(.vertical, 10)
     }
 
     private var cakeBoxDoodle: some View {
@@ -169,19 +217,38 @@ struct HangmanGameView: View {
         guard !guessedLetters.contains(letter) else { return }
         guessedLetters.insert(letter)
         if !targetWord.contains(letter) {
-            wrongGuessCount += 1
+            remainingAttempts -= 1
         }
     }
 
     private func decorationVisible(at index: Int) -> Bool {
-        wrongGuessCount <= index
+        let consumedAttempts = maxAttempts - remainingAttempts
+        return consumedAttempts <= index
     }
 
     private func startNewRound() {
+        let levelCode = (appState.currentLevel ?? .a1).rawValue
+        let descriptor = FetchDescriptor<VocabularyWord>(
+            predicate: #Predicate { $0.level == levelCode }
+        )
+
+        let levelWords = (try? modelContext.fetch(descriptor)) ?? []
+        if let selected = levelWords.randomElement() {
+            currentWord = selected
+            targetWord = selected.germanWord
+                .uppercased()
+                .replacingOccurrences(of: "ẞ", with: "SS")
+        } else {
+            currentWord = nil
+            targetWord = "KUCHEN"
+        }
+
         let level = appState.currentLevel ?? .a1
-        targetWord = wordPool(for: level).randomElement() ?? "KUCHEN"
+        if levelWords.isEmpty {
+            targetWord = wordPool(for: level).randomElement() ?? "KUCHEN"
+        }
         guessedLetters = []
-        wrongGuessCount = 0
+        remainingAttempts = maxAttempts
     }
 
     private func wordPool(for level: CEFRLevel) -> [String] {
