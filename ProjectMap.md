@@ -1,6 +1,7 @@
 # ProjectMap
 
 ## Root Files
+
 - `MainLobbyView.swift` - Lobby entrance UI with CEFR selector and first-run import progress bar.
 - `FlashcardView.swift` - First classroom screen with answer validation (shared German normalization), centered feedback/`Next` column, and feedback animation.
 - `GermanFlashcardAnswerNormalization.swift` - Typed-answer comparison helper (de_DE folding, ß→`ss`).

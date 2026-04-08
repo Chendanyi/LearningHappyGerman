@@ -50,7 +50,10 @@ struct MainLobbyView: View {
                                         .fill(Color.white.opacity(0.45))
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                                         .fill(Theme.Colors.societyBlue)
-                                        .frame(width: proxy.size.width * max(0, min(1, appState.initializationProgress)))
+                                        .frame(
+                                            width: proxy.size.width
+                                                * max(0, min(1, appState.initializationProgress))
+                                        )
                                 }
                             }
                             .frame(height: 10)

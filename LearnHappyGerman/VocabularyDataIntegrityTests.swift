@@ -128,22 +128,28 @@ final class VocabularyDataIntegrityTests: XCTestCase {
             )
             XCTAssertTrue(
                 word.hasValidArticleForNoun,
-                "Integrity: nouns/thematic entries must have der/die/das; verbs use category Verb with article none (\(dto.germanWord))."
+                """
+                Integrity: nouns/thematic entries must have der/die/das; verbs use
+                category Verb with article none (\(dto.germanWord)).
+                """
             )
         }
     }
 
     private static func normalizedArticleFromJSON(_ raw: String) -> String? {
-        let t = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        if t.isEmpty || t == "none" { return nil }
-        guard t == "der" || t == "die" || t == "das" else { return nil }
-        return t
+        let trimmedArticle = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if trimmedArticle.isEmpty || trimmedArticle == "none" { return nil }
+        guard trimmedArticle == "der" || trimmedArticle == "die" || trimmedArticle == "das" else { return nil }
+        return trimmedArticle
     }
 
-    /// Unit tests may resolve `Bundle(for:)` differently than the host app; prefer any bundle that ships `initial_data.json`.
+    /// Unit tests may resolve `Bundle(for:)` differently than host app;
+    /// prefer any bundle that ships `initial_data.json`.
     private static func bundleContainingInitialDataJSON() -> Bundle? {
         let candidates: [Bundle] = [Bundle(for: VocabularyWord.self), Bundle.main] + Bundle.allBundles
-        return candidates.first { $0.url(forResource: "initial_data", withExtension: "json") != nil }
+        return candidates.first {
+            $0.url(forResource: "initial_data", withExtension: "json") != nil
+        }
     }
 }
 

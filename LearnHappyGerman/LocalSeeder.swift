@@ -42,15 +42,21 @@ private struct InitialDataWordDTO: Codable {
     let version: Int?
 }
 
+struct BundledImportResult {
+    let wordCount: Int
+    let ruleCount: Int
+    let bundleVersion: Int
+}
+
 // MARK: - Article / level parsing
 
 private func parseBundledArticle(_ raw: String, germanWord: String) throws -> String? {
-    let t = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-    if t.isEmpty || t == "none" { return nil }
-    guard t == "der" || t == "die" || t == "das" else {
+    let trimmedArticle = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    if trimmedArticle.isEmpty || trimmedArticle == "none" { return nil }
+    guard trimmedArticle == "der" || trimmedArticle == "die" || trimmedArticle == "das" else {
         throw LocalSeederError.invalidWord("unknown article \(raw) for \(germanWord)")
     }
-    return t
+    return trimmedArticle
 }
 
 // MARK: - Local seeder
@@ -92,8 +98,9 @@ final class LocalSeeder {
         self.context = context
     }
 
+    // swiftlint:disable function_body_length
     /// Imports bundled JSON. Call only when the store should receive the initial corpus (first launch path).
-    func importFromBundle() throws -> (wordCount: Int, ruleCount: Int, bundleVersion: Int) {
+    func importFromBundle() throws -> BundledImportResult {
         guard let url = Bundle.main.url(
             forResource: Self.bundledFileName,
             withExtension: Self.bundledFileExtension
@@ -151,10 +158,16 @@ final class LocalSeeder {
         }
 
         try context.save()
-        return (payload.words.count, ruleCount, payload.version)
+        return BundledImportResult(
+            wordCount: payload.words.count,
+            ruleCount: ruleCount,
+            bundleVersion: payload.version
+        )
     }
+    // swiftlint:enable function_body_length
 
-    /// Merges `initial_data.json` (30 A1 words, etc.): inserts rows whose `(germanWord, level)` is not yet stored. Idempotent.
+    /// Merges `initial_data.json` (30 A1 words, etc.).
+    /// Inserts rows whose `(germanWord, level)` is not yet stored. Idempotent.
     func mergeInitialDataFromBundle() throws -> Int {
         guard let url = Bundle.main.url(
             forResource: Self.initialDataFileName,
@@ -221,7 +234,9 @@ final class LocalSeeder {
             let key = "\(record.germanWord)|\(record.level)"
             guard !existingKeys.contains(key) else { continue }
             guard CEFRLevel(rawValue: record.level) != nil else {
-                throw LocalSeederError.invalidWord("full_vocabulary: unknown level \(record.level) for \(record.germanWord)")
+                throw LocalSeederError.invalidWord(
+                    "full_vocabulary: unknown level \(record.level) for \(record.germanWord)"
+                )
             }
 
             let article = try parseBundledArticle(record.article ?? "none", germanWord: record.germanWord)
@@ -233,7 +248,9 @@ final class LocalSeeder {
                 category: record.category
             )
             guard word.hasValidArticleForNoun else {
-                throw LocalSeederError.invalidWord("full_vocabulary: \(record.germanWord) failed article/category validation")
+                throw LocalSeederError.invalidWord(
+                    "full_vocabulary: \(record.germanWord) failed article/category validation"
+                )
             }
             context.insert(word)
             existingKeys.insert(key)
