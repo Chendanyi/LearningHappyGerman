@@ -16,12 +16,12 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 
 ## Project Layout
 
-- `MainLobbyView.swift`: Main Entrance (Lobby) UI and level-selection interactions.
+- `MainLobbyView.swift`: Main Entrance (Lobby) UI and level-selection interactions, including first-run vocabulary import progress bar.
 - `FlashcardView.swift`: First classroom with `FetchDescriptor` vocabulary filtered by `AppState.currentLevel` (no `@Query`, to avoid macro temp-file tooling issues), Check using `GermanFlashcardAnswerNormalization` (German folding + ß→`ss` + lowercase; article rules for noun-like rows), success sound/animation and `isMastered` on correct, LobbyBoyPurple wrong-answer hint, centered feedback column and **Next** only after a check.
 - `Theme.swift`: App design tokens and layout/icon helpers.
 - `VocabularyWord.swift`: SwiftData vocabulary model (UUID, `version`, indexed `germanWord`/`level` strings) and `CEFRLevel` enum for UI routing only.
 - `GrammarRule.swift`: SwiftData grammar content (`title`, `explanation`, `level`, `exampleSentences`).
-- `DataSeeder.swift`: A1-C2 import and seed-if-needed logic (fallback when bundled import did not fill the store).
+- `DataSeeder.swift`: A1-C2 import and seed-if-needed logic, plus background bulk import from `full_vocabulary.json` with 500-row batch saves, upsert by `id`/`(germanWord, level)`, and progress callback.
 - `vocab_processor.py`: Converts external CSV/JSON vocab sources into minified `full_vocabulary.json` with app fields (`germanWord`, `article`, `englishTranslation`, `level`, `category`).
 - `LocalSeeder.swift`: Loads `BundledData.json` on first launch and writes ingestion audit lines for `MEMORY.md`.
 - `SyncService.swift`: Placeholder remote JSON fetch + merge into SwiftData (dedupe by word + level; preserves `isMastered`). See `SyncServiceTests`.
@@ -55,4 +55,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
     - `--mapping-json '{"germanWord":"lemma","englishTranslation":"en","level":"cefr","category":"pos","article":"artikel"}'`
 - Generated payload is minified and shaped as `{"version":1,"words":[...]}` with fields used by `VocabularyWord`.
 
-Last updated: 2026-04-08 (external vocabulary pipeline via `vocab_processor.py`; `full_vocabulary.json` + `DataSeeder` JSON decode support)
+Last updated: 2026-04-08 (background full-vocabulary bulk import, 500-row batch upsert, lobby progress bar)

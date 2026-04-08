@@ -1,14 +1,14 @@
 # ProjectMap
 
 ## Root Files
-- `MainLobbyView.swift` - Lobby entrance UI with CEFR selector.
+- `MainLobbyView.swift` - Lobby entrance UI with CEFR selector and first-run import progress bar.
 - `FlashcardView.swift` - First classroom screen with answer validation (shared German normalization), centered feedback/`Next` column, and feedback animation.
 - `GermanFlashcardAnswerNormalization.swift` - Typed-answer comparison helper (de_DE folding, ß→`ss`).
 - `Theme.swift` - Shared color, typography, symmetry, and icon styling utilities.
 - `VocabularyWord.swift` - SwiftData vocabulary model (UUID `id`, `version`, indexed `germanWord`/`level` strings, optional `article`, `category` string) and `CEFRLevel` for UI only.
 - `GrammarRule.swift` - Grammar rules (`title`, `explanation`, `level`, `exampleSentences`).
 - `HYBRID_DATA_ARCHITECTURE.md` - Planner notes on vocabulary + grammar SwiftData layout.
-- `DataSeeder.swift` - Seed pipeline for CEFR A1-C2 data imports (fallback when bundled import did not populate the store).
+- `DataSeeder.swift` - Seed pipeline for CEFR A1-C2 data imports; background bulk import with batched saves and upsert.
 - `vocab_processor.py` - External CSV/JSON -> minified `full_vocabulary.json` transformer for CEFR imports.
 - `LocalSeeder.swift` - First-launch ingestion from `BundledData.json`; merges `full_vocabulary.json` (preferred large corpus) and `initial_data.json` idempotently on each bootstrap path; audit log for `MEMORY.md`.
 - `BundledData.json` (under `LearnHappyGerman/` and nested app folder) - Bundled vocabulary and grammar rules JSON (`exampleSentences` on rules).

@@ -38,10 +38,16 @@ struct LearnHappyGermanApp: App {
     private func runInitialBootstrap() async {
         let context = ModelContext(sharedModelContainer)
         let importKey = LocalSeeder.importCompletedDefaultsKey
+        appState.isInitializingVocabulary = true
+        appState.initializationProgress = 0
+        defer {
+            appState.initializationProgress = 1
+            appState.isInitializingVocabulary = false
+        }
 
         if UserDefaults.standard.bool(forKey: importKey) {
             seedFallbackIfEmpty(context: context)
-            mergeFullVocabularyFromBundle(context: context)
+            await mergeFullVocabularyFromBundle()
             mergeInitialDataFromBundle(context: context)
             return
         }
@@ -51,7 +57,7 @@ struct LearnHappyGermanApp: App {
             UserDefaults.standard.set(true, forKey: importKey)
             try? IngestionAuditLogger.appendLegacyStoreLog(existingWordCount: existingWords)
             seedFallbackIfEmpty(context: context)
-            mergeFullVocabularyFromBundle(context: context)
+            await mergeFullVocabularyFromBundle()
             mergeInitialDataFromBundle(context: context)
             return
         }
@@ -80,7 +86,7 @@ struct LearnHappyGermanApp: App {
         }
 
         seedFallbackIfEmpty(context: context)
-        mergeFullVocabularyFromBundle(context: context)
+        await mergeFullVocabularyFromBundle()
         mergeInitialDataFromBundle(context: context)
     }
 
@@ -97,14 +103,21 @@ struct LearnHappyGermanApp: App {
         }
     }
 
-    /// Adds vocabulary from `full_vocabulary.json` when missing.
+    /// Adds vocabulary from `full_vocabulary.json` when missing in batched background mode.
     /// This file is preferred as the primary large A1-C2 corpus if present in bundle.
-    private func mergeFullVocabularyFromBundle(context: ModelContext) {
-        let seeder = LocalSeeder(context: context)
+    private func mergeFullVocabularyFromBundle() async {
         do {
-            let n = try seeder.mergeFullVocabularyFromBundle()
-            if n > 0 {
-                print("LearnHappyGerman: merged \(n) rows from full_vocabulary.json")
+            let result = try await DataSeeder.importFullVocabularyFromBundle(
+                container: sharedModelContainer,
+                batchSize: 500
+            ) { progress in
+                self.appState.initializationProgress = progress
+            }
+            if result.inserted > 0 || result.updated > 0 {
+                print(
+                    "LearnHappyGerman: full_vocabulary import processed \(result.totalProcessed) rows "
+                        + "(inserted: \(result.inserted), updated: \(result.updated))"
+                )
             }
         } catch {
             print("Full vocabulary merge failed (non-fatal): \(error)")
