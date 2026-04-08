@@ -29,6 +29,8 @@ identifier_name:
     warning: 40
     error: 50
   validates_start_with_lowercase: true
+  excluded:
+    - CodingKeys
   allowed_symbols:
     - _
 
@@ -41,8 +43,8 @@ type_name:
 custom_rules:
   grand_budapest_naming:
     name: "Grand Budapest Naming"
-    regex: '\b(let|var|func|class|struct|enum|protocol)\s+[A-Za-z0-9]*_[A-Za-z0-9_]*\b'
-    message: "Use Grand Budapest naming: lowerCamelCase for members/functions, UpperCamelCase for types; avoid snake_case."
+    regex: '\b(func|class|struct|enum|protocol)\s+[A-Za-z0-9]*_[A-Za-z0-9_]*\b'
+    message: "Use Grand Budapest naming for API/type declarations; snake_case data keys are allowed for Codable mapping."
     severity: error
 
   symmetry_exception_marker:

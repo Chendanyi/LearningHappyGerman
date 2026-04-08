@@ -1,0 +1,5 @@
+parent_config: ../../.swiftlint.yml
+
+# Test setup favors concise fixtures; force unwraps remain visible but non-blocking.
+force_unwrapping:
+  severity: warning
