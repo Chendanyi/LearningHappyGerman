@@ -61,6 +61,16 @@ For every feature, execute in order:
 2. Generator
 3. Evaluator
 
+## Verification Mechanism (Data + UI)
+
+- **Bundled vocabulary audit:** `scripts/audit_data.swift` validates every `full_vocabulary.json` found under `LearnHappyGerman/` (app bundle copy and repo-level copy). It runs in `./scripts/pipeline.sh` **before** the fast-path / full-test split, so JSON-only commits still must pass data rules.
+- **Runtime integrity:** `VocabularyDataIntegrityTests` and grammar regressions remain the SwiftData-level gate inside the test suite.
+
+## Break Glass Protocol (SwiftUI Symmetry)
+
+- If an Agent is **stuck in a loop** trying to satisfy a **SwiftLint symmetry warning** (for example `symmetry_exception_marker` or repeated layout tweaks with no stable pass), it **must stop** and ask the user for an explicit **Design Exception** (what to allow, which screen, and why) instead of guessing further padding or offsets.
+- After approval, document the exception in code with `// SYMMETRY-EXCEPTION: <reason>` on the relevant directional padding (see `.swiftlint.yml`), or adjust the lint rule via a deliberate project decision recorded in `MEMORY.md`.
+
 ## Zero-Failure Merge Policy
 
 ### Generator Constraint
@@ -109,3 +119,7 @@ For every feature, execute in order:
   - `LearnHappyGerman/LearnHappyGermanTests/.swiftlint.yml`
   - `LearnHappyGerman/LearnHappyGermanUITests/.swiftlint.yml`
   - In tests, `force_unwrapping` is downgraded to warning for concise fixture setup.
+
+## Snapshot Testing (Prepared)
+
+- Root `Package.swift` declares the **pointfreeco/swift-snapshot-testing** dependency and a small `LearningHappyGermanSnapshots` library target for future visual regression tests (Lobby and classroom symmetry). The production app is still built from `LearnHappyGerman/LearnHappyGerman.xcodeproj`; resolve SPM with `swift package resolve` at the repo root when adding snapshot tests.

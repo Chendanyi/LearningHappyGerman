@@ -37,14 +37,16 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - `FlashcardRegressionTests.swift`: A1 lobby filter vs `initial_data.json` after merge + umlaut/ß normalization regressions.
 - `SyncServiceTests.swift`: Remote merge test; updated gloss preserves `isMastered`.
 - `.swiftlint.yml`: strict lint configuration and custom style/symmetry checks.
-- `check_integrity.sh`: pipeline script (`swiftlint` + `xcodebuild test` for the `LearnHappyGerman` scheme) that fails fast on violations.
-- `scripts/pipeline.sh`: CI quality gate script that runs `swiftlint` and `swift test` (returns exit code `1` on failure).
-- `scripts/pipeline.sh`: CI quality gate with fast-path + stability guards:
-  - runs `swiftlint` first;
+- `check_integrity.sh`: pipeline script (`swiftlint` + data audit + `xcodebuild test` for the `LearnHappyGerman` scheme) that fails fast on violations.
+- `scripts/audit_data.swift`: standalone Swift audit of `full_vocabulary.json` (Noun rows need der/die/das; German lemma character set). Run: `swift scripts/audit_data.swift`. Invoked automatically by `scripts/pipeline.sh` and `check_integrity.sh` before tests.
+- `Package.swift`: SPM tooling package at repo root; depends on **swift-snapshot-testing** for future Lobby/classroom visual regression tests (the iOS app still builds from `LearnHappyGerman.xcodeproj`). Run `swift package resolve` after cloning. `Package.resolved` pins dependency versions for reproducible tooling builds.
+- `scripts/pipeline.sh`: CI quality gate with fast-path + stability guards (exits `1` on failure):
+  - runs `swiftlint` first, then `scripts/audit_data.swift` (always, including fast-path);
   - if changed files are only `.md` / `.json`, runs only `VocabularyDataIntegrityTests`;
   - runs full suite when `.swift` or `Package.swift` changes are present;
   - cleans simulator state (`simctl shutdown all`, `simctl erase all`) before test gate;
-  - enforces a 5-minute timeout for test commands.
+  - enforces a 5-minute timeout for test commands;
+  - when both `Package.swift` and the Xcode project exist, `xcodebuild test` is used for the app (SPM is for tooling snapshots, not the primary test runner).
 - Pipeline runs append pass/fail summaries to `MEMORY.md` automatically.
 - `.git/hooks/pre-commit`: local hook that runs `./scripts/pipeline.sh`; commit is aborted if quality gate fails.
 - `AGENTS.md` / `TODO.md` / `MEMORY.md`: Planner-Generator-Evaluator process docs.
@@ -66,4 +68,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
     - `--mapping-json '{"germanWord":"lemma","englishTranslation":"en","level":"cefr","category":"pos","article":"artikel"}'`
 - Generated payload is minified and shaped as `{"version":1,"words":[...]}` with fields used by `VocabularyWord`.
 
-Last updated: 2026-04-08 (Hangman SwiftData level-aware game logic and noun/article twist)
+Last updated: 2026-04-08 (Data audit script, pipeline integration, SnapshotTesting SPM prep)

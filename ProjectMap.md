@@ -28,3 +28,5 @@
 - `.cursorrules` - Pre-task workflow constraints.
 - `.swiftlint.yml` - Strict lint policy, naming rules, and symmetry exception checks.
 - `check_integrity.sh` - Local quality gate script for lint + tests.
+- `scripts/audit_data.swift` - Standalone `full_vocabulary.json` audit (nouns + German lemma characters).
+- `Package.swift` / `Package.resolved` - SPM tooling package (swift-snapshot-testing) for future visual regression tests; app remains Xcode-based.
