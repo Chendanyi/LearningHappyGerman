@@ -7,6 +7,24 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 - Review before starting any task.
 - Add entries when a bug, failed test, or validation issue is discovered.
 - Record concrete prevention rules from each incident.
+- **Evaluator — Morning Brief:** at the end of each autonomous session, append **one** new section at the **end** of the incident log (or directly after pipeline notes for that day) using the template under **Morning Brief template** below.
+- **Nightly — off-allowlist command log:** when using a command not on the Nightly allowlist in `AGENTS.md` but allowed by the non-blocking policy (e.g. essential `git`), add a short dated line or subsection: command, reason, and outcome.
+
+## Morning Brief template
+
+Append a section with this **exact** title pattern (level-1 heading, date in `YYYY-MM-DD`):
+
+```markdown
+# Morning Brief YYYY-MM-DD
+
+- **Tasks Completed:** (e.g. A2 Grammar database initialized.)
+- **Tests Passed:** (e.g. 12/12 unit tests passed.)
+- **Failed/Blocked:** (e.g. AI Voice Dialogue blocked due to missing API Key; or `(none)`.)
+- **Lint Status:** (List any persistent symmetry warnings; or `(none)`.)
+- **Merge (human, after approval):** `git checkout main && git merge nightly/YYYY-MM-DD` (optional: `git checkout main && git pull origin main && git merge nightly/YYYY-MM-DD`)
+```
+
+Replace `YYYY-MM-DD` in the title and in the merge line with the session date; replace `nightly/YYYY-MM-DD` with the **actual** branch name if it differs.
 
 ## Entry Template
 
@@ -248,3 +266,19 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ### [PIPELINE-20260408-174555] Automated Pipeline Run
 
 - [2026-04-08 17:45:55 +0200] Pipeline passed: 21 tests, 0 lint violations.
+
+### [PIPELINE-20260408-201234] Automated Pipeline Run
+
+- [2026-04-08 20:12:33 +0200] Pipeline passed: 21 tests, 0 lint violations.
+
+### [PIPELINE-20260408-204858] Automated Pipeline Run
+
+- [2026-04-08 20:48:58 +0200] Pipeline passed: 4 tests, 0 lint violations.
+
+### [PIPELINE-20260408-204908] Automated Pipeline Run
+
+- [2026-04-08 20:49:08 +0200] Pipeline failed: 0 tests, 0 lint violations.
+
+### [PIPELINE-20260408-205407] Automated Pipeline Run
+
+- [2026-04-08 20:54:06 +0200] Pipeline failed: 0 tests, 0 lint violations.

@@ -22,9 +22,9 @@
 - `VocabularySymmetryLayoutTests.swift` - Grand Budapest theme symmetry contract for vocabulary screens.
 - `FlashcardRegressionTests.swift` - A1 filter integration after `initial_data` merge; umlaut/ß normalization tests.
 - `NAVIGATION_ARCHITECTURE.md` - Planner navigation specification.
-- `AGENTS.md` - Persona loop and architecture guidelines.
+- `AGENTS.md` - Persona loop, architecture guidelines, and **Nightly Autonomous Protocol** (daily branch, allowlist: Unix tools + `swift`/`xcodebuild`/`xcrun`, non-blocking policy for unlisted essential commands with `MEMORY.md` logging, strict sudo/brew/`Package.swift` red lines).
 - `TODO.md` - Prioritized roadmap and feature checklists.
-- `MEMORY.md` - Regression-prevention log.
+- `MEMORY.md` - Regression-prevention log; **Morning Brief** sections (`# Morning Brief YYYY-MM-DD`) appended by Evaluator at end of autonomous sessions.
 - `.cursorrules` - Pre-task workflow constraints.
 - `.swiftlint.yml` - Strict lint policy, naming rules, and symmetry exception checks.
 - `check_integrity.sh` - Local quality gate script for lint + tests.

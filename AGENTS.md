@@ -22,6 +22,7 @@
 - Validate key UI flows and edge cases.
 - Report failures with reproducible steps and expected vs. actual outcomes.
 - Feed regression learnings into `MEMORY.md`.
+- At the **end of each autonomous session**, append a **Morning Brief** to `MEMORY.md` (see **Morning Brief (Evaluator)** below).
 
 ## Main Entrance (The Lobby) Architecture
 
@@ -123,3 +124,111 @@ For every feature, execute in order:
 ## Snapshot Testing (Prepared)
 
 - Root `Package.swift` declares the **pointfreeco/swift-snapshot-testing** dependency and a small `LearningHappyGermanSnapshots` library target for future visual regression tests (Lobby and classroom symmetry). The production app is still built from `LearnHappyGerman/LearnHappyGerman.xcodeproj`; resolve SPM with `swift package resolve` at the repo root when adding snapshot tests.
+
+## Nightly Autonomous Protocol (Planner)
+
+### Daily branching
+
+- **Before** starting any nightly (or autonomous batch) task, create a temporary branch: `nightly/YYYY-MM-DD` (example: `nightly/2026-04-09`). Use the **authoritative calendar date** for the run.
+- Commit all progress on that branch only for the duration of the batch.
+- **Never** merge to `main` (or any protected integration branch) without **explicit human review** and a normal PR/integrity pass.
+
+### Permission scope (autonomous work)
+
+Agents may **read and write** within these areas (this repository’s layout):
+
+- **Source:** application Swift sources under `LearnHappyGerman/` (including `LearnHappyGerman/LearnHappyGerman/`).
+- **Tests:** `LearnHappyGerman/LearnHappyGermanTests/`, `LearnHappyGerman/LearnHappyGermanUITests/`, and root-level `*Tests.swift` files co-located with the app tree where the project already places them.
+- **Resources:** bundled JSON, assets, and copy under `LearnHappyGerman/` (for example `*.json`, `Assets.xcassets`, `Preview Content`).
+
+Agents may **execute** for validation:
+
+- `./scripts/pipeline.sh`
+- `./check_integrity.sh` (when present)
+- `xcodebuild` (build/test) against the `LearnHappyGerman` scheme and available simulators, consistent with existing scripts.
+
+### Nightly allowlist (pre-authorized)
+
+To reduce workflow interruptions, the following are **pre-authorized** for nightly/autonomous batches (still subject to **Manual authorization gate** red lines below).
+
+**Standard Unix utilities** (use `rm` only inside project **source/resource** paths listed under *Permission scope*; do not delete arbitrary user files outside the repo):
+
+- `mkdir`, `cp`, `mv`, `rm`, `find`, `grep`, `cat`, `chmod` (e.g. `chmod +x` for scripts)
+
+**Build and Apple toolchain:**
+
+- `swift` (including `swift scripts/…` for repo scripts; do not use SwiftPM to add or change dependencies—see red lines)
+- `xcodebuild`
+- `xcrun` (including `simctl` and other subcommands invoked via `xcrun`)
+
+### Command not on the allowlist (non-blocking policy)
+
+If a command is **not** listed above but appears **essential** for the task (for example a specific **`git`** invocation):
+
+1. **Do not stop** the batch solely because the command is unlisted.
+2. **Log** the exact command line and short rationale in `MEMORY.md` (dated entry or under the session’s notes).
+3. **Prefer** an alternative path using only allowlisted commands when one exists.
+4. **Only** if no alternative exists **and** the task is **Critical** to the batch: mark the item **Blocked** in `TODO.md` (see **Nightly — Blocked**), note it in `MEMORY.md`, and **continue** with the next independent batch item.
+
+### Manual authorization gate
+
+Without **explicit human confirmation**, agents are **forbidden** to:
+
+- Run `brew install` or other package-manager installs that change the machine environment.
+- Run `sudo` or any command requiring elevated privileges.
+- **Modify `Package.swift`** to add or upgrade dependencies (including new SPM packages).
+
+**Strict red-line:** `sudo`, `brew` (install/upgrade), and **any** `Package.swift` modification that adds or bumps dependencies remain **absolute**—no exceptions via the non-blocking policy.
+
+If a new library or tool is needed, add a **Blocked** line item under **Nightly — Blocked (needs human)** in `TODO.md` with a short rationale and link or package name; do not change `Package.swift` autonomously.
+
+### Nightly batch processing
+
+When the user provides a **Nightly Batch Requirement** (ordered list of tasks):
+
+1. Process tasks **sequentially** in the given order.
+2. If a task **fails**, append a concise entry to `MEMORY.md` (symptom, root cause if known, next step) and **continue** with the **next independent** task. Do not halt the entire batch for one failure unless the user scope says otherwise.
+3. Dependent tasks that require a failed prerequisite should be **skipped** with a note in `MEMORY.md`, not attempted blindly.
+
+## Morning Brief (Evaluator)
+
+At the **end** of an autonomous session (after commits on `nightly/YYYY-MM-DD` or equivalent batch work), the Evaluator **must** append a new section to `MEMORY.md` titled:
+
+`# Morning Brief YYYY-MM-DD`
+
+Use the **authoritative calendar date** for the run (same date as the nightly branch when applicable).
+
+### Required fields
+
+Summarize, with concrete examples where helpful:
+
+| Field | Purpose |
+| --- | --- |
+| **Tasks Completed** | What shipped or was initialized (e.g. A2 grammar database initialized). |
+| **Tests Passed** | Counts or suite names (e.g. 12/12 unit tests passed; pipeline green). |
+| **Failed/Blocked** | Items not done and why (e.g. AI Voice Dialogue blocked due to missing API key). Use `(none)` if clear. |
+| **Lint Status** | SwiftLint outcome; list **persistent** symmetry or other warnings that remain. Use `(none)` if clean. |
+
+### Merge command for the human (after approval)
+
+Do **not** merge to `main` autonomously. Provide the human with the **exact** command(s) to run **after** they approve the work (replace `nightly/YYYY-MM-DD` with the actual branch).
+
+**Exact one-liner** (as requested for copy-paste):
+
+```bash
+git checkout main && git merge nightly/YYYY-MM-DD
+```
+
+**Recommended** (updates `main` from `origin` before merging):
+
+```bash
+git checkout main && git pull origin main && git merge nightly/YYYY-MM-DD
+```
+
+Example for a run on 9 April 2026:
+
+```bash
+git checkout main && git merge nightly/2026-04-09
+```
+
+The Morning Brief in `MEMORY.md` must repeat the **same** branch name in the **Merge** line so the human can copy-paste without guessing.
