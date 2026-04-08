@@ -200,6 +200,8 @@ private func classroomDestination(for door: ClassroomDoor, level: CEFRLevel?) ->
     switch door {
     case .flashcards:
         FlashcardView(level: level)
+    case .tenses:
+        GrammarQuizView()
     case .hangman:
         HangmanGameView()
     default:

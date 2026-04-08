@@ -282,3 +282,32 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ### [PIPELINE-20260408-205407] Automated Pipeline Run
 
 - [2026-04-08 20:54:06 +0200] Pipeline failed: 0 tests, 0 lint violations.
+
+### [PIPELINE-20260408-214541] Automated Pipeline Run
+
+- [2026-04-08 21:45:41 +0200] Pipeline failed: 0 tests, 3 lint violations.
+
+### [PIPELINE-20260408-214628] Automated Pipeline Run
+
+- [2026-04-08 21:46:28 +0200] Pipeline failed: 0 tests, 0 lint violations.
+
+### [PIPELINE-20260408-214905] Automated Pipeline Run
+
+- [2026-04-08 21:49:05 +0200] Pipeline failed: 0 tests, 0 lint violations.
+
+### [PIPELINE-20260408-215529] Automated Pipeline Run
+
+- [2026-04-08 21:55:29 +0200] Pipeline failed: 0 tests, 0 lint violations.
+
+---
+
+# Morning Brief 2026-04-09
+
+- **A2 vocabulary:** **103** new A2 lemmas added to `full_vocabulary.json` (repo + nested app copy kept identical). Verbs include infinitive + Partizip II in `englishTranslation`; nouns capitalized with `article`; adjectives lowercased. `swift scripts/audit_data.swift` clean; `VocabularyDataIntegrityTests` / seeding paths unchanged in intent.
+- **GrammarQuizView (Tenses):** **Functional** — A1-gated present-tense cloze from `A1GrammarSentenceLibrary`, MendlsPink prompt / SocietyBlue field, next-question flow; Hallway routes `case .tenses` to `GrammarQuizView`. Unit tests: `GrammarQuizTests`.
+- **SwiftLint:** No outstanding rule violations requiring manual design decisions for this batch (test targets retain relaxed `force_unwrapping` as policy).
+- **Pipeline:** `scripts/pipeline.sh` uses `TEST_TIMEOUT_SECONDS=600` so full `xcodebuild test` can finish on slower hosts; prior 300s run timed out before completion.
+
+### [PIPELINE-20260408-221101] Automated Pipeline Run
+
+- [2026-04-08 22:11:01 +0200] Pipeline passed: 23 tests, 0 lint violations.
