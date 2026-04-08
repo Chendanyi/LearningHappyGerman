@@ -90,7 +90,12 @@ struct FlashcardView: View {
                         )
                         .multilineTextAlignment(.center)
                         .autocorrectionDisabled()
-                        .disabled(validationState != .idle)
+                        .onChange(of: userAnswer) {
+                            // Keep typing enabled after a check; clear prior feedback as soon as user edits.
+                            if validationState != .idle {
+                                validationState = .idle
+                            }
+                        }
 
                     Button {
                         withAnimation(.easeInOut(duration: 0.22)) {
