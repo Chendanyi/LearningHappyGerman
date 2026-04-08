@@ -7,6 +7,12 @@ Hierarchical checklist by feature and execution phase.
 - Before marking any feature task as DONE, run `./check_integrity.sh`.
 - If either SwiftLint or `swift test` fails, task status must remain in-progress.
 
+## Nightly — Blocked (needs human)
+
+Autonomous agents must **not** change `Package.swift`, run `brew install`, or use `sudo` without explicit confirmation. Log proposed dependency or environment changes here as **Blocked** until approved.
+
+- (none)
+
 ## Prioritized Roadmap (Planner)
 
 - Phase 1: Foundation. SwiftData Model for `VocabularyWord` including `level` and `article` properties.

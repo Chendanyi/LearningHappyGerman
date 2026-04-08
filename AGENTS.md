@@ -123,3 +123,42 @@ For every feature, execute in order:
 ## Snapshot Testing (Prepared)
 
 - Root `Package.swift` declares the **pointfreeco/swift-snapshot-testing** dependency and a small `LearningHappyGermanSnapshots` library target for future visual regression tests (Lobby and classroom symmetry). The production app is still built from `LearnHappyGerman/LearnHappyGerman.xcodeproj`; resolve SPM with `swift package resolve` at the repo root when adding snapshot tests.
+
+## Nightly Autonomous Protocol (Planner)
+
+### Daily branching
+
+- **Before** starting any nightly (or autonomous batch) task, create a temporary branch: `nightly/YYYY-MM-DD` (example: `nightly/2026-04-09`). Use the **authoritative calendar date** for the run.
+- Commit all progress on that branch only for the duration of the batch.
+- **Never** merge to `main` (or any protected integration branch) without **explicit human review** and a normal PR/integrity pass.
+
+### Permission scope (autonomous work)
+
+Agents may **read and write** within these areas (this repository’s layout):
+
+- **Source:** application Swift sources under `LearnHappyGerman/` (including `LearnHappyGerman/LearnHappyGerman/`).
+- **Tests:** `LearnHappyGerman/LearnHappyGermanTests/`, `LearnHappyGerman/LearnHappyGermanUITests/`, and root-level `*Tests.swift` files co-located with the app tree where the project already places them.
+- **Resources:** bundled JSON, assets, and copy under `LearnHappyGerman/` (for example `*.json`, `Assets.xcassets`, `Preview Content`).
+
+Agents may **execute** for validation:
+
+- `./scripts/pipeline.sh`
+- `xcodebuild` (build/test) against the `LearnHappyGerman` scheme and available simulators, consistent with existing scripts.
+
+### Manual authorization gate
+
+Without **explicit human confirmation**, agents are **forbidden** to:
+
+- Run `brew install` or other package-manager installs that change the machine environment.
+- Run `sudo` or any command requiring elevated privileges.
+- **Modify `Package.swift`** to add or upgrade dependencies (including new SPM packages).
+
+If a new library or tool is needed, add a **Blocked** line item under **Nightly — Blocked (needs human)** in `TODO.md` with a short rationale and link or package name; do not change `Package.swift` autonomously.
+
+### Nightly batch processing
+
+When the user provides a **Nightly Batch Requirement** (ordered list of tasks):
+
+1. Process tasks **sequentially** in the given order.
+2. If a task **fails**, append a concise entry to `MEMORY.md` (symptom, root cause if known, next step) and **continue** with the **next independent** task. Do not halt the entire batch for one failure unless the user scope says otherwise.
+3. Dependent tasks that require a failed prerequisite should be **skipped** with a note in `MEMORY.md`, not attempted blindly.
