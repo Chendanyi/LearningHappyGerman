@@ -6,6 +6,7 @@ import SwiftData
 struct FlashcardView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.modelContext) private var modelContext
+    @StateObject private var audioService = AudioService()
 
     /// Loaded via `FetchDescriptor` (avoids `@Query` macro sidecars under
     /// `swift-generated-sources/`, which break SwiftLint / some editors).
@@ -37,6 +38,23 @@ struct FlashcardView: View {
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
 
                     if let card = currentWord {
+                        HStack {
+                            Spacer(minLength: 0)
+                            Button {
+                                audioService.speakGermanReplayCoalesced(expectedAnswer(for: card))
+                            } label: {
+                                Image(systemName: "speaker.wave.2.bubble.left")
+                                    .font(.system(size: 22, weight: .ultraLight))
+                                    .doodleSymbolStyle()
+                                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                    .frame(width: 44, height: 44)
+                                    .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("Play German word")
+                            Spacer(minLength: 0)
+                        }
+
                         Button {
                             withAnimation(.easeInOut(duration: 0.4)) {
                                 showSymbolSide.toggle()
@@ -299,6 +317,9 @@ struct FlashcardView: View {
             validationState = .idle
             userAnswer = ""
             successScale = 1.0
+        }
+        if let word = currentWord {
+            audioService.speakGerman(expectedAnswer(for: word))
         }
     }
 

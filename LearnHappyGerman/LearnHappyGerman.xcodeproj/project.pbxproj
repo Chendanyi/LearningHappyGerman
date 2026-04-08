@@ -43,6 +43,10 @@
 		CF49D7D32F84F0000004A851 /* SentenceTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7D12F84F0000004A851 /* SentenceTemplate.swift */; };
 		CF49D7D42F84F0000004A850 /* GrammarQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7D02F84F0000004A850 /* GrammarQuizView.swift */; };
 		CF49D7D52F84F0000004A851 /* SentenceTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7D12F84F0000004A851 /* SentenceTemplate.swift */; };
+		CF49D7ED2F84F0130004A867 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7EC2F84F0130004A866 /* AudioService.swift */; };
+		CF49D7EE2F84F0130004A868 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7EC2F84F0130004A866 /* AudioService.swift */; };
+		CF49D7EF2F84F0130004A869 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7EC2F84F0130004A866 /* AudioService.swift */; };
+		CF49D7F12F84F0140004A871 /* AudioServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7F02F84F0140004A870 /* AudioServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +87,8 @@
 		CF49D7C32F84EFF00004A840 /* HangmanGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangmanGameView.swift; sourceTree = "<group>"; };
 		CF49D7D02F84F0000004A850 /* GrammarQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarQuizView.swift; sourceTree = "<group>"; };
 		CF49D7D12F84F0000004A851 /* SentenceTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceTemplate.swift; sourceTree = "<group>"; };
+		CF49D7EC2F84F0130004A866 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
+		CF49D7F02F84F0140004A870 /* AudioServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -143,6 +149,8 @@
 				CF49D7B72F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift */,
 				CF49D7C32F84EFF00004A840 /* HangmanGameView.swift */,
 				CF49D7812F84EFC50004A814 /* FlashcardView.swift */,
+				CF49D7EC2F84F0130004A866 /* AudioService.swift */,
+				CF49D7F02F84F0140004A870 /* AudioServiceTests.swift */,
 				CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */,
 				CF49D7702F84EF9D0004A814 /* Theme.swift */,
 				CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */,
@@ -324,6 +332,7 @@
 				CF49D7892F84EFC70004A814 /* LocalSeeder.swift in Sources */,
 				CF49D7902F84EFC90004A814 /* SyncService.swift in Sources */,
 				CF49D7802F84EFC50004A814 /* FlashcardView.swift in Sources */,
+				CF49D7ED2F84F0130004A867 /* AudioService.swift in Sources */,
 				CF49D7B42F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */,
 				CF49D7C02F84EFF00004A840 /* HangmanGameView.swift in Sources */,
 			);
@@ -334,6 +343,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF49D7822F84EFD60004A814 /* FlashcardView.swift in Sources */,
+				CF49D7EE2F84F0130004A868 /* AudioService.swift in Sources */,
+				CF49D7F12F84F0140004A871 /* AudioServiceTests.swift in Sources */,
 				CF49D7762F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
 				CF49D7772F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */,
@@ -357,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF49D7832F84EFD60004A814 /* FlashcardView.swift in Sources */,
+				CF49D7EF2F84F0130004A869 /* AudioService.swift in Sources */,
 				CF49D77A2F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
 				CF49D77B2F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77C2F84EF9E0004A814 /* VocabularyWord.swift in Sources */,

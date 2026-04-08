@@ -20,6 +20,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 
 - `MainLobbyView.swift`: Main Entrance (Lobby) UI and level-selection interactions, including first-run vocabulary import progress bar.
 - `FlashcardView.swift`: First classroom with `FetchDescriptor` vocabulary filtered by `AppState.currentLevel` (no `@Query`, to avoid macro temp-file tooling issues), Check using `GermanFlashcardAnswerNormalization` (German folding + ß→`ss` + lowercase; article rules for noun-like rows), success sound/animation and `isMastered` on correct, LobbyBoyPurple wrong-answer hint, centered feedback column and **Next** only after a check.
+- `AudioService.swift`: AVFoundation `AVSpeechSynthesizer` TTS locked to **de-DE**, mixed audio session (`playback` + `mixWithOthers`), auto-speaks the German study form on each new card and a LobbyBoyPurple `speaker.wave.2.bubble.left` control for replay (coalesced rapid taps).
 - `HangmanGameView.swift`: Mendl's Cake Box themed hangman room that fetches a random `VocabularyWord` for the selected level, tracks guesses/attempts, reveals noun articles, and shows concierge (win) / room-service tray (loss) outcomes.
 - `GrammarQuizView.swift` / `SentenceTemplate.swift` (under `LearnHappyGerman/LearnHappyGerman/`): A1 fill-in-the-blank present tense; MendlsPink prompt card and SocietyBlue input field; wired from Hallway **Tenses**.
 - `full_vocabulary.json` (repo + app bundle): expanded with **103** A2 lemmas (verbs with Partizip II in `englishTranslation`, nouns with articles, adjectives); merge helper `scripts/merge_a2_vocab_batch.py`.
@@ -71,4 +72,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
     - `--mapping-json '{"germanWord":"lemma","englishTranslation":"en","level":"cefr","category":"pos","article":"artikel"}'`
 - Generated payload is minified and shaped as `{"version":1,"words":[...]}` with fields used by `VocabularyWord`.
 
-Last updated: 2026-04-09 (A2 vocab expansion + GrammarQuiz Tenses; pipeline test timeout 600s; Morning Brief)
+Last updated: 2026-04-09 (Audio Concierge TTS for flashcards; A2 vocab + GrammarQuiz Tenses; pipeline test timeout 600s)
