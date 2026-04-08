@@ -5,6 +5,7 @@
 - `MainLobbyView.swift` - Lobby entrance UI with CEFR selector and first-run import progress bar.
 - `FlashcardView.swift` - First classroom screen with answer validation (shared German normalization), centered feedback/`Next` column, and feedback animation.
 - `HangmanGameView.swift` - Hangman classroom with Mendl's cake-box visual, symmetric word slots, and letter keyboard.
+- `GrammarQuizView.swift` / `SentenceTemplate.swift` (nested `LearnHappyGerman/LearnHappyGerman/`) - A1 present-tense cloze; Hallway **Tenses**; MendlsPink + SocietyBlue.
 - `GermanFlashcardAnswerNormalization.swift` - Typed-answer comparison helper (de_DE folding, ß→`ss`).
 - `Theme.swift` - Shared color, typography, symmetry, and icon styling utilities.
 - `VocabularyWord.swift` - SwiftData vocabulary model (UUID `id`, `version`, indexed `germanWord`/`level` strings, optional `article`, `category` string) and `CEFRLevel` for UI only.
@@ -15,7 +16,7 @@
 - `LocalSeeder.swift` - First-launch ingestion from `BundledData.json`; merges `full_vocabulary.json` (preferred large corpus) and `initial_data.json` idempotently on each bootstrap path; audit log for `MEMORY.md`.
 - `BundledData.json` (under `LearnHappyGerman/` and nested app folder) - Bundled vocabulary and grammar rules JSON (`exampleSentences` on rules).
 - `initial_data.json` - 30 A1 words (UUID `id`, `article`, thematic `category`); shipped in app bundle; covered by `VocabularyDataIntegrityTests`.
-- `full_vocabulary.json` - Generated full corpus payload (`{"version":1,"words":[...]}`) for large A1-C2 ingestion.
+- `full_vocabulary.json` - Generated full corpus payload (`{"version":1,"words":[...]}`) for large A1-C2 ingestion; A2 batch merges via `scripts/merge_a2_vocab_batch.py`.
 - `SyncService.swift` - Remote JSON merge placeholder; `SyncServiceTests.swift` - remote update preserves mastery.
 - `VocabularyWordTests.swift` - Noun/article validity guard.
 - `VocabularyDataIntegrityTests.swift` - Seeded nouns + CEFR levels; seed-if-needed idempotency.

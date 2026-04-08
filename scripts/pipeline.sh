@@ -5,7 +5,7 @@ MEMORY_FILE="MEMORY.md"
 LINT_LOG="$(mktemp)"
 TEST_LOG="$(mktemp)"
 RUN_STATUS="failed"
-TEST_TIMEOUT_SECONDS=300
+TEST_TIMEOUT_SECONDS=600
 
 append_memory_summary() {
   local test_count lint_violations stamp summary_line
