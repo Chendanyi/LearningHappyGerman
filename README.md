@@ -7,6 +7,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - Shows a Main Entrance lobby (`MainLobbyView`) for CEFR level check-in (`A1` to `C2`).
 - Uses a symmetrical "Hotel Concierge Board" composition for level selection.
 - Routes the Hallway "Flashcards" door to `FlashcardView` as the first classroom.
+- Routes the Hallway "Hangman" door to `HangmanGameView` with a symmetric Mendl's cake-box themed board.
 - On first launch, `LocalSeeder` reads `BundledData.json` from the bundle and imports words and grammar rules into SwiftData; counts are logged under Application Support (`MEMORY_ingestion_appendix.md`) for pasting into `MEMORY.md`. If that fails, a **Human Takeover** alert is shown.
 - If the store is still empty afterward, `DataSeeder` supplies the built-in starter list (legacy fallback).
 - Uses SwiftData hybrid models: `VocabularyWord` (UUID `id`, `version`, indexed `germanWord` + `level` as `String`, optional `article`, `category` as `String`) and `GrammarRule` (`title`, `explanation`, `level`, `exampleSentences`). Store file: Application Support `LearnHappyGerman/learnhappygerman-v9.store`, with in-memory fallback if opening the file fails.
@@ -18,6 +19,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 
 - `MainLobbyView.swift`: Main Entrance (Lobby) UI and level-selection interactions, including first-run vocabulary import progress bar.
 - `FlashcardView.swift`: First classroom with `FetchDescriptor` vocabulary filtered by `AppState.currentLevel` (no `@Query`, to avoid macro temp-file tooling issues), Check using `GermanFlashcardAnswerNormalization` (German folding + ß→`ss` + lowercase; article rules for noun-like rows), success sound/animation and `isMastered` on correct, LobbyBoyPurple wrong-answer hint, centered feedback column and **Next** only after a check.
+- `HangmanGameView.swift`: Mendl's Cake Box themed hangman room with centered doodle, symmetric word slots, and SocietyBlue keyboard grid.
 - `Theme.swift`: App design tokens and layout/icon helpers.
 - `VocabularyWord.swift`: SwiftData vocabulary model (UUID, `version`, indexed `germanWord`/`level` strings) and `CEFRLevel` enum for UI routing only.
 - `GrammarRule.swift`: SwiftData grammar content (`title`, `explanation`, `level`, `exampleSentences`).
@@ -58,4 +60,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
     - `--mapping-json '{"germanWord":"lemma","englishTranslation":"en","level":"cefr","category":"pos","article":"artikel"}'`
 - Generated payload is minified and shaped as `{"version":1,"words":[...]}` with fields used by `VocabularyWord`.
 
-Last updated: 2026-04-08 (evaluator requirements: grammar/symmetry regressions + pipeline memory logging)
+Last updated: 2026-04-08 (Hangman game room with Mendl's Cake Box symmetric UI)

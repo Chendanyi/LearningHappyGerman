@@ -198,6 +198,8 @@ private func classroomDestination(for door: ClassroomDoor, level: CEFRLevel?) ->
     switch door {
     case .flashcards:
         FlashcardView(level: level)
+    case .hangman:
+        HangmanGameView()
     default:
         ClassroomPlaceholderView(door: door)
     }

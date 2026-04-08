@@ -4,6 +4,7 @@
 
 - `MainLobbyView.swift` - Lobby entrance UI with CEFR selector and first-run import progress bar.
 - `FlashcardView.swift` - First classroom screen with answer validation (shared German normalization), centered feedback/`Next` column, and feedback animation.
+- `HangmanGameView.swift` - Hangman classroom with Mendl's cake-box visual, symmetric word slots, and letter keyboard.
 - `GermanFlashcardAnswerNormalization.swift` - Typed-answer comparison helper (de_DE folding, ß→`ss`).
 - `Theme.swift` - Shared color, typography, symmetry, and icon styling utilities.
 - `VocabularyWord.swift` - SwiftData vocabulary model (UUID `id`, `version`, indexed `germanWord`/`level` strings, optional `article`, `category` string) and `CEFRLevel` for UI only.
