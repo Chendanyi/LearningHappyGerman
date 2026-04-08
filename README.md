@@ -49,7 +49,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
   - when both `Package.swift` and the Xcode project exist, `xcodebuild test` is used for the app (SPM is for tooling snapshots, not the primary test runner).
 - Pipeline runs append pass/fail summaries to `MEMORY.md` automatically.
 - `.git/hooks/pre-commit`: local hook that runs `./scripts/pipeline.sh`; commit is aborted if quality gate fails.
-- `AGENTS.md` / `TODO.md` / `MEMORY.md`: Planner-Generator-Evaluator process docs; `AGENTS.md` defines the **Nightly Autonomous Protocol** and **Morning Brief** (Evaluator end-of-session summary in `MEMORY.md`, plus the exact `git checkout main && git pull origin main && git merge nightly/...` line for human-approved merges).
+- `AGENTS.md` / `TODO.md` / `MEMORY.md`: Planner-Generator-Evaluator process docs; `AGENTS.md` defines the **Nightly Autonomous Protocol** (allowlist for Unix/build tools, non-blocking policy for essential commands such as `git`, **Morning Brief**, red lines for `sudo` / `brew` / `Package.swift`).
 
 ## Troubleshooting
 
@@ -68,4 +68,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
     - `--mapping-json '{"germanWord":"lemma","englishTranslation":"en","level":"cefr","category":"pos","article":"artikel"}'`
 - Generated payload is minified and shaped as `{"version":1,"words":[...]}` with fields used by `VocabularyWord`.
 
-Last updated: 2026-04-09 (Morning Brief evaluator workflow; Nightly protocol; data audit, pipeline, SnapshotTesting SPM prep)
+Last updated: 2026-04-09 (Nightly allowlist + non-blocking command policy; Morning Brief; data audit, pipeline, SnapshotTesting SPM prep)

@@ -144,7 +144,31 @@ Agents may **read and write** within these areas (this repository’s layout):
 Agents may **execute** for validation:
 
 - `./scripts/pipeline.sh`
+- `./check_integrity.sh` (when present)
 - `xcodebuild` (build/test) against the `LearnHappyGerman` scheme and available simulators, consistent with existing scripts.
+
+### Nightly allowlist (pre-authorized)
+
+To reduce workflow interruptions, the following are **pre-authorized** for nightly/autonomous batches (still subject to **Manual authorization gate** red lines below).
+
+**Standard Unix utilities** (use `rm` only inside project **source/resource** paths listed under *Permission scope*; do not delete arbitrary user files outside the repo):
+
+- `mkdir`, `cp`, `mv`, `rm`, `find`, `grep`, `cat`, `chmod` (e.g. `chmod +x` for scripts)
+
+**Build and Apple toolchain:**
+
+- `swift` (including `swift scripts/…` for repo scripts; do not use SwiftPM to add or change dependencies—see red lines)
+- `xcodebuild`
+- `xcrun` (including `simctl` and other subcommands invoked via `xcrun`)
+
+### Command not on the allowlist (non-blocking policy)
+
+If a command is **not** listed above but appears **essential** for the task (for example a specific **`git`** invocation):
+
+1. **Do not stop** the batch solely because the command is unlisted.
+2. **Log** the exact command line and short rationale in `MEMORY.md` (dated entry or under the session’s notes).
+3. **Prefer** an alternative path using only allowlisted commands when one exists.
+4. **Only** if no alternative exists **and** the task is **Critical** to the batch: mark the item **Blocked** in `TODO.md` (see **Nightly — Blocked**), note it in `MEMORY.md`, and **continue** with the next independent batch item.
 
 ### Manual authorization gate
 
@@ -153,6 +177,8 @@ Without **explicit human confirmation**, agents are **forbidden** to:
 - Run `brew install` or other package-manager installs that change the machine environment.
 - Run `sudo` or any command requiring elevated privileges.
 - **Modify `Package.swift`** to add or upgrade dependencies (including new SPM packages).
+
+**Strict red-line:** `sudo`, `brew` (install/upgrade), and **any** `Package.swift` modification that adds or bumps dependencies remain **absolute**—no exceptions via the non-blocking policy.
 
 If a new library or tool is needed, add a **Blocked** line item under **Nightly — Blocked (needs human)** in `TODO.md` with a short rationale and link or package name; do not change `Package.swift` autonomously.
 

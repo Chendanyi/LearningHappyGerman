@@ -8,6 +8,7 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 - Add entries when a bug, failed test, or validation issue is discovered.
 - Record concrete prevention rules from each incident.
 - **Evaluator — Morning Brief:** at the end of each autonomous session, append **one** new section at the **end** of the incident log (or directly after pipeline notes for that day) using the template under **Morning Brief template** below.
+- **Nightly — off-allowlist command log:** when using a command not on the Nightly allowlist in `AGENTS.md` but allowed by the non-blocking policy (e.g. essential `git`), add a short dated line or subsection: command, reason, and outcome.
 
 ## Morning Brief template
 
@@ -277,3 +278,7 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ### [PIPELINE-20260408-204908] Automated Pipeline Run
 
 - [2026-04-08 20:49:08 +0200] Pipeline failed: 0 tests, 0 lint violations.
+
+### [PIPELINE-20260408-205407] Automated Pipeline Run
+
+- [2026-04-08 20:54:06 +0200] Pipeline failed: 0 tests, 0 lint violations.
