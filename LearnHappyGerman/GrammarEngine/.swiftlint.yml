@@ -1,0 +1,7 @@
+parent_config: ../../.swiftlint.yml
+
+# Grammar rules are naturally branch-heavy; allow a higher complexity buffer here.
+cyclomatic_complexity:
+  warning: 15
+  error: 20
+  ignores_case_statements: true

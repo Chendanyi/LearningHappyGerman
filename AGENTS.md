@@ -100,3 +100,12 @@ For every feature, execute in order:
 - Do not hardcode machine-specific paths in project code or scripts.
 - Prefer portable detection (`command -v`, environment variables, dynamic runtime discovery).
 - Do not commit personal or sensitive local identifiers (home paths, usernames, device IDs, private tokens, or machine-specific metadata).
+
+## Lint Guardrail Overrides
+
+- Root lint policy: `.swiftlint.yml` (main code stays strict; `force_unwrapping` is an error).
+- Grammar complexity override: `LearnHappyGerman/GrammarEngine/.swiftlint.yml` (`cyclomatic_complexity` warning 15, error 20).
+- Test force-unwrap override:
+  - `LearnHappyGerman/LearnHappyGermanTests/.swiftlint.yml`
+  - `LearnHappyGerman/LearnHappyGermanUITests/.swiftlint.yml`
+  - In tests, `force_unwrapping` is downgraded to warning for concise fixture setup.
