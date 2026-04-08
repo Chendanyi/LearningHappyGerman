@@ -3,7 +3,8 @@
 ## Root Files
 
 - `MainLobbyView.swift` - Lobby entrance UI with CEFR selector and first-run import progress bar.
-- `FlashcardView.swift` - First classroom screen with answer validation (shared German normalization), centered feedback/`Next` column, and feedback animation.
+- `FlashcardView.swift` - First classroom screen with answer validation (shared German normalization), centered feedback/`Next` column, feedback animation, and `AudioService` TTS (de-DE) with speaker replay.
+- `AudioService.swift` - `AVSpeechSynthesizer` German speech, mixed audio session, coalesced manual replay.
 - `HangmanGameView.swift` - Hangman classroom with Mendl's cake-box visual, symmetric word slots, and letter keyboard.
 - `GrammarQuizView.swift` / `SentenceTemplate.swift` (nested `LearnHappyGerman/LearnHappyGerman/`) - A1 present-tense cloze; Hallway **Tenses**; MendlsPink + SocietyBlue.
 - `GermanFlashcardAnswerNormalization.swift` - Typed-answer comparison helper (de_DE folding, ß→`ss`).
@@ -22,6 +23,7 @@
 - `VocabularyDataIntegrityTests.swift` - Seeded nouns + CEFR levels; seed-if-needed idempotency.
 - `VocabularySymmetryLayoutTests.swift` - Grand Budapest theme symmetry contract for vocabulary screens.
 - `FlashcardRegressionTests.swift` - A1 filter integration after `initial_data` merge; umlaut/ß normalization tests.
+- `AudioServiceTests.swift` - Smoke tests for TTS helpers (no crash on empty or sample phrases).
 - `NAVIGATION_ARCHITECTURE.md` - Planner navigation specification.
 - `AGENTS.md` - Persona loop, architecture guidelines, and **Nightly Autonomous Protocol** (daily branch, allowlist: Unix tools + `swift`/`xcodebuild`/`xcrun`, non-blocking policy for unlisted essential commands with `MEMORY.md` logging, strict sudo/brew/`Package.swift` red lines).
 - `TODO.md` - Prioritized roadmap and feature checklists.

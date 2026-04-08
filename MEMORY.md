@@ -311,3 +311,17 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ### [PIPELINE-20260408-221101] Automated Pipeline Run
 
 - [2026-04-08 22:11:01 +0200] Pipeline passed: 23 tests, 0 lint violations.
+
+### [PIPELINE-20260408-222015] Automated Pipeline Run
+
+- [2026-04-08 22:20:14 +0200] Pipeline passed: 23 tests, 0 lint violations.
+
+### Audio Concierge (Flashcards) — 2026-04-09
+
+- **`AudioService`:** `AVSpeechSynthesizer`, voice `de-DE` via optional `AVSpeechSynthesisVoice(language:)` + fallback from `speechVoices()` (no force unwrap). Session: `.playback` + `.spokenAudio` + `.mixWithOthers`. Rate ~0.92× default, pitch 1.06. Manual replay uses `speakGermanReplayCoalesced` (0.15s) after `stopSpeaking(at: .immediate)`.
+- **`FlashcardView`:** Auto-speaks German study form (`expectedAnswer`) after each `nextCard()`; centered `speaker.wave.2.bubble.left` in LobbyBoyPurple.
+- **Evaluator:** `LearnHappyGermanTests/AudioServiceTests` green via `xcodebuild test -only-testing:LearnHappyGermanTests/AudioServiceTests`. Local `./check_integrity.sh` requires `swiftlint` on `PATH` (not present in this environment).
+
+### [PIPELINE-20260408-230648] Automated Pipeline Run
+
+- [2026-04-08 23:06:48 +0200] Pipeline failed: 21 tests, 0 lint violations.
