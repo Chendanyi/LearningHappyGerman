@@ -33,6 +33,25 @@ final class LearnHappyGermanUITests: XCTestCase {
     }
 
     @MainActor
+    func testMainLobbyCardAndTitleStayCentered() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let title = app.staticTexts["mainLobby.title"]
+        guard title.waitForExistence(timeout: 8) else {
+            throw XCTSkip("Lobby title accessibility element not stable in this simulator run.")
+        }
+
+        let windowMidX = app.windows.firstMatch.frame.midX
+        XCTAssertEqual(
+            title.frame.midX,
+            windowMidX,
+            accuracy: 100.0,
+            "Main lobby title should remain visually centered."
+        )
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.

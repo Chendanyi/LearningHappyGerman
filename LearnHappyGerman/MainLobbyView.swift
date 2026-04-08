@@ -33,6 +33,7 @@ struct MainLobbyView: View {
                         .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                        .accessibilityIdentifier("mainLobby.title")
 
                     Text("Select Your CEFR Level")
                         .font(Theme.Typography.rounded(.headline, weight: .medium))
@@ -96,6 +97,7 @@ struct MainLobbyView: View {
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
                         .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
                 )
+                .accessibilityIdentifier("mainLobby.card")
                 .wesSymmetricLayout()
             }
             .navigationBarHidden(true)
