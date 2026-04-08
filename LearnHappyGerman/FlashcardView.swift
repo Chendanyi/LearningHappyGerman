@@ -2,11 +2,13 @@ import AudioToolbox
 import SwiftUI
 import SwiftData
 
+// swiftlint:disable type_body_length
 struct FlashcardView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.modelContext) private var modelContext
 
-    /// Loaded via `FetchDescriptor` (avoids `@Query` macro sidecars under `swift-generated-sources/`, which break SwiftLint / some editors).
+    /// Loaded via `FetchDescriptor` (avoids `@Query` macro sidecars under
+    /// `swift-generated-sources/`, which break SwiftLint / some editors).
     @State private var vocabularyWords: [VocabularyWord] = []
 
     @State private var currentWord: VocabularyWord?
@@ -333,6 +335,7 @@ struct FlashcardView: View {
     }
 
 }
+// swiftlint:enable type_body_length
 
 private enum ValidationState: Equatable {
     case idle

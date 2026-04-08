@@ -15,6 +15,14 @@ opt_in_rules:
 force_unwrapping:
   severity: error
 
+cyclomatic_complexity:
+  warning: 10
+  error: 15
+  ignores_case_statements: true
+
+vertical_whitespace:
+  max_empty_lines: 1
+
 identifier_name:
   min_length: 2
   max_length:

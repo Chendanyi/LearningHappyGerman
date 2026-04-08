@@ -174,3 +174,23 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
   - When adding new corpus fields that users type, add a regression test that covers ä/ö/ü and ß.
 - **Validation Evidence:** `FlashcardRegressionTests.testGermanAnswerNormalizationTreatsUmlautsAsEquivalent`, `testGermanAnswerNormalizationMapsEszettForComparison`; lobby A1 filter test `testLobbyA1SelectionFiltersToInitialDataA1CorpusOnly`.
 
+
+### [PIPELINE-20260408-142417] Automated Pipeline Run
+
+- [2026-04-08 14:24:16 +0200] Pipeline failed: 0 tests, unknown lint violations.
+
+### [PIPELINE-20260408-142702] Automated Pipeline Run
+
+- [2026-04-08 14:27:02 +0200] Pipeline failed: 20 tests, 0 lint violations.
+
+### [PIPELINE-20260408-143100] Automated Pipeline Run
+
+- [2026-04-08 14:31:00 +0200] Pipeline failed: 20 tests, 0 lint violations.
+
+### [PIPELINE-20260408-143538] Automated Pipeline Run
+
+- [2026-04-08 14:35:38 +0200] Pipeline failed: 20 tests, 0 lint violations.
+
+### [PIPELINE-20260408-143858] Automated Pipeline Run
+
+- [2026-04-08 14:38:58 +0200] Pipeline passed: 20 tests, 0 lint violations.

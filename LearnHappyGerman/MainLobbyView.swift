@@ -33,6 +33,7 @@ struct MainLobbyView: View {
                         .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                        .accessibilityIdentifier("mainLobby.title")
 
                     Text("Select Your CEFR Level")
                         .font(Theme.Typography.rounded(.headline, weight: .medium))
@@ -50,7 +51,10 @@ struct MainLobbyView: View {
                                         .fill(Color.white.opacity(0.45))
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                                         .fill(Theme.Colors.societyBlue)
-                                        .frame(width: proxy.size.width * max(0, min(1, appState.initializationProgress)))
+                                        .frame(
+                                            width: proxy.size.width
+                                                * max(0, min(1, appState.initializationProgress))
+                                        )
                                 }
                             }
                             .frame(height: 10)
@@ -93,6 +97,7 @@ struct MainLobbyView: View {
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
                         .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
                 )
+                .accessibilityIdentifier("mainLobby.card")
                 .wesSymmetricLayout()
             }
             .navigationBarHidden(true)

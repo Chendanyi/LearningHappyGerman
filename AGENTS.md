@@ -73,10 +73,18 @@ For every feature, execute in order:
 - Evaluator has veto power over release readiness.
 - If any UI component violates symmetry or a German grammar test fails, Evaluator must trigger an automatic revert of the last commit.
 
+### Test Requirements
+
+- Grammar Regression: whenever a CEFR level is added or updated (`A1`...`C2`), tests must verify the `VocabularyWord` Noun + Article rule still holds.
+- Symmetry Test: UI tests should verify `MainLobbyView` key elements remain centered.
+- Memory Logging: every pipeline run (pass or fail) must append a summary line to `MEMORY.md`.
+
 ### Pre-commit Logic
 
 - Before every git commit, simulate a pre-commit hook by running the full test suite.
 - Record the run outcome in `MEMORY.md` with explicit `Pass`/`Fail` status.
+- No agent is allowed to bypass the pre-commit hook.
+- Every commit must be a **Verified Commit**.
 
 ## Git Workflow Refinement
 

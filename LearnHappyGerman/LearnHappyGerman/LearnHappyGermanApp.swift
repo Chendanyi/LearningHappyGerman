@@ -80,7 +80,8 @@ struct LearnHappyGermanApp: App {
             appState.humanTakeoverMessage = """
             Bundled data import failed. \(message)
 
-            Fix BundledData.json, reset the app, or reinstall. Developer: copy MEMORY_ingestion_appendix.md from the app container when import succeeds.
+            Fix BundledData.json, reset the app, or reinstall.
+            Developer: copy MEMORY_ingestion_appendix.md from the app container when import succeeds.
             """
             return
         }
@@ -94,9 +95,9 @@ struct LearnHappyGermanApp: App {
     private func mergeInitialDataFromBundle(context: ModelContext) {
         let seeder = LocalSeeder(context: context)
         do {
-            let n = try seeder.mergeInitialDataFromBundle()
-            if n > 0 {
-                print("LearnHappyGerman: merged \(n) rows from initial_data.json")
+            let mergedCount = try seeder.mergeInitialDataFromBundle()
+            if mergedCount > 0 {
+                print("LearnHappyGerman: merged \(mergedCount) rows from initial_data.json")
             }
         } catch {
             print("Initial data merge failed (non-fatal): \(error)")
@@ -144,10 +145,12 @@ struct LearnHappyGermanApp: App {
 
         let memoryConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 
-        let appSupport = FileManager.default.urls(
+        guard let appSupport = FileManager.default.urls(
             for: .applicationSupportDirectory,
             in: .userDomainMask
-        ).first!
+        ).first else {
+            fatalError("Could not resolve Application Support directory.")
+        }
         let folder = appSupport.appendingPathComponent("LearnHappyGerman", isDirectory: true)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         let storeURL = folder.appendingPathComponent("learnhappygerman-v9.store", isDirectory: false)

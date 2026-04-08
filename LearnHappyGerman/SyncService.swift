@@ -106,12 +106,12 @@ enum SyncService {
     }
 
     private static func normalizedArticle(_ raw: String, germanWord: String) throws -> String? {
-        let t = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        if t.isEmpty || t == "none" { return nil }
-        guard t == "der" || t == "die" || t == "das" else {
+        let trimmedArticle = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if trimmedArticle.isEmpty || trimmedArticle == "none" { return nil }
+        guard trimmedArticle == "der" || trimmedArticle == "die" || trimmedArticle == "das" else {
             throw SyncServiceError.invalidRemoteField("article for \(germanWord)")
         }
-        return t
+        return trimmedArticle
     }
 }
 

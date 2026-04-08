@@ -146,6 +146,7 @@ final class DataSeeder {
         try seedIfNeeded(records: records)
     }
 
+    // swiftlint:disable function_body_length
     /// Background-safe bulk upsert from `full_vocabulary.json` with batched saves and progress callbacks.
     static func importFullVocabularyFromBundle(
         container: ModelContainer,
@@ -234,4 +235,5 @@ final class DataSeeder {
             return FullVocabularyImportResult(inserted: inserted, updated: updated, totalProcessed: records.count)
         }.value
     }
+    // swiftlint:enable function_body_length
 }
