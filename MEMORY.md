@@ -7,6 +7,23 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 - Review before starting any task.
 - Add entries when a bug, failed test, or validation issue is discovered.
 - Record concrete prevention rules from each incident.
+- **Evaluator — Morning Brief:** at the end of each autonomous session, append **one** new section at the **end** of the incident log (or directly after pipeline notes for that day) using the template under **Morning Brief template** below.
+
+## Morning Brief template
+
+Append a section with this **exact** title pattern (level-1 heading, date in `YYYY-MM-DD`):
+
+```markdown
+# Morning Brief YYYY-MM-DD
+
+- **Tasks Completed:** (e.g. A2 Grammar database initialized.)
+- **Tests Passed:** (e.g. 12/12 unit tests passed.)
+- **Failed/Blocked:** (e.g. AI Voice Dialogue blocked due to missing API Key; or `(none)`.)
+- **Lint Status:** (List any persistent symmetry warnings; or `(none)`.)
+- **Merge (human, after approval):** `git checkout main && git merge nightly/YYYY-MM-DD` (optional: `git checkout main && git pull origin main && git merge nightly/YYYY-MM-DD`)
+```
+
+Replace `YYYY-MM-DD` in the title and in the merge line with the session date; replace `nightly/YYYY-MM-DD` with the **actual** branch name if it differs.
 
 ## Entry Template
 

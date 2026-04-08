@@ -22,6 +22,7 @@
 - Validate key UI flows and edge cases.
 - Report failures with reproducible steps and expected vs. actual outcomes.
 - Feed regression learnings into `MEMORY.md`.
+- At the **end of each autonomous session**, append a **Morning Brief** to `MEMORY.md` (see **Morning Brief (Evaluator)** below).
 
 ## Main Entrance (The Lobby) Architecture
 
@@ -162,3 +163,46 @@ When the user provides a **Nightly Batch Requirement** (ordered list of tasks):
 1. Process tasks **sequentially** in the given order.
 2. If a task **fails**, append a concise entry to `MEMORY.md` (symptom, root cause if known, next step) and **continue** with the **next independent** task. Do not halt the entire batch for one failure unless the user scope says otherwise.
 3. Dependent tasks that require a failed prerequisite should be **skipped** with a note in `MEMORY.md`, not attempted blindly.
+
+## Morning Brief (Evaluator)
+
+At the **end** of an autonomous session (after commits on `nightly/YYYY-MM-DD` or equivalent batch work), the Evaluator **must** append a new section to `MEMORY.md` titled:
+
+`# Morning Brief YYYY-MM-DD`
+
+Use the **authoritative calendar date** for the run (same date as the nightly branch when applicable).
+
+### Required fields
+
+Summarize, with concrete examples where helpful:
+
+| Field | Purpose |
+| --- | --- |
+| **Tasks Completed** | What shipped or was initialized (e.g. A2 grammar database initialized). |
+| **Tests Passed** | Counts or suite names (e.g. 12/12 unit tests passed; pipeline green). |
+| **Failed/Blocked** | Items not done and why (e.g. AI Voice Dialogue blocked due to missing API key). Use `(none)` if clear. |
+| **Lint Status** | SwiftLint outcome; list **persistent** symmetry or other warnings that remain. Use `(none)` if clean. |
+
+### Merge command for the human (after approval)
+
+Do **not** merge to `main` autonomously. Provide the human with the **exact** command(s) to run **after** they approve the work (replace `nightly/YYYY-MM-DD` with the actual branch).
+
+**Exact one-liner** (as requested for copy-paste):
+
+```bash
+git checkout main && git merge nightly/YYYY-MM-DD
+```
+
+**Recommended** (updates `main` from `origin` before merging):
+
+```bash
+git checkout main && git pull origin main && git merge nightly/YYYY-MM-DD
+```
+
+Example for a run on 9 April 2026:
+
+```bash
+git checkout main && git merge nightly/2026-04-09
+```
+
+The Morning Brief in `MEMORY.md` must repeat the **same** branch name in the **Merge** line so the human can copy-paste without guessing.

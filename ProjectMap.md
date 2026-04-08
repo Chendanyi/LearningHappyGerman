@@ -24,7 +24,7 @@
 - `NAVIGATION_ARCHITECTURE.md` - Planner navigation specification.
 - `AGENTS.md` - Persona loop, architecture guidelines, and **Nightly Autonomous Protocol** (daily branch, autonomy scope, manual gate for deps/sudo/brew, batch failure handling).
 - `TODO.md` - Prioritized roadmap and feature checklists.
-- `MEMORY.md` - Regression-prevention log.
+- `MEMORY.md` - Regression-prevention log; **Morning Brief** sections (`# Morning Brief YYYY-MM-DD`) appended by Evaluator at end of autonomous sessions.
 - `.cursorrules` - Pre-task workflow constraints.
 - `.swiftlint.yml` - Strict lint policy, naming rules, and symmetry exception checks.
 - `check_integrity.sh` - Local quality gate script for lint + tests.
