@@ -10,7 +10,7 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 
 ## Entry Template
 
-### [YYYY-MM-DD] 
+### [YYYY-MM-DD]
 
 - **Feature/Area:**
 - **Symptom/Error:**
@@ -21,8 +21,6 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 - **Validation Evidence:** (unit test, UI validation, manual steps)
 
 ## Incident Log
-
-
 
 # MEMORY
 
@@ -52,8 +50,6 @@ Persistent engineering memory to reduce repeated mistakes and regressions.
 - Promote high-frequency errors into explicit workflow checks.
 
 ## Incident Log
-
-
 
 # MEMORY - Regression Prevention Log
 
@@ -94,8 +90,6 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ---
 
 ## Issue History
-
-
 
 ### [AUDIT-2026-04-06] MainLobbyView Visual and Logic Audit
 
@@ -179,3 +173,4 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
   - Never compare German learner input with raw `lowercased()` only; use shared `GermanFlashcardAnswerNormalization` (or equivalent) for flashcards and any future typed German checks.
   - When adding new corpus fields that users type, add a regression test that covers ä/ö/ü and ß.
 - **Validation Evidence:** `FlashcardRegressionTests.testGermanAnswerNormalizationTreatsUmlautsAsEquivalent`, `testGermanAnswerNormalizationMapsEszettForComparison`; lobby A1 filter test `testLobbyA1SelectionFiltersToInitialDataA1CorpusOnly`.
+

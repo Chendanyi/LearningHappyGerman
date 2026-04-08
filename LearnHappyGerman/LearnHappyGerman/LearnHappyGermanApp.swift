@@ -41,6 +41,7 @@ struct LearnHappyGermanApp: App {
 
         if UserDefaults.standard.bool(forKey: importKey) {
             seedFallbackIfEmpty(context: context)
+            mergeFullVocabularyFromBundle(context: context)
             mergeInitialDataFromBundle(context: context)
             return
         }
@@ -50,6 +51,7 @@ struct LearnHappyGermanApp: App {
             UserDefaults.standard.set(true, forKey: importKey)
             try? IngestionAuditLogger.appendLegacyStoreLog(existingWordCount: existingWords)
             seedFallbackIfEmpty(context: context)
+            mergeFullVocabularyFromBundle(context: context)
             mergeInitialDataFromBundle(context: context)
             return
         }
@@ -78,6 +80,7 @@ struct LearnHappyGermanApp: App {
         }
 
         seedFallbackIfEmpty(context: context)
+        mergeFullVocabularyFromBundle(context: context)
         mergeInitialDataFromBundle(context: context)
     }
 
@@ -91,6 +94,20 @@ struct LearnHappyGermanApp: App {
             }
         } catch {
             print("Initial data merge failed (non-fatal): \(error)")
+        }
+    }
+
+    /// Adds vocabulary from `full_vocabulary.json` when missing.
+    /// This file is preferred as the primary large A1-C2 corpus if present in bundle.
+    private func mergeFullVocabularyFromBundle(context: ModelContext) {
+        let seeder = LocalSeeder(context: context)
+        do {
+            let n = try seeder.mergeFullVocabularyFromBundle()
+            if n > 0 {
+                print("LearnHappyGerman: merged \(n) rows from full_vocabulary.json")
+            }
+        } catch {
+            print("Full vocabulary merge failed (non-fatal): \(error)")
         }
     }
 
