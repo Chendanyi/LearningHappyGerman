@@ -340,7 +340,7 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 
 ### Repository layout reorg — 2026-04-18
 
-- **Change:** `Documentation/` holds `AGENTS.md`, `TODO.md`, `MEMORY.md`, `ProjectMap.md`, and architecture markdown; tooling lives under `Scripts/` (capital **S**); `Data/` placeholder added; unit tests consolidated under `LearnHappyGerman/LearnHappyGermanTests/Logic/`; Xcode explicit test `PBXFileReference` entries removed so `PBXFileSystemSynchronizedRootGroup` is the single source of truth for those files; root `check_integrity.sh` is a thin `exec` wrapper; removed obsolete root `MainLobbyView.swift` / `Theme.swift` stubs.
+- **Change:** `Documentation/` holds `AGENTS.md`, `TODO.md`, `MEMORY.md`, `ProjectMap.md`, and architecture markdown; tooling lives under `Scripts/` (capital **S**); `Data/` placeholder added; unit tests live under `LearnHappyGerman/LearnHappyGermanTests/` (synced); see **Feature-based source layout** below for `Features/` grouping; Xcode explicit test `PBXFileReference` entries removed so `PBXFileSystemSynchronizedRootGroup` is the single source of truth for those files; root `check_integrity.sh` is a thin `exec` wrapper; removed obsolete root `MainLobbyView.swift` / `Theme.swift` stubs.
 - **Prevention:** On case-insensitive volumes, avoid maintaining both `scripts/` and `Scripts/` as distinct folders—use one canonical `Scripts/` path and `cd` to repo root inside shell entrypoints.
 
 ### [VERIFY-20260418] Post-reorg checks
@@ -363,3 +363,12 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ### [PIPELINE-20260418-221918] Automated Pipeline Run
 
 - [2026-04-18 22:19:18 +0200] Pipeline passed: 4 tests, 0 lint violations.
+
+### Feature-based source layout — 2026-04-18
+
+- **Change:** Swift sources under `LearnHappyGerman/LearnHappyGerman/` are grouped into `Features/{Lobby,Flashcards,Hangman,Grammar,Bakery,Vocabulary}/` and `Services/`; tests mirror this under `LearnHappyGermanTests/Features/…`. Xcode app/unit/UI test targets now rely on **empty explicit Compile Sources** lists for those files; `PBXFileSystemSynchronizedRootGroup` compiles the trees (avoids duplicate symbols).
+- **Verification:** `xcodebuild test` (`LearnHappyGerman` scheme) passed after the move.
+
+### [PIPELINE-20260418-225143] Automated Pipeline Run
+
+- [2026-04-18 22:51:43 +0200] Pipeline passed: 29 tests, 0 lint violations.

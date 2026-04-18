@@ -24,7 +24,7 @@ You need a recent Xcode with the iOS SDK that matches the project’s deployment
 
 | Folder | Purpose |
 |--------|--------|
-| `LearnHappyGerman/` | Xcode project, app source, and bundled JSON vocabulary |
+| `LearnHappyGerman/` | Xcode project, bundled JSON, and Swift sources under `LearnHappyGerman/LearnHappyGerman/` (`Features/…`, `Services/…`) |
 | `Documentation/` | Roadmap, architecture notes, and project memory for contributors |
 | `Scripts/` | Quality checks and helper scripts (for example vocabulary audits) |
 
@@ -41,4 +41,4 @@ Maintainers use **`./check_integrity.sh`** (lint, data checks, and tests) before
 
 ---
 
-*Last updated: 2026-04-18*
+*Last updated: 2026-04-18 (feature-grouped app and test folders)*
