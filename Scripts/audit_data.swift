@@ -1,6 +1,6 @@
 #!/usr/bin/env swift
 // Standalone data audit for `full_vocabulary.json` (matches `DataSeeder.decodeRecords` payload shape).
-// Run: swift scripts/audit_data.swift [optional/path/to/full_vocabulary.json]
+// Run: swift Scripts/audit_data.swift [optional/path/to/full_vocabulary.json]
 //
 // Rules: rows with category "Noun" (case-insensitive) must have der/die/das; `germanWord` must use
 // Latin-script characters acceptable for German lemmas (umlauts, ß, hyphen, apostrophe, spaces).
@@ -90,7 +90,8 @@ private func resolveDefaultVocabularyURLs() -> [URL] {
     let cwd = URL(fileURLWithPath: FileManager.default.currentDirectoryPath, isDirectory: true)
     let candidates = [
         cwd.appendingPathComponent("LearnHappyGerman/LearnHappyGerman/full_vocabulary.json"),
-        cwd.appendingPathComponent("LearnHappyGerman/full_vocabulary.json")
+        cwd.appendingPathComponent("LearnHappyGerman/full_vocabulary.json"),
+        cwd.appendingPathComponent("LearnHappyGerman/Resources/full_vocabulary.json")
     ]
     var seen = Set<String>()
     var result: [URL] = []

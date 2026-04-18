@@ -270,12 +270,12 @@ final class LocalSeeder {
     }
 }
 
-// MARK: - Observability (appendix for MEMORY.md)
+// MARK: - Observability (appendix for Documentation/MEMORY.md)
 
 enum IngestionAuditLogger {
     private static let appendixFileName = "MEMORY_ingestion_appendix.md"
 
-    /// Writes a markdown block under Application Support for developers to paste into repo `MEMORY.md`.
+    /// Writes a markdown block under Application Support for developers to paste into repo `Documentation/MEMORY.md`.
     static func appendIngestionLog(wordCount: Int, ruleCount: Int, bundleVersion: Int) throws {
         let folder = try applicationSupportFolder()
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -292,7 +292,7 @@ enum IngestionAuditLogger {
         - **Words imported:** \(wordCount)
         - **Rules imported:** \(ruleCount)
         - **Prevention Rule(s):** If counts are zero or import fails, do not ship; fix JSON and re-run.
-        - **Note:** Copy this block into `MEMORY.md` Incident Log when integrating.
+        - **Note:** Copy this block into `Documentation/MEMORY.md` Incident Log when integrating.
 
         ---
         """
@@ -318,7 +318,8 @@ enum IngestionAuditLogger {
         ### [\(stamp)] Bundled import skipped (existing store)
 
         - **Existing vocabulary rows:** \(existingWordCount)
-        - **Note:** Marked import complete without re-reading `BundledData.json`. Copy into `MEMORY.md` if relevant.
+        - **Note:** Marked import complete without re-reading `BundledData.json`. Copy into
+          `Documentation/MEMORY.md` if relevant.
 
         ---
         """

@@ -21,8 +21,8 @@
 - Validate behavior with unit tests.
 - Validate key UI flows and edge cases.
 - Report failures with reproducible steps and expected vs. actual outcomes.
-- Feed regression learnings into `MEMORY.md`.
-- At the **end of each autonomous session**, append a **Morning Brief** to `MEMORY.md` (see **Morning Brief (Evaluator)** below).
+- Feed regression learnings into `Documentation/MEMORY.md`.
+- At the **end of each autonomous session**, append a **Morning Brief** to `Documentation/MEMORY.md` (see **Morning Brief (Evaluator)** below).
 
 ## Main Entrance (The Lobby) Architecture
 
@@ -64,13 +64,13 @@ For every feature, execute in order:
 
 ## Verification Mechanism (Data + UI)
 
-- **Bundled vocabulary audit:** `scripts/audit_data.swift` validates every `full_vocabulary.json` found under `LearnHappyGerman/` (app bundle copy and repo-level copy). It runs in `./scripts/pipeline.sh` **before** the fast-path / full-test split, so JSON-only commits still must pass data rules.
+- **Bundled vocabulary audit:** `Scripts/audit_data.swift` validates every `full_vocabulary.json` found under `LearnHappyGerman/` (app bundle copy and repo-level copy). It runs in `./Scripts/pipeline.sh` **before** the fast-path / full-test split, so JSON-only commits still must pass data rules.
 - **Runtime integrity:** `VocabularyDataIntegrityTests` and grammar regressions remain the SwiftData-level gate inside the test suite.
 
 ## Break Glass Protocol (SwiftUI Symmetry)
 
 - If an Agent is **stuck in a loop** trying to satisfy a **SwiftLint symmetry warning** (for example `symmetry_exception_marker` or repeated layout tweaks with no stable pass), it **must stop** and ask the user for an explicit **Design Exception** (what to allow, which screen, and why) instead of guessing further padding or offsets.
-- After approval, document the exception in code with `// SYMMETRY-EXCEPTION: <reason>` on the relevant directional padding (see `.swiftlint.yml`), or adjust the lint rule via a deliberate project decision recorded in `MEMORY.md`.
+- After approval, document the exception in code with `// SYMMETRY-EXCEPTION: <reason>` on the relevant directional padding (see `.swiftlint.yml`), or adjust the lint rule via a deliberate project decision recorded in `Documentation/MEMORY.md`.
 
 ## Zero-Failure Merge Policy
 
@@ -88,12 +88,12 @@ For every feature, execute in order:
 
 - Grammar Regression: whenever a CEFR level is added or updated (`A1`...`C2`), tests must verify the `VocabularyWord` Noun + Article rule still holds.
 - Symmetry Test: UI tests should verify `MainLobbyView` key elements remain centered.
-- Memory Logging: every pipeline run (pass or fail) must append a summary line to `MEMORY.md`.
+- Memory Logging: every pipeline run (pass or fail) must append a summary line to `Documentation/MEMORY.md`.
 
 ### Pre-commit Logic
 
 - Before every git commit, simulate a pre-commit hook by running the full test suite.
-- Record the run outcome in `MEMORY.md` with explicit `Pass`/`Fail` status.
+- Record the run outcome in `Documentation/MEMORY.md` with explicit `Pass`/`Fail` status.
 - No agent is allowed to bypass the pre-commit hook.
 - Every commit must be a **Verified Commit**.
 
@@ -103,7 +103,7 @@ For every feature, execute in order:
 - After implementation, Evaluator must run `./check_integrity.sh` before merge or release decisions.
 - If integrity check passes, append a `Verified` badge marker to the commit message.
 - Standard commit format for passed checks: `<type>: <short description> [Verified]` (example: `feat: add A1 flashcards flow [Verified]`).
-- If integrity check fails, Agent must analyze the error, log the failure pattern in `MEMORY.md`, and fix it immediately.
+- If integrity check fails, Agent must analyze the error, log the failure pattern in `Documentation/MEMORY.md`, and fix it immediately.
 - Do not ask the user for lint/test failure help until three autonomous fix attempts have been made and documented.
 
 ## Portability and Privacy Guardrails (All Personas)
@@ -143,7 +143,7 @@ Agents may **read and write** within these areas (this repository’s layout):
 
 Agents may **execute** for validation:
 
-- `./scripts/pipeline.sh`
+- `./Scripts/pipeline.sh`
 - `./check_integrity.sh` (when present)
 - `xcodebuild` (build/test) against the `LearnHappyGerman` scheme and available simulators, consistent with existing scripts.
 
@@ -157,7 +157,7 @@ To reduce workflow interruptions, the following are **pre-authorized** for night
 
 **Build and Apple toolchain:**
 
-- `swift` (including `swift scripts/…` for repo scripts; do not use SwiftPM to add or change dependencies—see red lines)
+- `swift` (including `swift Scripts/…` for repo scripts; do not use SwiftPM to add or change dependencies—see red lines)
 - `xcodebuild`
 - `xcrun` (including `simctl` and other subcommands invoked via `xcrun`)
 
@@ -166,9 +166,9 @@ To reduce workflow interruptions, the following are **pre-authorized** for night
 If a command is **not** listed above but appears **essential** for the task (for example a specific **`git`** invocation):
 
 1. **Do not stop** the batch solely because the command is unlisted.
-2. **Log** the exact command line and short rationale in `MEMORY.md` (dated entry or under the session’s notes).
+2. **Log** the exact command line and short rationale in `Documentation/MEMORY.md` (dated entry or under the session’s notes).
 3. **Prefer** an alternative path using only allowlisted commands when one exists.
-4. **Only** if no alternative exists **and** the task is **Critical** to the batch: mark the item **Blocked** in `TODO.md` (see **Nightly — Blocked**), note it in `MEMORY.md`, and **continue** with the next independent batch item.
+4. **Only** if no alternative exists **and** the task is **Critical** to the batch: mark the item **Blocked** in `Documentation/TODO.md` (see **Nightly — Blocked**), note it in `Documentation/MEMORY.md`, and **continue** with the next independent batch item.
 
 ### Manual authorization gate
 
@@ -180,19 +180,19 @@ Without **explicit human confirmation**, agents are **forbidden** to:
 
 **Strict red-line:** `sudo`, `brew` (install/upgrade), and **any** `Package.swift` modification that adds or bumps dependencies remain **absolute**—no exceptions via the non-blocking policy.
 
-If a new library or tool is needed, add a **Blocked** line item under **Nightly — Blocked (needs human)** in `TODO.md` with a short rationale and link or package name; do not change `Package.swift` autonomously.
+If a new library or tool is needed, add a **Blocked** line item under **Nightly — Blocked (needs human)** in `Documentation/TODO.md` with a short rationale and link or package name; do not change `Package.swift` autonomously.
 
 ### Nightly batch processing
 
 When the user provides a **Nightly Batch Requirement** (ordered list of tasks):
 
 1. Process tasks **sequentially** in the given order.
-2. If a task **fails**, append a concise entry to `MEMORY.md` (symptom, root cause if known, next step) and **continue** with the **next independent** task. Do not halt the entire batch for one failure unless the user scope says otherwise.
-3. Dependent tasks that require a failed prerequisite should be **skipped** with a note in `MEMORY.md`, not attempted blindly.
+2. If a task **fails**, append a concise entry to `Documentation/MEMORY.md` (symptom, root cause if known, next step) and **continue** with the **next independent** task. Do not halt the entire batch for one failure unless the user scope says otherwise.
+3. Dependent tasks that require a failed prerequisite should be **skipped** with a note in `Documentation/MEMORY.md`, not attempted blindly.
 
 ## Morning Brief (Evaluator)
 
-At the **end** of an autonomous session (after commits on `nightly/YYYY-MM-DD` or equivalent batch work), the Evaluator **must** append a new section to `MEMORY.md` titled:
+At the **end** of an autonomous session (after commits on `nightly/YYYY-MM-DD` or equivalent batch work), the Evaluator **must** append a new section to `Documentation/MEMORY.md` titled:
 
 `# Morning Brief YYYY-MM-DD`
 
@@ -231,4 +231,4 @@ Example for a run on 9 April 2026:
 git checkout main && git merge nightly/2026-04-09
 ```
 
-The Morning Brief in `MEMORY.md` must repeat the **same** branch name in the **Merge** line so the human can copy-paste without guessing.
+The Morning Brief in `Documentation/MEMORY.md` must repeat the **same** branch name in the **Merge** line so the human can copy-paste without guessing.
