@@ -9,9 +9,10 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - Routes the Hallway "Flashcards" door to `FlashcardView` as the first classroom.
 - Routes the Hallway "Hangman" door to `HangmanGameView` with SwiftData-backed round selection by current CEFR level, noun article reveal, and concierge/room-service win-loss states.
 - Routes the Hallway "Tenses" door to `GrammarQuizView` (A1 present-tense cloze using `SentenceTemplate` / `A1GrammarSentenceLibrary`; lobby level must be A1 to play).
+- Routes the Hallway "AI Dialogue" door to `SimpleLifeBakeryDialogueView` + `BakeryScenarioEngine` (A1 multi-turn bakery scenario, present tense only).
 - On first launch, `LocalSeeder` reads `BundledData.json` from the bundle and imports words and grammar rules into SwiftData; counts are logged under Application Support (`MEMORY_ingestion_appendix.md`) for pasting into `MEMORY.md`. If that fails, a **Human Takeover** alert is shown.
 - If the store is still empty afterward, `DataSeeder` supplies the built-in starter list (legacy fallback).
-- Uses SwiftData hybrid models: `VocabularyWord` (UUID `id`, `version`, indexed `germanWord` + `level` as `String`, optional `article`, `category` as `String`) and `GrammarRule` (`title`, `explanation`, `level`, `exampleSentences`). Store file: Application Support `LearnHappyGerman/learnhappygerman-v9.store`, with in-memory fallback if opening the file fails.
+- Uses SwiftData hybrid models: `VocabularyWord` (UUID `id`, `version`, indexed `germanWord` + `level` as `String`, optional `article`, `category` as `String`, optional `pluralSuffix` + `exampleSentence` for A2 enrichment) and `GrammarRule` (`title`, `explanation`, `level`, `exampleSentences`). Store file: Application Support `LearnHappyGerman/learnhappygerman-v9.store`, with in-memory fallback if opening the file fails.
 - Applies shared design tokens from `Theme.swift` (palette, typography, symmetry, icon style).
 - Enforces a quality gate with SwiftLint + tests via `check_integrity.sh`.
   - Runs `swiftlint` and `xcodebuild test` for the `LearnHappyGerman` scheme.
@@ -23,9 +24,9 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - `AudioService.swift`: AVFoundation `AVSpeechSynthesizer` TTS locked to **de-DE**, mixed audio session (`playback` + `mixWithOthers`), auto-speaks the German study form on each new card and a LobbyBoyPurple `speaker.wave.2.bubble.left` control for replay (coalesced rapid taps).
 - `HangmanGameView.swift`: Mendl's Cake Box themed hangman room that fetches a random `VocabularyWord` for the selected level, tracks guesses/attempts, reveals noun articles, and shows concierge (win) / room-service tray (loss) outcomes.
 - `GrammarQuizView.swift` / `SentenceTemplate.swift` (under `LearnHappyGerman/LearnHappyGerman/`): A1 fill-in-the-blank present tense; MendlsPink prompt card and SocietyBlue input field; wired from Hallway **Tenses**.
-- `full_vocabulary.json` (repo + app bundle): expanded with **103** A2 lemmas (verbs with Partizip II in `englishTranslation`, nouns with articles, adjectives); merge helper `scripts/merge_a2_vocab_batch.py`.
+- `full_vocabulary.json` (repo + app bundle): **500** unique **A2** rows with `pluralSuffix` + `exampleSentence` (themes include Workplace, Travel, Media, Emotions); rebuild via `scripts/build_a2_500.py`. Level overlap guard: `scripts/audit_level_overlap.py`.
 - `Theme.swift`: App design tokens and layout/icon helpers.
-- `VocabularyWord.swift`: SwiftData vocabulary model (UUID, `version`, indexed `germanWord`/`level` strings) and `CEFRLevel` enum for UI routing only.
+- `VocabularyWord.swift`: SwiftData vocabulary model (UUID, `version`, indexed `germanWord`/`level` strings, optional `pluralSuffix` / `exampleSentence`) and `CEFRLevel` enum for UI routing only.
 - `GrammarRule.swift`: SwiftData grammar content (`title`, `explanation`, `level`, `exampleSentences`).
 - `DataSeeder.swift`: A1-C2 import and seed-if-needed logic, plus background bulk import from `full_vocabulary.json` with 500-row batch saves, upsert by `id`/`(germanWord, level)`, and progress callback.
 - `vocab_processor.py`: Converts external CSV/JSON vocab sources into minified `full_vocabulary.json` with app fields (`germanWord`, `article`, `englishTranslation`, `level`, `category`).
@@ -42,7 +43,7 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
 - `SyncServiceTests.swift`: Remote merge test; updated gloss preserves `isMastered`.
 - `.swiftlint.yml`: strict lint configuration and custom style/symmetry checks.
 - `check_integrity.sh`: pipeline script (`swiftlint` + data audit + `xcodebuild test` for the `LearnHappyGerman` scheme) that fails fast on violations.
-- `scripts/audit_data.swift`: standalone Swift audit of `full_vocabulary.json` (Noun rows need der/die/das; German lemma character set). Run: `swift scripts/audit_data.swift`. Invoked automatically by `scripts/pipeline.sh` and `check_integrity.sh` before tests.
+- `scripts/audit_data.swift`: standalone Swift audit of `full_vocabulary.json` (Noun rows need der/die/das; German lemma character set; **A2** rows require `exampleSentence`, and A2 nouns with articles require `pluralSuffix`). Run: `swift scripts/audit_data.swift`. Invoked automatically by `scripts/pipeline.sh` and `check_integrity.sh` before tests.
 - `Package.swift`: SPM tooling package at repo root; depends on **swift-snapshot-testing** for future Lobby/classroom visual regression tests (the iOS app still builds from `LearnHappyGerman.xcodeproj`). Run `swift package resolve` after cloning. `Package.resolved` pins dependency versions for reproducible tooling builds.
 - `scripts/pipeline.sh`: CI quality gate with fast-path + stability guards (exits `1` on failure):
   - runs `swiftlint` first, then `scripts/audit_data.swift` (always, including fast-path);
@@ -72,4 +73,4 @@ SwiftUI + SwiftData learning app structured around a lobby-and-classroom experie
     - `--mapping-json '{"germanWord":"lemma","englishTranslation":"en","level":"cefr","category":"pos","article":"artikel"}'`
 - Generated payload is minified and shaped as `{"version":1,"words":[...]}` with fields used by `VocabularyWord`.
 
-Last updated: 2026-04-09 (Audio Concierge TTS for flashcards; A2 vocab + GrammarQuiz Tenses; pipeline test timeout 600s)
+Last updated: 2026-04-09 (500 A2 vocabulary + plural/example fields; B1 dedupe in `BundledData`; A1 bakery dialogue; audits)

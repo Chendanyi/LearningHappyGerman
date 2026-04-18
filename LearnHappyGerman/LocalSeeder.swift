@@ -129,6 +129,8 @@ final class LocalSeeder {
                 englishTranslation: dto.englishTranslation,
                 level: dto.level,
                 category: dto.category,
+                pluralSuffix: nil,
+                exampleSentence: nil,
                 isMastered: dto.isMastered ?? false,
                 version: dto.version ?? 1
             )
@@ -196,6 +198,8 @@ final class LocalSeeder {
                 englishTranslation: dto.englishTranslation,
                 level: dto.level,
                 category: dto.category,
+                pluralSuffix: nil,
+                exampleSentence: nil,
                 isMastered: dto.isMastered ?? false,
                 version: dto.version ?? 1
             )
@@ -245,7 +249,9 @@ final class LocalSeeder {
                 article: article,
                 englishTranslation: record.englishTranslation,
                 level: record.level,
-                category: record.category
+                category: record.category,
+                pluralSuffix: record.pluralSuffix,
+                exampleSentence: record.exampleSentence
             )
             guard word.hasValidArticleForNoun else {
                 throw LocalSeederError.invalidWord(

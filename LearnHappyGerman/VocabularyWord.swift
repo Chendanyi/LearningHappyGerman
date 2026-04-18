@@ -49,6 +49,10 @@ final class VocabularyWord {
     var level: String
     /// Domain or part-of-speech tag, e.g. `Bakery`, `Office`, `Noun`.
     var category: String
+    /// For nouns: plural ending hint (e.g. `-en`, `-¨e`, `-s`); `nil` when not applicable.
+    var pluralSuffix: String?
+    /// Optional A2 example sentence (present tense, level-appropriate).
+    var exampleSentence: String?
     var isMastered: Bool
     var version: Int
 
@@ -59,6 +63,8 @@ final class VocabularyWord {
         englishTranslation: String,
         level: String,
         category: String,
+        pluralSuffix: String? = nil,
+        exampleSentence: String? = nil,
         isMastered: Bool = false,
         version: Int = 1
     ) {
@@ -68,6 +74,8 @@ final class VocabularyWord {
         self.englishTranslation = englishTranslation
         self.level = level
         self.category = category
+        self.pluralSuffix = pluralSuffix
+        self.exampleSentence = exampleSentence
         self.isMastered = isMastered
         self.version = version
     }

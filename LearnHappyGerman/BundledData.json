@@ -29,11 +29,11 @@
       "version": 1
     },
     {
-      "germanWord": "lernen",
-      "article": "none",
-      "englishTranslation": "to learn",
+      "germanWord": "Voraussetzung",
+      "article": "die",
+      "englishTranslation": "prerequisite",
       "level": "B1",
-      "category": "Verb",
+      "category": "Noun",
       "isMastered": false,
       "version": 1
     },

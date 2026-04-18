@@ -88,6 +88,8 @@ enum SyncService {
                     englishTranslation: dto.englishTranslation,
                     level: dto.level,
                     category: trimmedCategory,
+                    pluralSuffix: nil,
+                    exampleSentence: nil,
                     isMastered: false,
                     version: remoteVersion
                 )

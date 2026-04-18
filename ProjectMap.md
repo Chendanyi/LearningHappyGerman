@@ -7,6 +7,7 @@
 - `AudioService.swift` - `AVSpeechSynthesizer` German speech, mixed audio session, coalesced manual replay.
 - `HangmanGameView.swift` - Hangman classroom with Mendl's cake-box visual, symmetric word slots, and letter keyboard.
 - `GrammarQuizView.swift` / `SentenceTemplate.swift` (nested `LearnHappyGerman/LearnHappyGerman/`) - A1 present-tense cloze; Hallway **Tenses**; MendlsPink + SocietyBlue.
+- `SimpleLifeBakeryDialogueView.swift` / `BakeryScenarioEngine.swift` - A1 multi-turn bakery dialogue; Hallway **AI Dialogue**.
 - `GermanFlashcardAnswerNormalization.swift` - Typed-answer comparison helper (de_DE folding, ß→`ss`).
 - `Theme.swift` - Shared color, typography, symmetry, and icon styling utilities.
 - `VocabularyWord.swift` - SwiftData vocabulary model (UUID `id`, `version`, indexed `germanWord`/`level` strings, optional `article`, `category` string) and `CEFRLevel` for UI only.
@@ -17,7 +18,7 @@
 - `LocalSeeder.swift` - First-launch ingestion from `BundledData.json`; merges `full_vocabulary.json` (preferred large corpus) and `initial_data.json` idempotently on each bootstrap path; audit log for `MEMORY.md`.
 - `BundledData.json` (under `LearnHappyGerman/` and nested app folder) - Bundled vocabulary and grammar rules JSON (`exampleSentences` on rules).
 - `initial_data.json` - 30 A1 words (UUID `id`, `article`, thematic `category`); shipped in app bundle; covered by `VocabularyDataIntegrityTests`.
-- `full_vocabulary.json` - Generated full corpus payload (`{"version":1,"words":[...]}`) for large A1-C2 ingestion; A2 batch merges via `scripts/merge_a2_vocab_batch.py`.
+- `full_vocabulary.json` - Generated full corpus payload (`{"version":1,"words":[...]}`) for large A1-C2 ingestion; **500** A2 lemmas with `pluralSuffix` + `exampleSentence` via `scripts/build_a2_500.py`; `scripts/audit_level_overlap.py` ensures no B1 lemma duplicates A1/A2.
 - `SyncService.swift` - Remote JSON merge placeholder; `SyncServiceTests.swift` - remote update preserves mastery.
 - `VocabularyWordTests.swift` - Noun/article validity guard.
 - `VocabularyDataIntegrityTests.swift` - Seeded nouns + CEFR levels; seed-if-needed idempotency.

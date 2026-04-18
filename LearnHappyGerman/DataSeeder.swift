@@ -14,6 +14,8 @@ struct VocabularySeedRecord: Codable {
     let level: String
     let category: String
     let version: Int?
+    let pluralSuffix: String?
+    let exampleSentence: String?
 }
 
 struct FullVocabularyImportResult {
@@ -33,7 +35,9 @@ final class DataSeeder {
             englishTranslation: "apple",
             level: "A1",
             category: "Noun",
-            version: 1
+            version: 1,
+            pluralSuffix: nil,
+            exampleSentence: nil
         ),
         .init(
             id: nil,
@@ -42,7 +46,9 @@ final class DataSeeder {
             englishTranslation: "book",
             level: "A1",
             category: "Noun",
-            version: 1
+            version: 1,
+            pluralSuffix: nil,
+            exampleSentence: nil
         ),
         .init(
             id: nil,
@@ -51,16 +57,20 @@ final class DataSeeder {
             englishTranslation: "station",
             level: "A2",
             category: "Noun",
-            version: 1
+            version: 1,
+            pluralSuffix: nil,
+            exampleSentence: nil
         ),
         .init(
             id: nil,
-            germanWord: "lernen",
-            article: nil,
-            englishTranslation: "to learn",
+            germanWord: "Voraussetzung",
+            article: "die",
+            englishTranslation: "prerequisite",
             level: "B1",
-            category: "Verb",
-            version: 1
+            category: "Noun",
+            version: 1,
+            pluralSuffix: nil,
+            exampleSentence: nil
         ),
         .init(
             id: nil,
@@ -69,7 +79,9 @@ final class DataSeeder {
             englishTranslation: "invoice",
             level: "B2",
             category: "Noun",
-            version: 1
+            version: 1,
+            pluralSuffix: nil,
+            exampleSentence: nil
         ),
         .init(
             id: nil,
@@ -78,7 +90,9 @@ final class DataSeeder {
             englishTranslation: "excellent",
             level: "C1",
             category: "Adjective",
-            version: 1
+            version: 1,
+            pluralSuffix: nil,
+            exampleSentence: nil
         ),
         .init(
             id: nil,
@@ -87,7 +101,9 @@ final class DataSeeder {
             englishTranslation: "worldview",
             level: "C2",
             category: "Noun",
-            version: 1
+            version: 1,
+            pluralSuffix: nil,
+            exampleSentence: nil
         )
     ]
 
@@ -113,6 +129,8 @@ final class DataSeeder {
                 englishTranslation: record.englishTranslation,
                 level: record.level,
                 category: record.category,
+                pluralSuffix: record.pluralSuffix,
+                exampleSentence: record.exampleSentence,
                 version: record.version ?? 1
             )
             context.insert(word)
@@ -203,6 +221,8 @@ final class DataSeeder {
                     existingWord.englishTranslation = record.englishTranslation
                     existingWord.level = record.level
                     existingWord.category = record.category
+                    existingWord.pluralSuffix = record.pluralSuffix
+                    existingWord.exampleSentence = record.exampleSentence
                     existingWord.version = max(existingWord.version, incomingVersion)
                     updated += 1
                 } else {
@@ -214,6 +234,8 @@ final class DataSeeder {
                         englishTranslation: record.englishTranslation,
                         level: record.level,
                         category: record.category,
+                        pluralSuffix: record.pluralSuffix,
+                        exampleSentence: record.exampleSentence,
                         isMastered: false,
                         version: incomingVersion
                     )
