@@ -1,81 +1,44 @@
-# LearningHappyGerman
+# Learning Happy German
 
-SwiftUI + SwiftData learning app structured around a lobby-and-classroom experience.
+An iOS app for learning German with a simple **lobby → hallway → rooms** flow. You pick your level (A1–C2), then open activities such as flashcards, hangman, grammar practice, and a short dialogue scene.
 
-## What It Does
+## What you can do in the app
 
-- Shows a Main Entrance lobby (`MainLobbyView`) for CEFR level check-in (`A1` to `C2`).
-- Uses a symmetrical "Hotel Concierge Board" composition for level selection.
-- Routes the Hallway "Flashcards" door to `FlashcardView` as the first classroom.
-- Routes the Hallway "Hangman" door to `HangmanGameView` with SwiftData-backed round selection by current CEFR level, noun article reveal, and concierge/room-service win-loss states.
-- Routes the Hallway "Tenses" door to `GrammarQuizView` (A1 present-tense cloze using `SentenceTemplate` / `A1GrammarSentenceLibrary`; lobby level must be A1 to play).
-- Routes the Hallway "AI Dialogue" door to `SimpleLifeBakeryDialogueView` + `BakeryScenarioEngine` (A1 multi-turn bakery scenario, present tense only).
-- On first launch, `LocalSeeder` reads `BundledData.json` from the bundle and imports words and grammar rules into SwiftData; counts are logged under Application Support (`MEMORY_ingestion_appendix.md`) for pasting into `Documentation/MEMORY.md`. If that fails, a **Human Takeover** alert is shown.
-- If the store is still empty afterward, `DataSeeder` supplies the built-in starter list (legacy fallback).
-- Uses SwiftData hybrid models: `VocabularyWord` (UUID `id`, `version`, indexed `germanWord` + `level` as `String`, optional `article`, `category` as `String`, optional `pluralSuffix` + `exampleSentence` for A2 enrichment) and `GrammarRule` (`title`, `explanation`, `level`, `exampleSentences`). Store file: Application Support `LearnHappyGerman/learnhappygerman-v9.store`, with in-memory fallback if opening the file fails.
-- Applies shared design tokens from `Theme.swift` (palette, typography, symmetry, icon style).
-- Enforces a quality gate with SwiftLint + tests via `./check_integrity.sh` (wrapper that runs `Scripts/check_integrity.sh` from the repo root).
-  - Runs `swiftlint` and `xcodebuild test` for the `LearnHappyGerman` scheme.
+- **Choose your level** on the main screen (A1 through C2), styled like a hotel concierge board.
+- **Flashcards** — study words for your level, hear German pronunciation, and mark progress as you go.
+- **Hangman** — guess letters for words at your level; nouns show the correct article (der / die / das) when relevant.
+- **Tenses** — fill-in exercises for beginner grammar (A1 present tense).
+- **AI Dialogue** — a short, guided bakery-style conversation for A1 practice.
 
-## Project Layout
+On first launch, the app loads bundled vocabulary and grammar from its own data files. Everything stays on your device unless you later use features that sync data (if enabled in a future build).
 
-- `Documentation/` — `AGENTS.md`, `TODO.md`, `MEMORY.md`, `ProjectMap.md`, architecture notes (planner–evaluator workflow and regression log).
-- `Scripts/` — `check_integrity.sh`, `pipeline.sh`, `audit_data.swift`, `build_a2_500.py`, `audit_level_overlap.py`, `merge_a2_vocab_batch.py`, `vocab_processor.py`.
-- `Data/` — reserved for shared datasets (empty placeholder; vocabulary JSON lives under `LearnHappyGerman/`).
-- `LearnHappyGerman/Resources/` — bundled asset staging (see `LearnHappyGerman/Resources/README.md`).
-- `LearnHappyGerman/LearnHappyGermanTests/Logic/` — unit tests previously at the Xcode project root group (symmetry, vocabulary integrity, audio, bakery, hangman logic, grammar quiz, etc.).
-- `LearnHappyGerman/MainLobbyView.swift`: Main Entrance (Lobby) UI and level-selection interactions, including first-run vocabulary import progress bar.
-- `FlashcardView.swift`: First classroom with `FetchDescriptor` vocabulary filtered by `AppState.currentLevel` (no `@Query`, to avoid macro temp-file tooling issues), Check using `GermanFlashcardAnswerNormalization` (German folding + ß→`ss` + lowercase; article rules for noun-like rows), success sound/animation and `isMastered` on correct, LobbyBoyPurple wrong-answer hint, centered feedback column and **Next** only after a check.
-- `AudioService.swift`: AVFoundation `AVSpeechSynthesizer` TTS locked to **de-DE**, mixed audio session (`playback` + `mixWithOthers`), auto-speaks the German study form on each new card and a LobbyBoyPurple `speaker.wave.2.bubble.left` control for replay (coalesced rapid taps).
-- `HangmanGameView.swift`: Mendl's Cake Box themed hangman room that fetches a random `VocabularyWord` for the selected level, tracks guesses/attempts, reveals noun articles, and shows concierge (win) / room-service tray (loss) outcomes.
-- `GrammarQuizView.swift` / `SentenceTemplate.swift` (under `LearnHappyGerman/LearnHappyGerman/`): A1 fill-in-the-blank present tense; MendlsPink prompt card and SocietyBlue input field; wired from Hallway **Tenses**.
-- `full_vocabulary.json` (repo + app bundle): **500** unique **A2** rows with `pluralSuffix` + `exampleSentence` (themes include Workplace, Travel, Media, Emotions); rebuild via `Scripts/build_a2_500.py`. Level overlap guard: `Scripts/audit_level_overlap.py`.
-- `Theme.swift`: App design tokens and layout/icon helpers.
-- `VocabularyWord.swift`: SwiftData vocabulary model (UUID, `version`, indexed `germanWord`/`level` strings, optional `pluralSuffix` / `exampleSentence`) and `CEFRLevel` enum for UI routing only.
-- `GrammarRule.swift`: SwiftData grammar content (`title`, `explanation`, `level`, `exampleSentences`).
-- `DataSeeder.swift`: A1-C2 import and seed-if-needed logic, plus background bulk import from `full_vocabulary.json` with 500-row batch saves, upsert by `id`/`(germanWord, level)`, and progress callback.
-- `Scripts/vocab_processor.py`: Converts external CSV/JSON vocab sources into minified `full_vocabulary.json` with app fields (`germanWord`, `article`, `englishTranslation`, `level`, `category`).
-- `LocalSeeder.swift`: Loads `BundledData.json` on first launch and writes ingestion audit lines for `Documentation/MEMORY.md`.
-- `SyncService.swift`: Placeholder remote JSON fetch + merge into SwiftData (dedupe by word + level; preserves `isMastered`). See `SyncServiceTests`.
-- `BundledData.json`: Static corpus (vocabulary + grammar rules with `exampleSentences` arrays) shipped in the app bundle.
-- `initial_data.json`: 30 A1 vocabulary rows (themes `Daily Life`, `Activities`, `Travel`, `Home`, `People`, `Time`, plus verbs); merged into SwiftData on launch via `LocalSeeder.mergeInitialDataFromBundle()` (skips rows already present for the same `germanWord` + `level`). `BundledData.json` still ships the smaller cross-level sample; A1 richness comes from this merge.
-- `full_vocabulary.json`: Minified external-vocabulary payload generated by `vocab_processor.py` and compatible with `DataSeeder.decodeRecords(from:)`; when bundled, app bootstrap merges this corpus before `initial_data.json`.
-- `LearnHappyGermanTests/Logic/VocabularyWordTests.swift`: Evaluator guard test for noun/article validity.
-- `LearnHappyGermanTests/Logic/VocabularyDataIntegrityTests.swift`: Article + CEFR level invariants on seeded data; `DataSeeder.seedIfNeeded` idempotency (no duplicates on second run).
-- `LearnHappyGermanTests/Logic/VocabularySymmetryLayoutTests.swift`: Grand Budapest symmetric layout tokens + `Theme.VocabularyGrandBudapest` contract used by vocabulary UI.
-- `GermanFlashcardAnswerNormalization.swift`: Shared normalization for typed German answers (umlaut folding, eszett).
-- `LearnHappyGermanTests/Logic/FlashcardRegressionTests.swift`: A1 lobby filter vs `initial_data.json` after merge + umlaut/ß normalization regressions.
-- `LearnHappyGermanTests/Logic/SyncServiceTests.swift`: Remote merge test; updated gloss preserves `isMastered`.
-- `.swiftlint.yml`: strict lint configuration and custom style/symmetry checks.
-- `Scripts/check_integrity.sh`: pipeline script (`swiftlint` + data audit + `xcodebuild test` for the `LearnHappyGerman` scheme) that fails fast on violations. Run from anywhere via repo-root `./check_integrity.sh`.
-- `Scripts/audit_data.swift`: standalone Swift audit of `full_vocabulary.json` (Noun rows need der/die/das; German lemma character set; **A2** rows require `exampleSentence`, and A2 nouns with articles require `pluralSuffix`). Run from repo root: `swift Scripts/audit_data.swift`. Invoked automatically by `Scripts/pipeline.sh` and `Scripts/check_integrity.sh` before tests.
-- `Package.swift`: SPM tooling package at repo root; depends on **swift-snapshot-testing** for future Lobby/classroom visual regression tests (the iOS app still builds from `LearnHappyGerman.xcodeproj`). Run `swift package resolve` after cloning. `Package.resolved` pins dependency versions for reproducible tooling builds.
-- `Scripts/pipeline.sh`: CI quality gate with fast-path + stability guards (exits `1` on failure):
-  - runs `swiftlint` first, then `Scripts/audit_data.swift` (always, including fast-path);
-  - if changed files are only `.md` / `.json`, runs only `VocabularyDataIntegrityTests`;
-  - runs full suite when `.swift` or `Package.swift` changes are present;
-  - cleans simulator state (`simctl shutdown all`, `simctl erase all`) before test gate;
-  - enforces a 5-minute timeout for test commands;
-  - when both `Package.swift` and the Xcode project exist, `xcodebuild test` is used for the app (SPM is for tooling snapshots, not the primary test runner).
-- Pipeline runs append pass/fail summaries to `Documentation/MEMORY.md` automatically.
-- `.git/hooks/pre-commit`: local hook that runs `./Scripts/pipeline.sh`; commit is aborted if quality gate fails.
-- `Documentation/AGENTS.md` / `Documentation/TODO.md` / `Documentation/MEMORY.md`: Planner-Generator-Evaluator process docs; `AGENTS.md` defines the **Nightly Autonomous Protocol** (allowlist for Unix/build tools, non-blocking policy for essential commands such as `git`, **Morning Brief**, red lines for `sudo` / `brew` / `Package.swift`).
+## Running the app (developers)
 
-## Troubleshooting
+1. Open **`LearnHappyGerman/LearnHappyGerman.xcodeproj`** in Xcode.
+2. Select the **`LearnHappyGerman`** scheme and an **iPhone simulator** (or a connected device).
+3. Press **Run** (▶).
 
-- If `ModelContainer` fails to create after a SwiftData schema or relationship change, delete the app from the simulator or device once so the on-disk store can be recreated (development builds do not always migrate every intermediate schema).
-- **Black simulator screen:** Confirm the `LearnHappyGerman` scheme (not a test target) is running; open the **Debug area** (⇧⌘Y) and look for a crash or `fatalError`. Try **Simulator → Device → Erase All Content and Settings**, or quit and relaunch the Simulator app. The app attaches `modelContainer` to the root view and yields once before bundled import so the lobby can draw first.
+You need a recent Xcode with the iOS SDK that matches the project’s deployment target.
 
-## External Vocabulary Pipeline
+## Repository layout (short)
 
-- Suggested CEFR-aligned sources to evaluate:
-  - Goethe exam vocabulary lists (official, often PDF-first, check redistribution license before packaging).
-  - Community CEFR German CSV/JSON datasets (for example GitHub repositories tagged CEFR German vocabulary), after manual license review.
-- Convert external files into app format:
-  - `python3 Scripts/vocab_processor.py --input path/to/source.csv --output LearnHappyGerman/full_vocabulary.json`
-  - Multiple files: add multiple `--input ...` arguments (CSV and JSON can be mixed).
-  - If headers are nonstandard, pass explicit mapping:
-    - `--mapping-json '{"germanWord":"lemma","englishTranslation":"en","level":"cefr","category":"pos","article":"artikel"}'`
-- Generated payload is minified and shaped as `{"version":1,"words":[...]}` with fields used by `VocabularyWord`.
+| Folder | Purpose |
+|--------|--------|
+| `LearnHappyGerman/` | Xcode project, app source, and bundled JSON vocabulary |
+| `Documentation/` | Roadmap, architecture notes, and project memory for contributors |
+| `Scripts/` | Quality checks and helper scripts (for example vocabulary audits) |
 
-Last updated: 2026-04-18 (repo layout: `Documentation/`, `Scripts/`, `Data/`, tests under `LearnHappyGermanTests/Logic/`; integrity entrypoint unchanged at `./check_integrity.sh`)
+Deeper file-by-file notes live in **`Documentation/ProjectMap.md`**.
+
+## If something goes wrong
+
+- **App won’t start or data looks broken after an update** — delete the app from the simulator or device and install again so storage can be recreated (common during active development).
+- **Black or frozen simulator screen** — make sure you are running the **LearnHappyGerman** app scheme (not a test target). Try **Simulator → Device → Erase All Content and Settings**, then run again.
+
+## Contributing & vocabulary tooling
+
+Maintainers use **`./check_integrity.sh`** (lint, data checks, and tests) before merging. To convert external word lists into the app’s JSON format, see **`Scripts/vocab_processor.py`** and the notes in **`Documentation/`**.
+
+---
+
+*Last updated: 2026-04-18*

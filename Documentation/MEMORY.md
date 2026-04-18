@@ -347,3 +347,19 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 
 - `swift Scripts/audit_data.swift`: **Pass** (from repo root).
 - `xcodebuild test` (`LearnHappyGerman` scheme, default available iOS simulator): **Pass** (SwiftLint not available in this CI shell; run `./check_integrity.sh` locally for the full gate).
+
+### [PIPELINE-20260418-220705] Automated Pipeline Run
+
+- [2026-04-18 22:07:05 +0200] Pipeline failed: 0 tests, unknown lint violations.
+
+### [PIPELINE-20260418-220927] Automated Pipeline Run
+
+- [2026-04-18 22:09:27 +0200] Pipeline passed: 29 tests, 0 lint violations.
+
+### [PIPELINE-20260418-221821] Automated Pipeline Run
+
+- [2026-04-18 22:18:21 +0200] Pipeline passed: 4 tests, 0 lint violations.
+
+### [PIPELINE-20260418-221918] Automated Pipeline Run
+
+- [2026-04-18 22:19:18 +0200] Pipeline passed: 4 tests, 0 lint violations.
