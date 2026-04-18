@@ -322,6 +322,14 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 - **`FlashcardView`:** Auto-speaks German study form (`expectedAnswer`) after each `nextCard()`; centered `speaker.wave.2.bubble.left` in LobbyBoyPurple.
 - **Evaluator:** `LearnHappyGermanTests/AudioServiceTests` green via `xcodebuild test -only-testing:LearnHappyGermanTests/AudioServiceTests`. Local `./check_integrity.sh` requires `swiftlint` on `PATH` (not present in this environment).
 
+### Nightly A2 expansion + bakery dialogue — 2026-04-09
+
+- **`VocabularyWord`:** Added optional `pluralSuffix` and `exampleSentence`; `VocabularySeedRecord` + `DataSeeder.importFullVocabularyFromBundle` upsert extended; `scripts/audit_data.swift` enforces A2 example + plural for der/die/das rows.
+- **`full_vocabulary.json`:** **500** unique A2 lemmas (compound-heavy generator in `scripts/build_a2_500.py`); total vocabulary rows **966** (466 A1 + 500 A2). Re-run script after manual edits to keep A2 count at 500.
+- **B1 leak guard:** `BundledData.json` B1 sample word replaced **`lernen` → `Voraussetzung`** (abstract noun); `scripts/audit_level_overlap.py` passes (no B1 lemmas in `full_vocabulary.json` today).
+- **A1 bakery:** `SimpleLifeBakeryDialogueView` + `BakeryScenarioEngine` — multi-turn order / special / price / goodbye; Hallway **AI Dialogue** route.
+- **Tests:** `BakeryScenarioTests`, `VocabularyA2FetchPerformanceTests` (synthetic 500-row fetch measure).
+
 ### [PIPELINE-20260408-230648] Automated Pipeline Run
 
 - [2026-04-08 23:06:48 +0200] Pipeline failed: 21 tests, 0 lint violations.

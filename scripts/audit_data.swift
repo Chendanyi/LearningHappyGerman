@@ -22,6 +22,8 @@ struct VocabularySeedRecord: Codable {
     let level: String
     let category: String
     let version: Int?
+    let pluralSuffix: String?
+    let exampleSentence: String?
 }
 
 // MARK: - Rules
@@ -153,6 +155,19 @@ for url in urlsToAudit {
         }
         if let reason = invalidGermanLemmaReason(for: record.germanWord) {
             allErrors.append("\(prefix): \(reason)")
+        }
+        if record.level == "A2" {
+            let ex = record.exampleSentence?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            if ex.isEmpty {
+                allErrors.append("\(prefix): A2 row requires exampleSentence")
+            }
+            let art = normalizedArticle(record.article)
+            if art == "der" || art == "die" || art == "das" {
+                let pl = record.pluralSuffix?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                if pl.isEmpty {
+                    allErrors.append("\(prefix): A2 noun needs pluralSuffix")
+                }
+            }
         }
     }
 }

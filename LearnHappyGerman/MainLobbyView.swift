@@ -202,6 +202,8 @@ private func classroomDestination(for door: ClassroomDoor, level: CEFRLevel?) ->
         FlashcardView(level: level)
     case .tenses:
         GrammarQuizView()
+    case .aiDialogue:
+        SimpleLifeBakeryDialogueView()
     case .hangman:
         HangmanGameView()
     default:

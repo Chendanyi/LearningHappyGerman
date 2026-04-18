@@ -47,6 +47,14 @@
 		CF49D7EE2F84F0130004A868 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7EC2F84F0130004A866 /* AudioService.swift */; };
 		CF49D7EF2F84F0130004A869 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7EC2F84F0130004A866 /* AudioService.swift */; };
 		CF49D7F12F84F0140004A871 /* AudioServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D7F02F84F0140004A870 /* AudioServiceTests.swift */; };
+		CF49D8A22F84F0200004A882 /* BakeryScenarioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D8A02F84F0200004A880 /* BakeryScenarioEngine.swift */; };
+		CF49D8A32F84F0200004A883 /* SimpleLifeBakeryDialogueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D8A12F84F0200004A881 /* SimpleLifeBakeryDialogueView.swift */; };
+		CF49D8A42F84F0200004A884 /* BakeryScenarioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D8A02F84F0200004A880 /* BakeryScenarioEngine.swift */; };
+		CF49D8A52F84F0200004A885 /* SimpleLifeBakeryDialogueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D8A12F84F0200004A881 /* SimpleLifeBakeryDialogueView.swift */; };
+		CF49D8A62F84F0200004A886 /* BakeryScenarioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D8A02F84F0200004A880 /* BakeryScenarioEngine.swift */; };
+		CF49D8A72F84F0200004A887 /* SimpleLifeBakeryDialogueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D8A12F84F0200004A881 /* SimpleLifeBakeryDialogueView.swift */; };
+		CF49D8A92F84F0210004A889 /* BakeryScenarioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D8A82F84F0210004A888 /* BakeryScenarioTests.swift */; };
+		CF49D8AB2F84F0220004A891 /* VocabularyA2FetchPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF49D8AA2F84F0220004A890 /* VocabularyA2FetchPerformanceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +97,10 @@
 		CF49D7D12F84F0000004A851 /* SentenceTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceTemplate.swift; sourceTree = "<group>"; };
 		CF49D7EC2F84F0130004A866 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
 		CF49D7F02F84F0140004A870 /* AudioServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioServiceTests.swift; sourceTree = "<group>"; };
+		CF49D8A02F84F0200004A880 /* BakeryScenarioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BakeryScenarioEngine.swift; sourceTree = "<group>"; };
+		CF49D8A12F84F0200004A881 /* SimpleLifeBakeryDialogueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLifeBakeryDialogueView.swift; sourceTree = "<group>"; };
+		CF49D8A82F84F0210004A888 /* BakeryScenarioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BakeryScenarioTests.swift; sourceTree = "<group>"; };
+		CF49D8AA2F84F0220004A890 /* VocabularyA2FetchPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyA2FetchPerformanceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -151,6 +163,10 @@
 				CF49D7812F84EFC50004A814 /* FlashcardView.swift */,
 				CF49D7EC2F84F0130004A866 /* AudioService.swift */,
 				CF49D7F02F84F0140004A870 /* AudioServiceTests.swift */,
+				CF49D8A02F84F0200004A880 /* BakeryScenarioEngine.swift */,
+				CF49D8A12F84F0200004A881 /* SimpleLifeBakeryDialogueView.swift */,
+				CF49D8A82F84F0210004A888 /* BakeryScenarioTests.swift */,
+				CF49D8AA2F84F0220004A890 /* VocabularyA2FetchPerformanceTests.swift */,
 				CF49D76F2F84EF9D0004A814 /* MainLobbyView.swift */,
 				CF49D7702F84EF9D0004A814 /* Theme.swift */,
 				CF49D7712F84EF9D0004A814 /* VocabularyWord.swift */,
@@ -333,6 +349,8 @@
 				CF49D7902F84EFC90004A814 /* SyncService.swift in Sources */,
 				CF49D7802F84EFC50004A814 /* FlashcardView.swift in Sources */,
 				CF49D7ED2F84F0130004A867 /* AudioService.swift in Sources */,
+				CF49D8A22F84F0200004A882 /* BakeryScenarioEngine.swift in Sources */,
+				CF49D8A32F84F0200004A883 /* SimpleLifeBakeryDialogueView.swift in Sources */,
 				CF49D7B42F84EFE00004A830 /* GermanFlashcardAnswerNormalization.swift in Sources */,
 				CF49D7C02F84EFF00004A840 /* HangmanGameView.swift in Sources */,
 			);
@@ -345,6 +363,10 @@
 				CF49D7822F84EFD60004A814 /* FlashcardView.swift in Sources */,
 				CF49D7EE2F84F0130004A868 /* AudioService.swift in Sources */,
 				CF49D7F12F84F0140004A871 /* AudioServiceTests.swift in Sources */,
+				CF49D8A42F84F0200004A884 /* BakeryScenarioEngine.swift in Sources */,
+				CF49D8A52F84F0200004A885 /* SimpleLifeBakeryDialogueView.swift in Sources */,
+				CF49D8A92F84F0210004A889 /* BakeryScenarioTests.swift in Sources */,
+				CF49D8AB2F84F0220004A891 /* VocabularyA2FetchPerformanceTests.swift in Sources */,
 				CF49D7762F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
 				CF49D7772F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77F2F84EFB40004A814 /* VocabularyWordTests.swift in Sources */,
@@ -369,6 +391,8 @@
 			files = (
 				CF49D7832F84EFD60004A814 /* FlashcardView.swift in Sources */,
 				CF49D7EF2F84F0130004A869 /* AudioService.swift in Sources */,
+				CF49D8A62F84F0200004A886 /* BakeryScenarioEngine.swift in Sources */,
+				CF49D8A72F84F0200004A887 /* SimpleLifeBakeryDialogueView.swift in Sources */,
 				CF49D77A2F84EF9E0004A814 /* MainLobbyView.swift in Sources */,
 				CF49D77B2F84EF9E0004A814 /* Theme.swift in Sources */,
 				CF49D77C2F84EF9E0004A814 /* VocabularyWord.swift in Sources */,
