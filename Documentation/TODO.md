@@ -4,7 +4,7 @@ Hierarchical checklist by feature and execution phase.
 
 ## Harness Rule - Done Gate
 
-- Before marking any feature task as DONE, run `./check_integrity.sh`.
+- Before marking any feature task as DONE, run `./check_integrity.sh` (runs `Scripts/check_integrity.sh` from repo root).
 - If either SwiftLint or `swift test` fails, task status must remain in-progress.
 
 ## Nightly — Blocked (needs human)

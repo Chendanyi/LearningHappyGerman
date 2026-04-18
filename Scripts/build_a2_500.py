@@ -4,7 +4,7 @@ Rebuild LearnHappyGerman/full_vocabulary.json with exactly 500 A2 rows (unique l
 each with pluralSuffix + exampleSentence. Preserves all non-A2 rows from the input.
 
 Run from repo root:
-  python3 scripts/build_a2_500.py LearnHappyGerman/full_vocabulary.json
+  python3 Scripts/build_a2_500.py LearnHappyGerman/full_vocabulary.json
 
 Writes minified JSON to both bundle paths.
 """

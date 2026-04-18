@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
+cd "$(cd "$(dirname "$0")/.." && pwd)"
 
-MEMORY_FILE="MEMORY.md"
+MEMORY_FILE="Documentation/MEMORY.md"
 LINT_LOG="$(mktemp)"
 TEST_LOG="$(mktemp)"
 RUN_STATUS="failed"
@@ -132,7 +133,7 @@ if ! "${SWIFTLINT_BIN}" 2>&1 | tee "${LINT_LOG}"; then
 fi
 
 echo "==> Data audit (full_vocabulary.json)"
-if ! swift scripts/audit_data.swift 2>&1 | tee -a "${LINT_LOG}"; then
+if ! swift Scripts/audit_data.swift 2>&1 | tee -a "${LINT_LOG}"; then
   echo "Data audit failed."
   exit 1
 fi

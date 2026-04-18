@@ -24,7 +24,7 @@ The app uses a single SwiftData store with two complementary model families:
 
 - **Source:** `BundledData.json` in the app target (copied with the bundle).
 - **When:** First launch only, unless `UserDefaults` key `hasImportedBundledData.v1` is already set (or an existing non-empty vocabulary store triggers a legacy skip).
-- **Observability:** Successful runs append markdown to Application Support `LearnHappyGerman/MEMORY_ingestion_appendix.md` for copying into this repo’s `MEMORY.md`. Failed or corrupt JSON surfaces a **Human Takeover** alert (no silent fallback from bundled data).
+- **Observability:** Successful runs append markdown to Application Support `LearnHappyGerman/MEMORY_ingestion_appendix.md` for copying into this repo’s `Documentation/MEMORY.md`. Failed or corrupt JSON surfaces a **Human Takeover** alert (no silent fallback from bundled data).
 
 ## Design notes
 

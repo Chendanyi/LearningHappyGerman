@@ -8,7 +8,7 @@ Persistent log for errors, root causes, and prevention rules to avoid regression
 - Add entries when a bug, failed test, or validation issue is discovered.
 - Record concrete prevention rules from each incident.
 - **Evaluator — Morning Brief:** at the end of each autonomous session, append **one** new section at the **end** of the incident log (or directly after pipeline notes for that day) using the template under **Morning Brief template** below.
-- **Nightly — off-allowlist command log:** when using a command not on the Nightly allowlist in `AGENTS.md` but allowed by the non-blocking policy (e.g. essential `git`), add a short dated line or subsection: command, reason, and outcome.
+- **Nightly — off-allowlist command log:** when using a command not on the Nightly allowlist in `Documentation/AGENTS.md` but allowed by the non-blocking policy (e.g. essential `git`), add a short dated line or subsection: command, reason, and outcome.
 
 ## Morning Brief template
 
@@ -303,10 +303,10 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 
 # Morning Brief 2026-04-09
 
-- **A2 vocabulary:** **103** new A2 lemmas added to `full_vocabulary.json` (repo + nested app copy kept identical). Verbs include infinitive + Partizip II in `englishTranslation`; nouns capitalized with `article`; adjectives lowercased. `swift scripts/audit_data.swift` clean; `VocabularyDataIntegrityTests` / seeding paths unchanged in intent.
+- **A2 vocabulary:** **103** new A2 lemmas added to `full_vocabulary.json` (repo + nested app copy kept identical). Verbs include infinitive + Partizip II in `englishTranslation`; nouns capitalized with `article`; adjectives lowercased. `swift Scripts/audit_data.swift` clean; `VocabularyDataIntegrityTests` / seeding paths unchanged in intent.
 - **GrammarQuizView (Tenses):** **Functional** — A1-gated present-tense cloze from `A1GrammarSentenceLibrary`, MendlsPink prompt / SocietyBlue field, next-question flow; Hallway routes `case .tenses` to `GrammarQuizView`. Unit tests: `GrammarQuizTests`.
 - **SwiftLint:** No outstanding rule violations requiring manual design decisions for this batch (test targets retain relaxed `force_unwrapping` as policy).
-- **Pipeline:** `scripts/pipeline.sh` uses `TEST_TIMEOUT_SECONDS=600` so full `xcodebuild test` can finish on slower hosts; prior 300s run timed out before completion.
+- **Pipeline:** `Scripts/pipeline.sh` uses `TEST_TIMEOUT_SECONDS=600` so full `xcodebuild test` can finish on slower hosts; prior 300s run timed out before completion.
 
 ### [PIPELINE-20260408-221101] Automated Pipeline Run
 
@@ -324,12 +324,26 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 
 ### Nightly A2 expansion + bakery dialogue — 2026-04-09
 
-- **`VocabularyWord`:** Added optional `pluralSuffix` and `exampleSentence`; `VocabularySeedRecord` + `DataSeeder.importFullVocabularyFromBundle` upsert extended; `scripts/audit_data.swift` enforces A2 example + plural for der/die/das rows.
-- **`full_vocabulary.json`:** **500** unique A2 lemmas (compound-heavy generator in `scripts/build_a2_500.py`); total vocabulary rows **966** (466 A1 + 500 A2). Re-run script after manual edits to keep A2 count at 500.
-- **B1 leak guard:** `BundledData.json` B1 sample word replaced **`lernen` → `Voraussetzung`** (abstract noun); `scripts/audit_level_overlap.py` passes (no B1 lemmas in `full_vocabulary.json` today).
+- **`VocabularyWord`:** Added optional `pluralSuffix` and `exampleSentence`; `VocabularySeedRecord` + `DataSeeder.importFullVocabularyFromBundle` upsert extended; `Scripts/audit_data.swift` enforces A2 example + plural for der/die/das rows.
+- **`full_vocabulary.json`:** **500** unique A2 lemmas (compound-heavy generator in `Scripts/build_a2_500.py`); total vocabulary rows **966** (466 A1 + 500 A2). Re-run script after manual edits to keep A2 count at 500.
+- **B1 leak guard:** `BundledData.json` B1 sample word replaced **`lernen` → `Voraussetzung`** (abstract noun); `Scripts/audit_level_overlap.py` passes (no B1 lemmas in `full_vocabulary.json` today).
 - **A1 bakery:** `SimpleLifeBakeryDialogueView` + `BakeryScenarioEngine` — multi-turn order / special / price / goodbye; Hallway **AI Dialogue** route.
 - **Tests:** `BakeryScenarioTests`, `VocabularyA2FetchPerformanceTests` (synthetic 500-row fetch measure).
 
 ### [PIPELINE-20260408-230648] Automated Pipeline Run
 
 - [2026-04-08 23:06:48 +0200] Pipeline failed: 21 tests, 0 lint violations.
+
+### [PIPELINE-20260418-203829] Automated Pipeline Run
+
+- [2026-04-18 20:38:28 +0200] Pipeline passed: 27 tests, 0 lint violations.
+
+### Repository layout reorg — 2026-04-18
+
+- **Change:** `Documentation/` holds `AGENTS.md`, `TODO.md`, `MEMORY.md`, `ProjectMap.md`, and architecture markdown; tooling lives under `Scripts/` (capital **S**); `Data/` placeholder added; unit tests consolidated under `LearnHappyGerman/LearnHappyGermanTests/Logic/`; Xcode explicit test `PBXFileReference` entries removed so `PBXFileSystemSynchronizedRootGroup` is the single source of truth for those files; root `check_integrity.sh` is a thin `exec` wrapper; removed obsolete root `MainLobbyView.swift` / `Theme.swift` stubs.
+- **Prevention:** On case-insensitive volumes, avoid maintaining both `scripts/` and `Scripts/` as distinct folders—use one canonical `Scripts/` path and `cd` to repo root inside shell entrypoints.
+
+### [VERIFY-20260418] Post-reorg checks
+
+- `swift Scripts/audit_data.swift`: **Pass** (from repo root).
+- `xcodebuild test` (`LearnHappyGerman` scheme, default available iOS simulator): **Pass** (SwiftLint not available in this CI shell; run `./check_integrity.sh` locally for the full gate).
