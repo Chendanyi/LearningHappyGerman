@@ -27,6 +27,8 @@ You need a recent Xcode with the iOS SDK that matches the project’s deployment
 | `LearnHappyGerman/` | Xcode project, bundled JSON, and Swift sources under `LearnHappyGerman/LearnHappyGerman/` (`Features/…`, `Services/…`) |
 | `Documentation/` | Roadmap, architecture notes, and project memory for contributors |
 | `Scripts/` | Quality checks and helper scripts (for example vocabulary audits) |
+| `reference/vocabulary/` | Optional Goethe PDF sources for `Data/scripts/extract_vocab.py` |
+| `Data/` | Generated vocabulary JSON (`german_vocabulary.json`) and `Data/scripts/` extractors |
 
 Deeper file-by-file notes live in **`Documentation/ProjectMap.md`**.
 
@@ -39,6 +41,8 @@ Deeper file-by-file notes live in **`Documentation/ProjectMap.md`**.
 
 Maintainers use **`./check_integrity.sh`** (lint, data checks, and tests) before merging. To convert external word lists into the app’s JSON format, see **`Scripts/vocab_processor.py`** and the notes in **`Documentation/`**.
 
+**Goethe PDF word lists:** put licensed PDFs under **`reference/vocabulary/`** (inside this repo, next to `Data/`); **`*.pdf` there is gitignored** so they are not committed. The extractor prints the resolved **`Repo root`** and vocabulary dirs so you can confirm it sees your files. Install **`Data/scripts/requirements-pdf-extract.txt`** (**`pypdf`**), then run **`python3 Data/scripts/extract_vocab.py`** to write **`Data/german_vocabulary.json`** (gitignored; see `reference/vocabulary/README.md`).
+
 ---
 
-*Last updated: 2026-04-18 (feature-grouped app and test folders)*
+*Last updated: 2026-04-08 (PDF vocabulary extractor under `Data/scripts/`)*

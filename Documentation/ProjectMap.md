@@ -5,7 +5,9 @@
 - `README.md` — product overview, commands, and layout (GitHub landing).
 - `Documentation/` — `AGENTS.md`, `TODO.md`, `MEMORY.md`, `ProjectMap.md`, `HYBRID_DATA_ARCHITECTURE.md`, `NAVIGATION_ARCHITECTURE.md`.
 - `Scripts/` — `check_integrity.sh`, `pipeline.sh`, `audit_data.swift`, `build_a2_500.py`, `audit_level_overlap.py`, `merge_a2_vocab_batch.py`, `vocab_processor.py`.
-- `Data/` — placeholder for shared datasets (no canonical vocabulary here).
+- `reference/vocabulary/` — optional Goethe PDF sources; see `reference/vocabulary/README.md`.
+- `Data/scripts/` — `extract_vocab.py`, `requirements-pdf-extract.txt` (PDF → `Data/german_vocabulary.json`).
+- `Data/` — generated `german_vocabulary.json` from the extractor (not the app’s bundled `LearnHappyGerman/*.json` corpora).
 - `check_integrity.sh` — thin wrapper; runs `Scripts/check_integrity.sh` from repo root.
 - `.cursorrules` — pre-task workflow constraints.
 - `.swiftlint.yml` — strict lint policy (main paths under `LearnHappyGerman/`).
@@ -46,4 +48,4 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `Scripts/check_integrity.sh` — SwiftLint + `Scripts/audit_data.swift` + `xcodebuild test`.
 - `Scripts/pipeline.sh` — CI-style gate with fast-path; appends summaries to `Documentation/MEMORY.md`.
 
-Last updated: 2026-04-18 (feature-based `Features/` + `Services/` source and test layout)
+Last updated: 2026-04-08 (`Data/scripts/extract_vocab.py` + `reference/vocabulary/`)
