@@ -19,4 +19,4 @@ python3 -m pip install -r Data/scripts/requirements-pdf-extract.txt
 python3 Data/scripts/extract_vocab.py
 ```
 
-Output is written to `Data/german_vocabulary.json`.
+Output is written to **`Data/german_vocabulary.json`** (the path the Xcode app target bundles from `../Data/`). Rebuild the app after regenerating. Grammar rules are edited in **`Data/grammar_rules.json`**.

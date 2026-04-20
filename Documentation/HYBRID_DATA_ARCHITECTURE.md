@@ -22,9 +22,9 @@ The app uses a single SwiftData store with two complementary model families:
 
 ## Bundled ingestion (`LocalSeeder`)
 
-- **Source:** `BundledData.json` in the app target (copied with the bundle).
-- **When:** First launch only, unless `UserDefaults` key `hasImportedBundledData.v1` is already set (or an existing non-empty vocabulary store triggers a legacy skip).
-- **Observability:** Successful runs append markdown to Application Support `LearnHappyGerman/MEMORY_ingestion_appendix.md` for copying into this repo’s `Documentation/MEMORY.md`. Failed or corrupt JSON surfaces a **Human Takeover** alert (no silent fallback from bundled data).
+- **Source:** `Data/german_vocabulary.json` and `Data/grammar_rules.json` in the repo; Xcode copies them into the app bundle at build time.
+- **When:** Every launch runs an **idempotent merge** of vocabulary rows missing from SwiftData; grammar rules merge by unique `title`. `UserDefaults` key `hasImportedBundledData.v1` gates one-time ingestion audit logging only.
+- **Observability:** Successful first run appends markdown to Application Support `LearnHappyGerman/MEMORY_ingestion_appendix.md`. Failed or corrupt JSON surfaces a **Human Takeover** alert.
 
 ## Design notes
 

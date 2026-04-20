@@ -1,2 +1,3 @@
 # Bundle assets
-Canonical vocabulary JSON lives at `LearnHappyGerman/full_vocabulary.json` (and the nested app copy). Add new bundled assets here when the Xcode target references them.
+
+Canonical JSON lives under the repo’s **`Data/`** folder (`german_vocabulary.json`, `grammar_rules.json`). The **LearnHappyGerman** target references `../Data/*.json` in Xcode and copies them into the app at build time—do not duplicate copies under `LearnHappyGerman/LearnHappyGerman/`.

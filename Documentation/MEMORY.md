@@ -377,8 +377,21 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 
 - [2026-04-18 22:54:58 +0200] Pipeline passed: 4 tests, 0 lint violations.
 
+### Single bundled corpus — 2026-04-20
+
+- **Change:** App vocabulary and grammar JSON live under **`Data/`** (`german_vocabulary.json`, `grammar_rules.json`); the Xcode target references **`../Data/*.json`** in Copy Bundle Resources (no duplicate JSON under `LearnHappyGerman/LearnHappyGerman/`). Removed **`BundledData.json`**, **`full_vocabulary.json`**, **`initial_data.json`**. `LocalSeeder.mergeGermanVocabularyFromBundle()` maps extractor fields to `VocabularyWord`. `Scripts/audit_data.swift` reads **`Data/german_vocabulary.json`**.
+- **Verification:** `xcodebuild test` (LearnHappyGerman scheme, iPhone 16 simulator) passed; `swift Scripts/audit_data.swift` OK on bundled JSON.
+
 ### PDF vocabulary extractor — 2026-04-08
 
 - **Tool:** `python3 Data/scripts/extract_vocab.py` (deps: `Data/scripts/requirements-pdf-extract.txt`, **`pypdf`**). PDFs under repo or parent `reference/vocabulary/`; output `Data/german_vocabulary.json`.
 - **Verification run (no PDFs present):** Pass — script exits 0, writes `[]`, integrity report printed, duplicate-headword assertion skipped on empty list.
 - **Empty output cause:** `extract_vocab.py` uses **`pypdf`** and looks under **`LearningHappyGerman/reference/vocabulary/`** and **`04_LearningGerman/reference/vocabulary/`** (parent). If no PDFs are found, that directory contained no matching `*.pdf` (wrong folder, wrong filename, or PDFs not synced into this clone). The script prints **resolved repo root**, **PDF dirs**, and **directory listings** to compare with Finder.
+
+### [PIPELINE-20260420-003038] Automated Pipeline Run
+
+- [2026-04-20 00:30:38 +0200] Pipeline passed: 29 tests, 0 lint violations.
+
+### [PIPELINE-20260421-003034] Automated Pipeline Run
+
+- [2026-04-21 00:30:34 +0200] Pipeline failed: 0 tests, 8 lint violations.

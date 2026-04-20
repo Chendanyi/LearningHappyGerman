@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "title": "Present tense: regular -en verbs",
+      "explanation": "For many German verbs, the present tense is formed by dropping -en and adding endings to the stem.",
+      "level": "B1",
+      "exampleSentences": [
+        "lernen → ich lerne, du lernst, er/sie/es lernt",
+        "Stem + e/st/t/en/t/en for ich, du, er/sie/es, wir, ihr, sie/Sie."
+      ]
+    }
+  ]
+}

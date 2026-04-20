@@ -5,7 +5,7 @@ cd "$(cd "$(dirname "$0")/.." && pwd)"
 echo "==> Running SwiftLint"
 swiftlint
 
-echo "==> Data audit (full_vocabulary.json)"
+echo "==> Data audit (german_vocabulary.json)"
 swift Scripts/audit_data.swift
 
 echo "==> Running Xcode tests"

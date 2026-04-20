@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CF49D7A22F84EEBB0004A815 /* german_vocabulary.json in Resources */ = {isa = PBXBuildFile; fileRef = CF49D7A02F84EEBB0004A815 /* german_vocabulary.json */; };
+		CF49D7A32F84EEBB0004A815 /* grammar_rules.json in Resources */ = {isa = PBXBuildFile; fileRef = CF49D7A12F84EEBB0004A815 /* grammar_rules.json */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		CF49D7522F84EEBD0004A814 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,8 @@
 		CF49D73F2F84EEBB0004A814 /* LearnHappyGerman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearnHappyGerman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF49D7512F84EEBD0004A814 /* LearnHappyGermanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnHappyGermanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF49D75B2F84EEBD0004A814 /* LearnHappyGermanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnHappyGermanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF49D7A02F84EEBB0004A815 /* german_vocabulary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = german_vocabulary.json; sourceTree = "<group>"; };
+		CF49D7A12F84EEBB0004A815 /* grammar_rules.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = grammar_rules.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -76,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				CF49D7412F84EEBB0004A814 /* LearnHappyGerman */,
+				CF49D7A42F84EEBB0004A815 /* ../Data */,
 				CF49D7542F84EEBD0004A814 /* LearnHappyGermanTests */,
 				CF49D75E2F84EEBD0004A814 /* LearnHappyGermanUITests */,
 				CF49D7402F84EEBB0004A814 /* Products */,
@@ -90,6 +98,15 @@
 				CF49D75B2F84EEBD0004A814 /* LearnHappyGermanUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CF49D7A42F84EEBB0004A815 /* ../Data */ = {
+			isa = PBXGroup;
+			children = (
+				CF49D7A02F84EEBB0004A815 /* german_vocabulary.json */,
+				CF49D7A12F84EEBB0004A815 /* grammar_rules.json */,
+			);
+			path = ../Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +229,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF49D7A22F84EEBB0004A815 /* german_vocabulary.json in Resources */,
+				CF49D7A32F84EEBB0004A815 /* grammar_rules.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

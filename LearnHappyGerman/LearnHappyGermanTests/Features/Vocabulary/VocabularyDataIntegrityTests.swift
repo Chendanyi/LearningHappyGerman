@@ -81,90 +81,95 @@ final class VocabularyDataIntegrityTests: XCTestCase {
         XCTAssertEqual(keysFirst, keysSecond, "Stable (germanWord, level) keys must not change after second seed pass.")
     }
 
-    // MARK: - initial_data.json (A1 corpus in app bundle)
+    // MARK: - german_vocabulary.json (bundled Goethe corpus)
 
-    func testInitialDataJSONPassesArticleAndLevelIntegrity() throws {
+    /// If the bundle supplies `englishTranslation` but SwiftData still has an empty gloss (legacy import),
+    /// a second merge must backfill without duplicating rows.
+    func testBundledMergeBackfillsEmptyEnglishFromJSON() throws {
+        let container = try makeContainer()
+        let context = ModelContext(container)
+        let seeder = LocalSeeder(context: context)
+        let first = try seeder.mergeGermanVocabularyFromBundle()
+        XCTAssertGreaterThan(first.inserted, 0, "Bundle merge should insert corpus rows.")
+
+        let all = try context.fetch(FetchDescriptor<VocabularyWord>())
+        guard let target = all.first(where: {
+            !$0.englishTranslation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }) else {
+            throw XCTSkip("Bundled german_vocabulary.json has no englishTranslation rows; cannot test backfill.")
+        }
+        let saved = target.englishTranslation
+        target.englishTranslation = ""
+        try context.save()
+
+        let second = try seeder.mergeGermanVocabularyFromBundle()
+        XCTAssertEqual(second.inserted, 0, "Second merge must not insert duplicates.")
+        XCTAssertGreaterThan(second.updated, 0, "Second merge should restore glosses from JSON.")
+        XCTAssertEqual(target.englishTranslation, saved)
+    }
+
+    func testGermanVocabularyJSONPassesArticleAndLevelIntegrity() throws {
         let bundle = try XCTUnwrap(
-            Self.bundleContainingInitialDataJSON(),
-            "initial_data.json must be in the app target bundle (Copy Bundle Resources)."
+            Self.bundleContainingGermanVocabularyJSON(),
+            "german_vocabulary.json must be in the app target bundle (Copy Bundle Resources)."
         )
         let url = try XCTUnwrap(
-            bundle.url(forResource: "initial_data", withExtension: "json"),
-            "initial_data.json URL missing in bundle \(bundle.bundlePath)."
+            bundle.url(forResource: "german_vocabulary", withExtension: "json"),
+            "german_vocabulary.json URL missing in bundle \(bundle.bundlePath)."
         )
         let data = try Data(contentsOf: url)
-        let payload = try JSONDecoder().decode(InitialDataPayload.self, from: data)
+        let records = try JSONDecoder().decode([GermanVocabIntegrityRecord].self, from: data)
 
-        XCTAssertEqual(payload.words.count, 30, "A1 initial corpus must contain 30 entries.")
-        XCTAssertEqual(Set(payload.words.map(\.id)).count, 30, "Each row needs a unique id (UUID).")
-        XCTAssertEqual(
-            Set(payload.words.map { "\($0.germanWord)|\($0.level)" }).count,
-            30,
-            "Each row needs a unique (germanWord, level) pair."
-        )
+        XCTAssertFalse(records.isEmpty, "Bundled Goethe vocabulary must not be empty.")
 
-        for dto in payload.words {
-            XCTAssertEqual(dto.level, "A1")
-            XCTAssertTrue(CEFRLevel.isValidLevelCode(dto.level))
+        let keys = Set(records.map { "\($0.word)|\($0.level)" })
+        XCTAssertEqual(keys.count, records.count, "Each row needs a unique (word, level) pair.")
 
-            let articleOpt = Self.normalizedArticleFromJSON(dto.article)
-            if dto.article.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != "none",
-               dto.article.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != "" {
+        for dto in records {
+            XCTAssertTrue(CEFRLevel.isValidLevelCode(dto.level), "Invalid level for \(dto.word)")
+
+            let category = dto.type.trimmingCharacters(in: .whitespacesAndNewlines)
+            if category.lowercased() == "noun" {
+                let articleOpt = Self.normalizedArticleFromJSON(dto.article ?? "none")
                 XCTAssertNotNil(
                     articleOpt,
-                    "Article for '\(dto.germanWord)' must be der, die, das, or none."
+                    "Noun '\(dto.word)' must have der, die, or das in JSON."
+                )
+                let word = VocabularyWord(
+                    germanWord: dto.word,
+                    article: articleOpt,
+                    englishTranslation: "",
+                    level: dto.level,
+                    category: "Noun",
+                    pluralSuffix: nil,
+                    exampleSentence: nil
+                )
+                XCTAssertTrue(
+                    word.hasValidArticleForNoun,
+                    "Noun '\(dto.word)' must validate for SwiftData import."
                 )
             }
-
-            let word = VocabularyWord(
-                id: dto.id,
-                germanWord: dto.germanWord,
-                article: articleOpt,
-                englishTranslation: dto.englishTranslation,
-                level: dto.level,
-                category: dto.category,
-                isMastered: dto.isMastered ?? false,
-                version: dto.version ?? 1
-            )
-            XCTAssertTrue(
-                word.hasValidArticleForNoun,
-                """
-                Integrity: nouns/thematic entries must have der/die/das; verbs use
-                category Verb with article none (\(dto.germanWord)).
-                """
-            )
         }
     }
 
-    private static func normalizedArticleFromJSON(_ raw: String) -> String? {
-        let trimmedArticle = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    private static func normalizedArticleFromJSON(_ raw: String?) -> String? {
+        let trimmedArticle = (raw ?? "").trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         if trimmedArticle.isEmpty || trimmedArticle == "none" { return nil }
         guard trimmedArticle == "der" || trimmedArticle == "die" || trimmedArticle == "das" else { return nil }
         return trimmedArticle
     }
 
-    /// Unit tests may resolve `Bundle(for:)` differently than host app;
-    /// prefer any bundle that ships `initial_data.json`.
-    private static func bundleContainingInitialDataJSON() -> Bundle? {
+    private static func bundleContainingGermanVocabularyJSON() -> Bundle? {
         let candidates: [Bundle] = [Bundle(for: VocabularyWord.self), Bundle.main] + Bundle.allBundles
         return candidates.first {
-            $0.url(forResource: "initial_data", withExtension: "json") != nil
+            $0.url(forResource: "german_vocabulary", withExtension: "json") != nil
         }
     }
 }
 
-private struct InitialDataPayload: Codable {
-    let version: Int
-    let words: [InitialDataWordRecord]
-}
-
-private struct InitialDataWordRecord: Codable {
-    let id: UUID
-    let germanWord: String
-    let article: String
-    let englishTranslation: String
+private struct GermanVocabIntegrityRecord: Codable {
+    let word: String
+    let type: String
     let level: String
-    let category: String
-    let isMastered: Bool?
-    let version: Int?
+    let article: String?
 }
