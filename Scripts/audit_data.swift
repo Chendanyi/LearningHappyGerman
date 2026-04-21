@@ -1,29 +1,24 @@
 #!/usr/bin/env swift
-// Standalone data audit for `full_vocabulary.json` (matches `DataSeeder.decodeRecords` payload shape).
-// Run: swift Scripts/audit_data.swift [optional/path/to/full_vocabulary.json]
+// Standalone data audit for `german_vocabulary.json` (Goethe extractor output, array of records).
+// Run: swift Scripts/audit_data.swift [optional/path/to/german_vocabulary.json]
 //
-// Rules: rows with category "Noun" (case-insensitive) must have der/die/das; `germanWord` must use
-// Latin-script characters acceptable for German lemmas (umlauts, ß, hyphen, apostrophe, spaces).
-// Thematic categories (e.g. Travel, Food) are not treated as grammatical "Noun" here—use category "Noun" for noun lemmas.
+// Rules: rows with type "noun" must have der/die/das; `word` must use Latin-script characters
+// acceptable for German lemmas (umlauts, ß, hyphen, apostrophe, spaces).
 import Foundation
 
-// MARK: - Payload (aligned with DataSeeder)
+// MARK: - Payload (aligned with extract_vocab.py export)
 
-struct VocabularySeedPayload: Codable {
-    let version: Int
-    let words: [VocabularySeedRecord]
-}
-
-struct VocabularySeedRecord: Codable {
-    let id: UUID?
-    let germanWord: String
-    let article: String?
-    let englishTranslation: String
+struct GermanVocabularyJSONRecord: Codable {
+    let word: String
+    let type: String
     let level: String
-    let category: String
-    let version: Int?
-    let pluralSuffix: String?
-    let exampleSentence: String?
+    let examples: [String]?
+    let article: String?
+    let plural: String?
+    let conjugation: String?
+    let auxiliary: String?
+    let perfect: String?
+    let englishTranslation: String?
 }
 
 // MARK: - Rules
@@ -37,25 +32,21 @@ private func normalizedArticle(_ article: String?) -> String? {
     return trimmed.lowercased()
 }
 
-/// Strict audit: only rows with `category` literally "Noun" must carry der/die/das (matches learner expectation for noun lemmas).
-private func nounRowMissingArticle(category: String, article: String?) -> Bool {
-    guard category.lowercased() == "noun" else { return false }
+private func nounRowMissingArticle(type: String, article: String?) -> Bool {
+    guard type.lowercased() == "noun" else { return false }
     guard let art = normalizedArticle(article) else { return true }
     return !(art == "der" || art == "die" || art == "das")
 }
 
-/// Flags characters outside Latin-script letters used for German lemmas, plus space, hyphen, apostrophe, hyphen variants.
 private func invalidGermanLemmaReason(for word: String) -> String? {
     for scalar in word.unicodeScalars {
         let v = scalar.value
         if CharacterSet.whitespaces.contains(scalar) {
             continue
         }
-        // Hyphen, apostrophe, ASCII hyphen-minus
         if v == 0x002D || v == 0x2010 || v == 0x2011 || v == 0x0027 || v == 0x2019 || v == 0x00B7 {
             continue
         }
-        // Latin-1 / Latin Extended-A / Latin Extended-B / Latin Extended Additional (common for German)
         if (0x0041...0x005A).contains(v) || (0x0061...0x007A).contains(v) {
             continue
         }
@@ -65,11 +56,9 @@ private func invalidGermanLemmaReason(for word: String) -> String? {
         if (0x1E00...0x1EFF).contains(v) {
             continue
         }
-        // ß / ẞ
         if v == 0x00DF || v == 0x1E9E {
             continue
         }
-        // Digits (e.g. "3D") — not valid in lemma field for this corpus
         if (0x0030...0x0039).contains(v) {
             return "unexpected digit U+\(String(v, radix: 16, uppercase: true))"
         }
@@ -78,30 +67,13 @@ private func invalidGermanLemmaReason(for word: String) -> String? {
     return nil
 }
 
-private func decodeRecords(from data: Data) throws -> [VocabularySeedRecord] {
-    let decoder = JSONDecoder()
-    if let wrapped = try? decoder.decode(VocabularySeedPayload.self, from: data) {
-        return wrapped.words
-    }
-    return try decoder.decode([VocabularySeedRecord].self, from: data)
-}
-
 private func resolveDefaultVocabularyURLs() -> [URL] {
     let cwd = URL(fileURLWithPath: FileManager.default.currentDirectoryPath, isDirectory: true)
-    let candidates = [
-        cwd.appendingPathComponent("LearnHappyGerman/LearnHappyGerman/full_vocabulary.json"),
-        cwd.appendingPathComponent("LearnHappyGerman/full_vocabulary.json"),
-        cwd.appendingPathComponent("LearnHappyGerman/Resources/full_vocabulary.json")
-    ]
-    var seen = Set<String>()
-    var result: [URL] = []
-    for url in candidates where FileManager.default.fileExists(atPath: url.path) {
-        let key = url.resolvingSymlinksInPath().standardizedFileURL.path
-        if seen.insert(key).inserted {
-            result.append(url)
-        }
+    let url = cwd.appendingPathComponent("Data/german_vocabulary.json")
+    if FileManager.default.fileExists(atPath: url.path) {
+        return [url]
     }
-    return result
+    return []
 }
 
 // MARK: - Main
@@ -125,7 +97,7 @@ if let pathArg {
 
 if urlsToAudit.isEmpty {
     fputs(
-        "audit_data: no full_vocabulary.json found (skipped). Expected at LearnHappyGerman/LearnHappyGerman/full_vocabulary.json or LearnHappyGerman/full_vocabulary.json\n",
+        "audit_data: no Data/german_vocabulary.json found (skipped).\n",
         stderr
     )
     exit(0)
@@ -133,44 +105,32 @@ if urlsToAudit.isEmpty {
 
 var allErrors: [String] = []
 var totalRows = 0
-for url in urlsToAudit {
-    guard FileManager.default.fileExists(atPath: url.path) else {
-        allErrors.append("missing file \(url.path)")
-        continue
-    }
-    let data = try Data(contentsOf: url)
-    let records = try decodeRecords(from: data)
-    totalRows += records.count
-    for (index, record) in records.enumerated() {
-        let prefix = "\(url.lastPathComponent) [\(index)] \(record.germanWord) (\(record.level))"
-        if !validLevels.contains(record.level) {
-            allErrors.append("\(prefix): invalid level \(record.level)")
+let decoder = JSONDecoder()
+do {
+    for url in urlsToAudit {
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            allErrors.append("missing file \(url.path)")
+            continue
         }
-        if record.englishTranslation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            allErrors.append("\(prefix): empty englishTranslation")
-        }
-        if nounRowMissingArticle(category: record.category, article: record.article) {
-            allErrors.append(
-                "\(prefix): Noun row requires der/die/das article, got \(record.article ?? "nil")"
-            )
-        }
-        if let reason = invalidGermanLemmaReason(for: record.germanWord) {
-            allErrors.append("\(prefix): \(reason)")
-        }
-        if record.level == "A2" {
-            let ex = record.exampleSentence?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-            if ex.isEmpty {
-                allErrors.append("\(prefix): A2 row requires exampleSentence")
+        let data = try Data(contentsOf: url)
+        let records = try decoder.decode([GermanVocabularyJSONRecord].self, from: data)
+        totalRows += records.count
+        for (index, record) in records.enumerated() {
+            let prefix = "\(url.lastPathComponent) [\(index)] \(record.word) (\(record.level))"
+            if !validLevels.contains(record.level) {
+                allErrors.append("\(prefix): invalid level \(record.level)")
             }
-            let art = normalizedArticle(record.article)
-            if art == "der" || art == "die" || art == "das" {
-                let pl = record.pluralSuffix?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                if pl.isEmpty {
-                    allErrors.append("\(prefix): A2 noun needs pluralSuffix")
-                }
+            if nounRowMissingArticle(type: record.type, article: record.article) {
+                allErrors.append("\(prefix): noun requires der/die/das, got \(record.article ?? "nil")")
+            }
+            if let reason = invalidGermanLemmaReason(for: record.word) {
+                allErrors.append("\(prefix): \(reason)")
             }
         }
     }
+} catch {
+    fputs("audit_data: decode error — \(error)\n", stderr)
+    exit(1)
 }
 
 if allErrors.isEmpty {

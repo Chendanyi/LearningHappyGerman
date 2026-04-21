@@ -2,7 +2,7 @@ import XCTest
 import SwiftData
 @testable import LearnHappyGerman
 
-/// Evaluator: lobby level filtering vs `initial_data.json`, and German answer normalization (umlauts, ß).
+/// Evaluator: lobby level filtering vs `german_vocabulary.json`, and German answer normalization (umlauts, ß).
 final class FlashcardRegressionTests: XCTestCase {
     private func makeContainer() throws -> ModelContainer {
         let schema = Schema([VocabularyWord.self, GrammarRule.self])
@@ -15,20 +15,20 @@ final class FlashcardRegressionTests: XCTestCase {
         all.filter { $0.level == level.rawValue }
     }
 
-    private func bundleContainingInitialDataJSON() -> Bundle? {
+    private func bundleContainingGermanVocabularyJSON() -> Bundle? {
         let candidates: [Bundle] = [Bundle(for: VocabularyWord.self), Bundle.main] + Bundle.allBundles
-        return candidates.first { $0.url(forResource: "initial_data", withExtension: "json") != nil }
+        return candidates.first { $0.url(forResource: "german_vocabulary", withExtension: "json") != nil }
     }
 
-    func testLobbyA1SelectionFiltersToInitialDataA1CorpusOnly() throws {
+    func testLobbyA1SelectionFiltersToGermanVocabularyA1CorpusOnly() throws {
         let container = try makeContainer()
         let context = ModelContext(container)
         let seeder = LocalSeeder(context: context)
-        let inserted = try seeder.mergeInitialDataFromBundle()
+        let mergeResult = try seeder.mergeGermanVocabularyFromBundle()
         XCTAssertGreaterThan(
-            inserted,
+            mergeResult.inserted,
             0,
-            "Test host must ship initial_data.json so merge inserts rows (integration with bundle)."
+            "Test host must ship german_vocabulary.json so merge inserts rows (integration with bundle)."
         )
 
         let distractor = VocabularyWord(
@@ -47,13 +47,14 @@ final class FlashcardRegressionTests: XCTestCase {
         XCTAssertTrue(a1Only.allSatisfy { $0.level == CEFRLevel.a1.rawValue })
         XCTAssertFalse(a1Only.contains { $0.germanWord == distractor.germanWord })
 
-        let bundle = try XCTUnwrap(bundleContainingInitialDataJSON())
-        let url = try XCTUnwrap(bundle.url(forResource: "initial_data", withExtension: "json"))
-        let payload = try JSONDecoder().decode(InitialDataRegressionPayload.self, from: Data(contentsOf: url))
+        let bundle = try XCTUnwrap(bundleContainingGermanVocabularyJSON())
+        let url = try XCTUnwrap(bundle.url(forResource: "german_vocabulary", withExtension: "json"))
+        let payload = try JSONDecoder().decode([GermanVocabRegressionRecord].self, from: Data(contentsOf: url))
+        let a1Count = payload.filter { $0.level == "A1" }.count
         XCTAssertEqual(
             a1Only.count,
-            payload.words.count,
-            "After merge, A1-filtered count should match initial_data.json word count (no A2 leak)."
+            a1Count,
+            "After merge, A1-filtered count should match german_vocabulary.json A1 rows (no A2 leak)."
         )
     }
 
@@ -88,12 +89,7 @@ final class FlashcardRegressionTests: XCTestCase {
     }
 }
 
-private struct InitialDataRegressionPayload: Codable {
-    let version: Int
-    let words: [InitialDataRegressionWord]
-}
-
-private struct InitialDataRegressionWord: Codable {
-    let germanWord: String
+private struct GermanVocabRegressionRecord: Codable {
+    let word: String
     let level: String
 }

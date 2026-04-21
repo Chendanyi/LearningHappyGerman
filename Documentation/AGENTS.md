@@ -64,7 +64,7 @@ For every feature, execute in order:
 
 ## Verification Mechanism (Data + UI)
 
-- **Bundled vocabulary audit:** `Scripts/audit_data.swift` validates every `full_vocabulary.json` found under `LearnHappyGerman/` (app bundle copy and repo-level copy). It runs in `./Scripts/pipeline.sh` **before** the fast-path / full-test split, so JSON-only commits still must pass data rules.
+- **Bundled vocabulary audit:** `Scripts/audit_data.swift` validates **`Data/german_vocabulary.json`**. It runs in `./Scripts/pipeline.sh` **before** the fast-path / full-test split, so JSON-only commits still must pass data rules.
 - **Runtime integrity:** `VocabularyDataIntegrityTests` and grammar regressions remain the SwiftData-level gate inside the test suite.
 
 ## Break Glass Protocol (SwiftUI Symmetry)

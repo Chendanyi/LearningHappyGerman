@@ -132,7 +132,7 @@ if ! "${SWIFTLINT_BIN}" 2>&1 | tee "${LINT_LOG}"; then
   exit 1
 fi
 
-echo "==> Data audit (full_vocabulary.json)"
+echo "==> Data audit (german_vocabulary.json)"
 if ! swift Scripts/audit_data.swift 2>&1 | tee -a "${LINT_LOG}"; then
   echo "Data audit failed."
   exit 1

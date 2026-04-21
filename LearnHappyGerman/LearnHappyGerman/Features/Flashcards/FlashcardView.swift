@@ -75,9 +75,13 @@ struct FlashcardView: View {
                                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                                         .transition(.opacity.combined(with: .scale))
                                 } else {
-                                    Text(card.englishTranslation.capitalized)
+                                    Text(flashcardPrompt(for: card))
                                         .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
                                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                        .multilineTextAlignment(.center)
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(6)
+                                        .padding(.horizontal, 8)
                                         .transition(.opacity)
                                 }
                             }
@@ -323,6 +327,16 @@ struct FlashcardView: View {
         }
     }
 
+    /// Front-of-card text: English gloss when the corpus provides it. Goethe JSON has no English—do **not** show
+    /// `exampleSentence` here (it would give away German context or the wrong sense, e.g. „nach Hause“ under „Haus“).
+    private func flashcardPrompt(for card: VocabularyWord) -> String {
+        let eng = card.englishTranslation.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !eng.isEmpty {
+            return eng.capitalized
+        }
+        return "Tap the speaker, then type the German answer below."
+    }
+
     private func expectedAnswer(for word: VocabularyWord) -> String {
         guard let art = word.article?.trimmingCharacters(in: .whitespacesAndNewlines),
               !art.isEmpty,
@@ -351,6 +365,7 @@ struct FlashcardView: View {
         case "adverb": return "speedometer"
         case "phrase": return "text.quote"
         case "expression": return "ellipsis.bubble"
+        case "other": return "sparkles"
         default: return "sparkles"
         }
     }
@@ -366,26 +381,4 @@ private enum ValidationState: Equatable {
 
 #Preview {
     FlashcardPreviewHost()
-}
-
-private struct FlashcardPreviewHost: View {
-    @StateObject private var appState = AppState()
-
-    private static let previewContainer: ModelContainer = {
-        let schema = Schema([VocabularyWord.self, GrammarRule.self])
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-        // swiftlint:disable:next force_try
-        return try! ModelContainer(for: schema, configurations: [configuration])
-    }()
-
-    var body: some View {
-        NavigationStack {
-            FlashcardView(level: .a1)
-                .environmentObject(appState)
-                .modelContainer(Self.previewContainer)
-                .onAppear {
-                    appState.currentLevel = .a1
-                }
-        }
-    }
 }

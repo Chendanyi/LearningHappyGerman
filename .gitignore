@@ -12,11 +12,9 @@ xcuserdata/
 DerivedData/
 .swiftpm/
 
-# Generated from Goethe PDFs (run Data/scripts/extract_vocab.py)
-Data/german_vocabulary.json
-
 # Licensed Goethe / local word-list PDFs (keep on disk; do not commit)
 reference/vocabulary/*.pdf
 
-# Python extractor bytecode
+# Python extractor bytecode / local venv for googletrans
 Data/scripts/__pycache__/
+.venv/
