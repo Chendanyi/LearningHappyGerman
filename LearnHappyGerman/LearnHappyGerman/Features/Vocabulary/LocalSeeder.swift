@@ -350,30 +350,6 @@ enum IngestionAuditLogger {
         print("IngestionAudit: logged \(wordCount) bundle words, \(ruleCount) rules → \(url.path)")
     }
 
-    /// When a store already had vocabulary before bundled import was introduced.
-    static func appendLegacyStoreLog(existingWordCount: Int) throws {
-        let folder = try applicationSupportFolder()
-        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        let url = folder.appendingPathComponent(appendixFileName, isDirectory: false)
-        let isoFormatter = ISO8601DateFormatter()
-        let stamp = isoFormatter.string(from: Date())
-        let block = """
-
-        ### [\(stamp)] Bundled import skipped (existing store)
-
-        - **Existing vocabulary rows:** \(existingWordCount)
-        - **Note:** Marked import complete without re-reading bundle JSON. Copy into
-          `Documentation/MEMORY.md` if relevant.
-
-        ---
-        """
-        var existing = ""
-        if FileManager.default.fileExists(atPath: url.path) {
-            existing = try String(contentsOf: url, encoding: .utf8)
-        }
-        try (existing + block).write(to: url, atomically: true, encoding: .utf8)
-    }
-
     private static func applicationSupportFolder() throws -> URL {
         guard let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
         else {

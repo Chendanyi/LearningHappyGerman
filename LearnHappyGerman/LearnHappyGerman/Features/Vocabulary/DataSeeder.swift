@@ -1,11 +1,6 @@
 import Foundation
 import SwiftData
 
-struct VocabularySeedPayload: Codable {
-    let version: Int
-    let words: [VocabularySeedRecord]
-}
-
 struct VocabularySeedRecord: Codable {
     let id: UUID?
     let germanWord: String
@@ -138,23 +133,5 @@ final class DataSeeder {
         let existing = try context.fetchCount(descriptor)
         guard existing == 0 else { return }
         try importA1ToC2(records: records)
-    }
-
-    /// Decode external vocabulary payload from either:
-    /// - `{"version":1,"words":[...]}`
-    /// - `[{...}, {...}]`
-    static func decodeRecords(from data: Data) throws -> [VocabularySeedRecord] {
-        let decoder = JSONDecoder()
-        if let wrapped = try? decoder.decode(VocabularySeedPayload.self, from: data) {
-            return wrapped.words
-        }
-        return try decoder.decode([VocabularySeedRecord].self, from: data)
-    }
-
-    /// Convenience for external JSON in `VocabularySeedPayload` / `[VocabularySeedRecord]` shape.
-    func seedIfNeeded(jsonFileURL: URL) throws {
-        let data = try Data(contentsOf: jsonFileURL)
-        let records = try Self.decodeRecords(from: data)
-        try seedIfNeeded(records: records)
     }
 }

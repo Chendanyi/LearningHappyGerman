@@ -8,7 +8,11 @@ struct FlashcardPreviewHost: View {
         let schema = Schema([VocabularyWord.self, GrammarRule.self])
         let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         // swiftlint:disable:next force_try
-        return try! ModelContainer(for: schema, configurations: [configuration])
+        let container = try! ModelContainer(for: schema, configurations: [configuration])
+        let context = ModelContext(container)
+        // swiftlint:disable:next force_try
+        try! DataSeeder(context: context).seedIfNeeded(records: DataSeeder.starterVocabulary)
+        return container
     }()
 
     var body: some View {

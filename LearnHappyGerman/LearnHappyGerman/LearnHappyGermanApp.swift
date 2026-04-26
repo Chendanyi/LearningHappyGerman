@@ -104,7 +104,6 @@ struct LearnHappyGermanApp: App {
     /// If the on-disk store still fails (schema edge cases), falls back to an in-memory container so the app runs.
     private static func makeModelContainer() -> ModelContainer {
         let schema = Schema([
-            Item.self,
             VocabularyWord.self,
             GrammarRule.self
         ])
@@ -119,7 +118,7 @@ struct LearnHappyGermanApp: App {
         }
         let folder = appSupport.appendingPathComponent("LearnHappyGerman", isDirectory: true)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        let storeURL = folder.appendingPathComponent("learnhappygerman-v10.store", isDirectory: false)
+        let storeURL = folder.appendingPathComponent("learnhappygerman-v11.store", isDirectory: false)
         let diskConfiguration = ModelConfiguration(schema: schema, url: storeURL)
 
         do {

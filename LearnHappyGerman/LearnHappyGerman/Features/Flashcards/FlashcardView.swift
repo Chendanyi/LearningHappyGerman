@@ -18,7 +18,6 @@ struct FlashcardView: View {
     @State private var validationState: ValidationState = .idle
     @State private var checkPulse = false
     @State private var shakeBellboy = false
-    @State private var hasAttemptedFallbackSeed = false
     @State private var successScale: CGFloat = 1.0
 
     let level: CEFRLevel?
@@ -161,7 +160,6 @@ struct FlashcardView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             reloadVocabulary()
-            ensureVocabularyAvailability()
             pickCurrentWordIfNeeded()
         }
         .onChange(of: appState.currentLevel) {
@@ -170,7 +168,6 @@ struct FlashcardView: View {
             showSymbolSide = false
             successScale = 1.0
             reloadVocabulary()
-            ensureVocabularyAvailability()
             nextCard()
         }
     }
@@ -196,18 +193,6 @@ struct FlashcardView: View {
     private func pickCurrentWordIfNeeded() {
         guard currentWord == nil, !vocabularyWords.isEmpty else { return }
         nextCard()
-    }
-
-    private func ensureVocabularyAvailability() {
-        guard !hasAttemptedFallbackSeed, vocabularyWords.isEmpty else { return }
-        hasAttemptedFallbackSeed = true
-        let seeder = DataSeeder(context: modelContext)
-        do {
-            try seeder.seedIfNeeded(records: DataSeeder.starterVocabulary)
-        } catch {
-            print("Flashcard fallback seed failed: \(error)")
-        }
-        reloadVocabulary()
     }
 
     /// Grand Budapest: feedback + **Next** share a full-width centered column under the card stack.
