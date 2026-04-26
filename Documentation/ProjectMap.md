@@ -4,7 +4,7 @@
 
 - `README.md` — product overview, commands, and layout (GitHub landing).
 - `Documentation/` — `AGENTS.md`, `TODO.md`, `MEMORY.md`, `ProjectMap.md`, `HYBRID_DATA_ARCHITECTURE.md`, `NAVIGATION_ARCHITECTURE.md`.
-- `Scripts/` — `check_integrity.sh`, `pipeline.sh`, `audit_data.swift`, `build_a2_500.py`, `audit_level_overlap.py`, `merge_a2_vocab_batch.py`, `vocab_processor.py`.
+- `Scripts/` — `check_integrity.sh`, `pipeline.sh`, `audit_data.swift` (quality gate scripts for lint/data/tests).
 - `reference/vocabulary/` — optional Goethe PDF sources; see `reference/vocabulary/README.md`.
 - `Data/scripts/` — `extract_vocab.py`, `requirements-pdf-extract.txt` (PDF → `Data/german_vocabulary.json`; optional `--translate` / `--translate-only` fills `englishTranslation` via **googletrans**, needs network).
 - `Data/` — **`german_vocabulary.json`**, **`grammar_rules.json`**, and `Data/scripts/`; Xcode copies these into the app target at build time (`project.pbxproj` → `../Data/*.json`).
@@ -48,4 +48,4 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `Scripts/check_integrity.sh` — SwiftLint + `Scripts/audit_data.swift` + `xcodebuild test`.
 - `Scripts/pipeline.sh` — CI-style gate with fast-path; appends summaries to `Documentation/MEMORY.md`.
 
-Last updated: 2026-04-08 (`extract_vocab.py` + googletrans for `englishTranslation`; `LocalSeeder` reads optional gloss)
+Last updated: 2026-04-26 (removed legacy `full_vocabulary.json` scripts; canonical data flow is `Data/scripts/extract_vocab.py` -> `Data/german_vocabulary.json`)
