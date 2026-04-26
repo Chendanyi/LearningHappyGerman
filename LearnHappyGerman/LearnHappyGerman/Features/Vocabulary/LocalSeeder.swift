@@ -29,11 +29,27 @@ private struct GrammarRulesFilePayload: Codable {
     let rules: [BundledRuleDTO]
 }
 
+private struct GrammarExampleDTO: Codable {
+    let de: String
+    let en: String
+}
+
+/// Bundled `grammar_rules.json` v3+ (`version` ≥ 3): structured fields + `examples` objects.
 private struct BundledRuleDTO: Codable {
+    let module: String?
     let title: String
-    let explanation: String
     let level: String
-    let exampleSentences: [String]
+    let germanTitle: String
+    let formula: String
+    let description: String
+    let descriptionCN: String
+    let examples: [GrammarExampleDTO]
+
+    enum CodingKeys: String, CodingKey {
+        case module, title, level, formula, description, examples
+        case germanTitle = "german_title"
+        case descriptionCN = "description_cn"
+    }
 }
 
 // MARK: - Article / level parsing
@@ -264,16 +280,26 @@ final class LocalSeeder {
             guard CEFRLevel(rawValue: dto.level) != nil else {
                 throw LocalSeederError.invalidRule("unknown level \(dto.level) for \(dto.title)")
             }
-            guard !dto.exampleSentences.isEmpty else {
-                throw LocalSeederError.invalidRule("exampleSentences empty for \(dto.title)")
+            guard !dto.examples.isEmpty else {
+                throw LocalSeederError.invalidRule("examples empty for \(dto.title)")
+            }
+            let deLines = dto.examples.map(\.de).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            let enLines = dto.examples.map(\.en).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            guard deLines.allSatisfy({ !$0.isEmpty }), enLines.allSatisfy({ !$0.isEmpty }) else {
+                throw LocalSeederError.invalidRule("examples must have non-empty de/en for \(dto.title)")
             }
             guard !titles.contains(dto.title) else { continue }
 
             let rule = GrammarRule(
+                module: dto.module?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "",
                 title: dto.title,
-                explanation: dto.explanation,
+                germanTitle: dto.germanTitle.trimmingCharacters(in: .whitespacesAndNewlines),
+                formula: dto.formula.trimmingCharacters(in: .whitespacesAndNewlines),
+                explanation: dto.description.trimmingCharacters(in: .whitespacesAndNewlines),
+                descriptionCN: dto.descriptionCN.trimmingCharacters(in: .whitespacesAndNewlines),
                 level: dto.level,
-                exampleSentences: dto.exampleSentences
+                exampleGermanLines: deLines,
+                exampleEnglishLines: enLines
             )
             context.insert(rule)
             titles.insert(dto.title)
