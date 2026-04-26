@@ -65,7 +65,7 @@ struct LearnHappyGermanApp: App {
                     try IngestionAuditLogger.appendIngestionLog(
                         wordCount: mergeResult.totalInFile,
                         ruleCount: ruleCount,
-                        bundleVersion: 1
+                        bundleVersion: 3
                     )
                 } catch {
                     print("Ingestion audit log failed (non-fatal): \(error)")
@@ -119,7 +119,7 @@ struct LearnHappyGermanApp: App {
         }
         let folder = appSupport.appendingPathComponent("LearnHappyGerman", isDirectory: true)
         try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        let storeURL = folder.appendingPathComponent("learnhappygerman-v9.store", isDirectory: false)
+        let storeURL = folder.appendingPathComponent("learnhappygerman-v10.store", isDirectory: false)
         let diskConfiguration = ModelConfiguration(schema: schema, url: storeURL)
 
         do {

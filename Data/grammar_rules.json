@@ -1,14 +1,442 @@
 {
-  "version": 1,
-  "rules": [
-    {
-      "title": "Present tense: regular -en verbs",
-      "explanation": "For many German verbs, the present tense is formed by dropping -en and adding endings to the stem.",
-      "level": "B1",
-      "exampleSentences": [
-        "lernen → ich lerne, du lernst, er/sie/es lernt",
-        "Stem + e/st/t/en/t/en for ich, du, er/sie/es, wir, ihr, sie/Sie."
-      ]
-    }
-  ]
+    "version": 3,
+    "rules": [
+        {
+            "module": "Sentence Structure",
+            "title": "Verb Second (V2)",
+            "level": "A1",
+            "german_title": "Verbzweitstellung",
+            "formula": "Position 1 + finite verb + remainder of clause",
+            "description": "In a normal statement, the conjugated verb is always the second element. The first slot can be the subject, a time word, or another starter.",
+            "description_cn": "陈述句中，变位动词通常位于第二位；第一位可以是主语、时间词或其他成分。",
+            "examples": [
+                {
+                    "de": "Heute lerne ich Deutsch.",
+                    "en": "Today I learn German."
+                },
+                {
+                    "de": "Der Mann kommt aus Berlin.",
+                    "en": "The man comes from Berlin."
+                },
+                {
+                    "de": "Das Kind spielt im Park.",
+                    "en": "The child plays in the park."
+                }
+            ]
+        },
+        {
+            "module": "Sentence Structure",
+            "title": "Yes–No Questions",
+            "level": "A1",
+            "german_title": "Ja/Nein-Fragen",
+            "formula": "Finite verb + subject + … ?",
+            "description": "Yes/No questions place the finite verb in first position, then the subject.",
+            "description_cn": "一般疑问句把变位动词放在句首，然后是主语。",
+            "examples": [
+                {
+                    "de": "Kommst du aus München?",
+                    "en": "Do you come from Munich?"
+                },
+                {
+                    "de": "Hat das Kind ein Buch?",
+                    "en": "Does the child have a book?"
+                },
+                {
+                    "de": "Wohnen Sie in Berlin?",
+                    "en": "Do you live in Berlin?"
+                }
+            ]
+        },
+        {
+            "module": "Sentence Structure",
+            "title": "W-Questions",
+            "level": "A1",
+            "german_title": "W-Fragen",
+            "formula": "W-word + finite verb + subject + … ?",
+            "description": "The question word comes first, then the verb, then the subject in simple A1 questions.",
+            "description_cn": "特殊疑问句中疑问词在前，然后是动词和主语。",
+            "examples": [
+                {
+                    "de": "Wo wohnst du?",
+                    "en": "Where do you live?"
+                },
+                {
+                    "de": "Was isst du?",
+                    "en": "What do you eat?"
+                },
+                {
+                    "de": "Wann kommst du?",
+                    "en": "When do you come?"
+                }
+            ]
+        },
+        {
+            "module": "Sentence Structure",
+            "title": "Conjunctions (und, oder, aber)",
+            "level": "A1",
+            "german_title": "Konjunktionen",
+            "formula": "Clause + und/oder/aber + clause",
+            "description": "und adds information, oder offers a choice, aber shows a small contrast. Each clause keeps normal word order at A1.",
+            "description_cn": "und 表并列，oder 表选择，aber 表转折；A1 阶段每个分句仍保持基本语序。",
+            "examples": [
+                {
+                    "de": "Du und ich lernen Deutsch.",
+                    "en": "You and I learn German."
+                },
+                {
+                    "de": "Tee oder Kaffee?",
+                    "en": "Tea or coffee?"
+                },
+                {
+                    "de": "Das Buch ist klein, aber gut.",
+                    "en": "The book is small, but good."
+                }
+            ]
+        },
+        {
+            "module": "Imperative",
+            "title": "Imperative",
+            "level": "A1",
+            "german_title": "Imperativ",
+            "formula": "Verb form + … ! (du / ihr / Sie)",
+            "description": "Use the imperative for short commands. Formal Sie forms are common in polite travel or class phrases.",
+            "description_cn": "命令式用于简短指令；正式场合常用 Sie 形式。",
+            "examples": [
+                {
+                    "de": "Komm bitte!",
+                    "en": "Please come!"
+                },
+                {
+                    "de": "Essen Sie bitte!",
+                    "en": "Please eat!"
+                },
+                {
+                    "de": "Gehen wir!",
+                    "en": "Let's go!"
+                }
+            ]
+        },
+        {
+            "module": "Verbs",
+            "title": "Present Tense — Regular Verbs",
+            "level": "A1",
+            "german_title": "Präsens (regelmäßige Verben)",
+            "formula": "Stem + -e / -st / -t / -en / -t / -en",
+            "description": "Drop -en from the infinitive, add the present endings for each person.",
+            "description_cn": "去掉不定词尾 -en 得到词干，再按人称加现在时词尾。",
+            "examples": [
+                {
+                    "de": "Ich lerne Deutsch. Du lernst Deutsch.",
+                    "en": "I learn German. You learn German."
+                },
+                {
+                    "de": "Er macht die Hausaufgabe.",
+                    "en": "He does the homework."
+                },
+                {
+                    "de": "Wir kaufen Brot.",
+                    "en": "We buy bread."
+                }
+            ]
+        },
+        {
+            "module": "Verbs",
+            "title": "Present Tense — Irregular Verbs",
+            "level": "A1",
+            "german_title": "Unregelmäßige Verben (haben, sein, Vokalwechsel)",
+            "formula": "Same persons as regular verbs; stem or vowel may change",
+            "description": "haben and sein are essential irregular verbs. Some verbs change a vowel in du and er/sie/es (e.g. essen, fahren).",
+            "description_cn": "haben、sein 为不规则动词；部分动词在 du/er 等形式中元音变化（如 essen、fahren）。",
+            "examples": [
+                {
+                    "de": "Ich bin müde. Du bist hier.",
+                    "en": "I am tired. You are here."
+                },
+                {
+                    "de": "Er hat ein Buch. Wir haben Zeit.",
+                    "en": "He has a book. We have time."
+                },
+                {
+                    "de": "Du isst Brot. Sie fährt mit der Bahn.",
+                    "en": "You eat bread. She travels by train."
+                }
+            ]
+        },
+        {
+            "module": "Verbs",
+            "title": "Modal Verbs",
+            "level": "A1",
+            "german_title": "Modalverben",
+            "formula": "Subject + modal (finite) + … + infinitive at the end",
+            "description": "Modals express ability, obligation, or desire. The main verb stays in the infinitive at the end in simple A1 sentences.",
+            "description_cn": "情态动词表示能力、义务或意愿；主要动词以不定式形式放在句末。",
+            "examples": [
+                {
+                    "de": "Ich kann Deutsch lernen.",
+                    "en": "I can learn German."
+                },
+                {
+                    "de": "Du musst jetzt gehen.",
+                    "en": "You must go now."
+                },
+                {
+                    "de": "Wir wollen Wasser trinken.",
+                    "en": "We want to drink water."
+                }
+            ]
+        },
+        {
+            "module": "Verbs",
+            "title": "Separable Verbs",
+            "level": "A1",
+            "german_title": "Trennbare Verben",
+            "formula": "Prefix + verb → finite verb in V2, prefix often at clause end",
+            "description": "Many verbs have a separable prefix. In present statements, the conjugated verb stands in second position and the prefix moves to the end.",
+            "description_cn": "可分动词的前缀在陈述句中常置于句末，变位动词仍占第二位。",
+            "examples": [
+                {
+                    "de": "Ich stehe früh auf.",
+                    "en": "I get up early."
+                },
+                {
+                    "de": "Wir fangen jetzt an.",
+                    "en": "We start now."
+                },
+                {
+                    "de": "Kommst du mit?",
+                    "en": "Are you coming along?"
+                }
+            ]
+        },
+        {
+            "module": "Nouns & Articles",
+            "title": "Gender (der, die, das)",
+            "level": "A1",
+            "german_title": "Genus",
+            "formula": "der + masculine, die + feminine, das + neuter",
+            "description": "Every noun has a gender. Learn the article together with the noun.",
+            "description_cn": "德语名词有性，需与冠词一起记忆。",
+            "examples": [
+                {
+                    "de": "der Mann, die Frau, das Kind",
+                    "en": "the man, the woman, the child"
+                },
+                {
+                    "de": "der Tag, die Nacht, das Jahr",
+                    "en": "the day, the night, the year"
+                },
+                {
+                    "de": "Das Buch ist neu.",
+                    "en": "The book is new."
+                }
+            ]
+        },
+        {
+            "module": "Nouns & Articles",
+            "title": "Definite and Indefinite Articles",
+            "level": "A1",
+            "german_title": "Bestimmter und unbestimmter Artikel",
+            "formula": "der/die/das vs. ein/eine/ein",
+            "description": "Use definite articles when the thing is known or specific; use ein/eine like “a/an” when it is new or general.",
+            "description_cn": "定冠词表已知或特定事物；不定冠词类似英语 a/an。",
+            "examples": [
+                {
+                    "de": "Der Mann hat ein Auto.",
+                    "en": "The man has a car."
+                },
+                {
+                    "de": "Eine Frau kauft Brot.",
+                    "en": "A woman buys bread."
+                },
+                {
+                    "de": "Das ist ein Kind.",
+                    "en": "That is a child."
+                }
+            ]
+        },
+        {
+            "module": "Nouns & Articles",
+            "title": "Plural Forms",
+            "level": "A1",
+            "german_title": "Pluralformen",
+            "formula": "Plural noun + plural article die (core A1 pattern)",
+            "description": "Common plural markers include -e, -en, -er, -n, or -s. Learn plural forms with the noun.",
+            "description_cn": "复数常有 -e、-en、-er、-n、-s 等标记，需与名词一并记忆。",
+            "examples": [
+                {
+                    "de": "das Buch → die Bücher",
+                    "en": "the book → the books"
+                },
+                {
+                    "de": "die Frau → die Frauen",
+                    "en": "the woman → the women"
+                },
+                {
+                    "de": "Wir kaufen Äpfel.",
+                    "en": "We buy apples."
+                }
+            ]
+        },
+        {
+            "module": "Nouns & Articles",
+            "title": "Negation (kein and nicht)",
+            "level": "A1",
+            "german_title": "Negation",
+            "formula": "kein + noun; nicht before verb, adjective, or focused part",
+            "description": "kein replaces ein/eine before a noun you negate. nicht negates verbs, adjectives, or whole clauses.",
+            "description_cn": "kein 用于否定带不定冠词的名词；nicht 否定动词、形容词或整个命题焦点。",
+            "examples": [
+                {
+                    "de": "Ich habe kein Geld.",
+                    "en": "I have no money."
+                },
+                {
+                    "de": "Das ist nicht gut.",
+                    "en": "That is not good."
+                },
+                {
+                    "de": "Ich komme heute nicht.",
+                    "en": "I am not coming today."
+                }
+            ]
+        },
+        {
+            "module": "Cases",
+            "title": "Nominative Case",
+            "level": "A1",
+            "german_title": "Nominativ",
+            "formula": "Subject (nominative) + verb + …",
+            "description": "The subject is in the nominative. It answers “who or what is acting?”",
+            "description_cn": "主语用第一格，表示“谁/什么”发出动作。",
+            "examples": [
+                {
+                    "de": "Der Mann schläft.",
+                    "en": "The man sleeps."
+                },
+                {
+                    "de": "Die Frau liest ein Buch.",
+                    "en": "The woman reads a book."
+                },
+                {
+                    "de": "Das Kind spielt.",
+                    "en": "The child plays."
+                }
+            ]
+        },
+        {
+            "module": "Cases",
+            "title": "Accusative Case",
+            "level": "A1",
+            "german_title": "Akkusativ",
+            "formula": "Subject (nom.) + verb + direct object (acc.)",
+            "description": "The accusative marks the direct object. Masculine articles change: der → den, ein → einen. Feminine and neuter articles often stay the same in many A1 patterns.",
+            "description_cn": "第四格表直接宾语；阳性冠词 der→den，ein→einen；阴性和中性在许多 A1 句型中形式不变。",
+            "examples": [
+                {
+                    "de": "Ich sehe den Mann.",
+                    "en": "I see the man."
+                },
+                {
+                    "de": "Er kauft einen Apfel.",
+                    "en": "He buys an apple."
+                },
+                {
+                    "de": "Sie liest ein Buch.",
+                    "en": "She reads a book."
+                }
+            ]
+        },
+        {
+            "module": "Pronouns",
+            "title": "Personal Pronouns",
+            "level": "A1",
+            "german_title": "Personalpronomen",
+            "formula": "Nominative for subject; accusative for direct object",
+            "description": "Personal pronouns replace nouns. Learn nominative and accusative forms for people and things you talk about every day.",
+            "description_cn": "人称代词代替名词；需掌握主格与宾格的基本形式。",
+            "examples": [
+                {
+                    "de": "Ich sehe dich.",
+                    "en": "I see you."
+                },
+                {
+                    "de": "Er hilft mir.",
+                    "en": "He helps me."
+                },
+                {
+                    "de": "Wir rufen euch an.",
+                    "en": "We call you (plural)."
+                }
+            ]
+        },
+        {
+            "module": "Pronouns",
+            "title": "Possessive Determiners",
+            "level": "A1",
+            "german_title": "Possessivartikel",
+            "formula": "Possessive + noun (endings follow A1 patterns you learn in class)",
+            "description": "mein, dein, sein, ihr show ownership. Endings agree with the following noun in gender and number.",
+            "description_cn": "mein、dein、sein、ihr 等表示所属，词尾随后面名词的性与数变化。",
+            "examples": [
+                {
+                    "de": "Das ist mein Bruder.",
+                    "en": "This is my brother."
+                },
+                {
+                    "de": "Ist das dein Auto?",
+                    "en": "Is that your car?"
+                },
+                {
+                    "de": "Seine Schwester ist hier.",
+                    "en": "His sister is here."
+                }
+            ]
+        },
+        {
+            "module": "Prepositions",
+            "title": "Time Prepositions (am, um, im)",
+            "level": "A1",
+            "german_title": "Zeitpräpositionen",
+            "formula": "am + weekday; um + clock time; im + month/season",
+            "description": "Use these for simple plans. Keep verbs in the present tense at A1.",
+            "description_cn": "表示星期用 am，钟点用 um，月份/季节用 im；A1 多用现在时。",
+            "examples": [
+                {
+                    "de": "Am Montag lerne ich Deutsch.",
+                    "en": "On Monday I learn German."
+                },
+                {
+                    "de": "Um acht Uhr frühstücke ich.",
+                    "en": "At eight o'clock I eat breakfast."
+                },
+                {
+                    "de": "Im Sommer fahren wir in die Stadt.",
+                    "en": "In summer we go to the city."
+                }
+            ]
+        },
+        {
+            "module": "Prepositions",
+            "title": "Place Prepositions (aus, in, nach)",
+            "level": "A1",
+            "german_title": "Lokale Präpositionen",
+            "formula": "aus + origin; in + place; nach + city/country (motion)",
+            "description": "aus marks where someone comes from. in marks being inside a place. nach marks movement toward a city or country in basic travel phrases.",
+            "description_cn": "aus 表来源；in 表在某地；nach 表前往城市或国家（基础位移用法）。",
+            "examples": [
+                {
+                    "de": "Ich komme aus Berlin.",
+                    "en": "I come from Berlin."
+                },
+                {
+                    "de": "Wir sind in Hamburg.",
+                    "en": "We are in Hamburg."
+                },
+                {
+                    "de": "Er fährt nach München.",
+                    "en": "He travels to Munich."
+                }
+            ]
+        }
+    ]
 }

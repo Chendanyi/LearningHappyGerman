@@ -6,8 +6,8 @@
 - `Documentation/` — `AGENTS.md`, `TODO.md`, `MEMORY.md`, `ProjectMap.md`, `HYBRID_DATA_ARCHITECTURE.md`, `NAVIGATION_ARCHITECTURE.md`.
 - `Scripts/` — `check_integrity.sh`, `pipeline.sh`, `audit_data.swift` (quality gate scripts for lint/data/tests).
 - `reference/vocabulary/` — optional Goethe PDF sources; see `reference/vocabulary/README.md`.
-- `Data/scripts/` — `extract_vocab.py`, `requirements-pdf-extract.txt` (PDF → `Data/german_vocabulary.json`; optional `--translate` / `--translate-only` fills `englishTranslation` via **googletrans**, needs network).
-- `Data/` — **`german_vocabulary.json`**, **`grammar_rules.json`**, and `Data/scripts/`; Xcode copies these into the app target at build time (`project.pbxproj` → `../Data/*.json`).
+- `Data/scripts/` — `extract_vocab.py`, `cleanup_german_vocabulary.py`, `requirements-pdf-extract.txt` (PDF → `Data/german_vocabulary.json`; optional `--translate` / `--translate-only` fills `englishTranslation` via **googletrans**, needs network; cleanup script fixes plural/example leaks and strips CJK).
+- `Data/` — **`german_vocabulary.json`**, **`grammar_rules.json`** (A1 grammar, JSON `version` 3), **`README.md`** (bundle schema + grammar rule index), and `Data/scripts/`; Xcode copies the JSON into the app target at build time (`project.pbxproj` → `../Data/*.json`).
 - `check_integrity.sh` — thin wrapper; runs `Scripts/check_integrity.sh` from repo root.
 - `.cursorrules` — pre-task workflow constraints.
 - `.swiftlint.yml` — strict lint policy (main paths under `LearnHappyGerman/`).
@@ -48,4 +48,4 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `Scripts/check_integrity.sh` — SwiftLint + `Scripts/audit_data.swift` + `xcodebuild test`.
 - `Scripts/pipeline.sh` — CI-style gate with fast-path; appends summaries to `Documentation/MEMORY.md`.
 
-Last updated: 2026-04-26 (removed legacy `full_vocabulary.json` scripts; canonical data flow is `Data/scripts/extract_vocab.py` -> `Data/german_vocabulary.json`)
+Last updated: 2026-04-26 (`grammar_rules.json` v3 + `GrammarRule` example pairs; store `learnhappygerman-v10`)
