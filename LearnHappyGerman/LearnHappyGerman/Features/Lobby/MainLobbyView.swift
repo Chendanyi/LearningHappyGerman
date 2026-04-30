@@ -48,7 +48,7 @@ struct MainLobbyView: View {
                             GeometryReader { proxy in
                                 ZStack(alignment: .leading) {
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(Color.white.opacity(0.45))
+                                        .fill(Theme.Colors.paperOverlay.opacity(0.7))
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                                         .fill(Theme.Colors.societyBlue)
                                         .frame(
@@ -76,7 +76,7 @@ struct MainLobbyView: View {
                                     .frame(maxWidth: .infinity, minHeight: 56)
                                     .background(
                                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                            .fill(Color.white.opacity(0.42))
+                                            .fill(Theme.Colors.paperOverlay.opacity(0.66))
                                     )
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -92,7 +92,7 @@ struct MainLobbyView: View {
                 .padding(24)
                 .background(
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(Color.white.opacity(0.22))
+                        .fill(Theme.Colors.paperOverlay.opacity(0.42))
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
@@ -159,7 +159,7 @@ struct ClassroomHallwayView: View {
                     .frame(maxWidth: .infinity, minHeight: 52)
                     .background(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .fill(Color.white.opacity(0.42))
+                            .fill(Theme.Colors.paperOverlay.opacity(0.66))
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -172,7 +172,7 @@ struct ClassroomHallwayView: View {
             .padding(24)
             .background(
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(Color.white.opacity(0.22))
+                    .fill(Theme.Colors.paperOverlay.opacity(0.42))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
@@ -235,7 +235,7 @@ struct ClassroomPlaceholderView: View {
             .frame(maxWidth: .infinity, minHeight: 220)
             .background(
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(Color.white.opacity(0.25))
+                    .fill(Theme.Colors.paperOverlay.opacity(0.46))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 24, style: .continuous)

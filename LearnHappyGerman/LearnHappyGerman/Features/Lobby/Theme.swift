@@ -2,10 +2,12 @@ import SwiftUI
 
 enum Theme {
     enum Colors {
-        static let mendlsPink = Color(hex: "F8C1C1")      // Main background
-        static let societyBlue = Color(hex: "A7C7E7")     // Selection/active state
-        static let lobbyBoyPurple = Color(hex: "6D4C7D")  // Accents/text
-        static let pastelYellow = Color(hex: "FDFD96")    // Highlighting articles
+        // Vintage hand-drawn illustrated map palette on warm beige paper.
+        static let mendlsPink = Color(hex: "E7D8BE")      // Main paper background
+        static let societyBlue = Color(hex: "6F8796")     // Route / frame accents
+        static let lobbyBoyPurple = Color(hex: "4A3A2A")  // Sepia ink text / lines
+        static let pastelYellow = Color(hex: "D7C39A")    // Highlight patches
+        static let paperOverlay = Color(hex: "F4E9D4")    // Layered paper cards
     }
 
     enum Typography {

@@ -32,7 +32,7 @@ struct SimpleLifeBakeryDialogueView: View {
                 .padding(24)
                 .background(
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(Color.white.opacity(0.22))
+                        .fill(Theme.Colors.paperOverlay.opacity(0.42))
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
@@ -122,7 +122,7 @@ struct SimpleLifeBakeryDialogueView: View {
                 .frame(maxWidth: .infinity, minHeight: 48)
                 .background(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color.white.opacity(0.45))
+                        .fill(Theme.Colors.paperOverlay.opacity(0.7))
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)

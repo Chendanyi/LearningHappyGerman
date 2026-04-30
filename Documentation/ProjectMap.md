@@ -20,13 +20,13 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 ### App package (`LearnHappyGerman/LearnHappyGerman/`)
 
 - **`Features/Lobby/`** — `MainLobbyView.swift`, `Theme.swift` (CEFR lobby + shared design tokens).
-- **`Features/Flashcards/`** — `FlashcardView.swift`, `GermanFlashcardAnswerNormalization.swift`.
+- **`Features/Flashcards/`** — `FlashcardView.swift`, `FlashcardView+Preview.swift`, `GermanFlashcardAnswerNormalization.swift`.
 - **`Features/Hangman/`** — `HangmanGameView.swift`.
 - **`Features/Grammar/`** — `GrammarQuizView.swift`, `SentenceTemplate.swift`, `GrammarRule.swift` (A1 tenses / cloze).
 - **`Features/Bakery/`** — `BakeryScenarioEngine.swift`, `SimpleLifeBakeryDialogueView.swift` (AI dialogue room).
 - **`Features/Vocabulary/`** — `VocabularyWord.swift`, `DataSeeder.swift`, `LocalSeeder.swift` (SwiftData model + seeding).
 - **`Services/`** — `AudioService.swift`, `SyncService.swift`.
-- **Package root** — `LearnHappyGermanApp.swift`, `ContentView.swift`, `Item.swift`, assets, previews.
+- **Package root** — `LearnHappyGermanApp.swift`, assets, previews.
 
 ### Data next to the `.xcodeproj`
 
@@ -48,4 +48,4 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `Scripts/check_integrity.sh` — SwiftLint + `Scripts/audit_data.swift` + `xcodebuild test`.
 - `Scripts/pipeline.sh` — CI-style gate with fast-path; appends summaries to `Documentation/MEMORY.md`.
 
-Last updated: 2026-04-26 (`grammar_rules.json` v3 + `GrammarRule` example pairs; store `learnhappygerman-v10`)
+Last updated: 2026-04-26 (removed template `Item` / `ContentView`; store `learnhappygerman-v11`; flashcard previews seed via `FlashcardView+Preview`)
