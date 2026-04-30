@@ -11,35 +11,28 @@ struct SimpleLifeBakeryDialogueView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.mendlsPink.ignoresSafeArea()
-
             Theme.VocabularyGrandBudapest.symmetricContent {
                 VStack(alignment: .center, spacing: 16) {
-                    Text("Simple Life — Bäckerei")
+                    Text("SIMPLE LIFE — BÄCKEREI")
                         .font(Theme.Typography.rounded(.title2, weight: .medium))
+                        .tracking(0.9)
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                         .frame(maxWidth: .infinity)
 
                     if appState.currentLevel != .a1 {
                         Text("Dieses Szenario ist für A1. Bitte wählen Sie A1 in der Lobby.")
-                            .font(Theme.Typography.rounded(.body, weight: .medium))
-                            .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                            .font(Theme.Typography.body(.body, weight: .regular))
+                            .foregroundStyle(Theme.Colors.secondaryText)
                             .multilineTextAlignment(.center)
                     } else {
                         dialogueColumn
                     }
                 }
                 .padding(24)
-                .background(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(Theme.Colors.paperOverlay.opacity(0.42))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
-                )
+                .vintageCard()
             }
         }
+        .vintageScreenBackground()
         .navigationTitle("AI Dialogue")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -62,11 +55,11 @@ struct SimpleLifeBakeryDialogueView: View {
                         HStack(alignment: .top) {
                             Text(turn.isUser ? "Sie" : "Verkäufer")
                                 .font(Theme.Typography.rounded(.caption, weight: .semibold))
-                                .foregroundStyle(Theme.Colors.societyBlue)
+                                .foregroundStyle(Theme.Colors.accentPrimary)
                                 .frame(width: 72, alignment: .leading)
                             Text(turn.text)
-                                .font(Theme.Typography.rounded(.body, weight: .medium))
-                                .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                .font(Theme.Typography.body(.body, weight: .regular))
+                                .foregroundStyle(Theme.Colors.secondaryText)
                         }
                     }
                 }
@@ -89,7 +82,7 @@ struct SimpleLifeBakeryDialogueView: View {
                     }
                 } else {
                     Text("Dialog zu Ende. Guten Appetit!")
-                        .font(Theme.Typography.rounded(.subheadline, weight: .medium))
+                        .font(Theme.Typography.body(.subheadline, weight: .regular))
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
@@ -105,15 +98,15 @@ struct SimpleLifeBakeryDialogueView: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .font(Theme.Typography.rounded(.caption, weight: .medium))
-                .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
+                .font(Theme.Typography.body(.caption, weight: .regular))
+                .foregroundStyle(Theme.Colors.mutedText)
             TextField("", text: text, axis: .vertical)
                 .font(Theme.Typography.rounded(.body, weight: .medium))
                 .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                 .padding(12)
                 .background(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Theme.Colors.societyBlue.opacity(0.35))
+                        .fill(Theme.Colors.cardHighlight)
                 )
                 .lineLimit(2 ... 4)
             Button(actionTitle, action: action)
@@ -122,11 +115,11 @@ struct SimpleLifeBakeryDialogueView: View {
                 .frame(maxWidth: .infinity, minHeight: 48)
                 .background(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Theme.Colors.paperOverlay.opacity(0.7))
+                        .fill(Theme.Colors.cardHighlight)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(Theme.Colors.societyBlue, lineWidth: 2)
+                        .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
                 )
                 .buttonStyle(.plain)
         }

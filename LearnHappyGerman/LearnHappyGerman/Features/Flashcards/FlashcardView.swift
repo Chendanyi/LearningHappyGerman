@@ -24,17 +24,16 @@ struct FlashcardView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.mendlsPink.ignoresSafeArea()
-
             Theme.VocabularyGrandBudapest.symmetricContent {
                 VStack(spacing: 18) {
-                    Text("Flashcards")
+                    Text("FLASHCARDS")
                         .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
+                        .tracking(1.1)
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
 
                     Text("Level: \(appState.currentLevel?.rawValue ?? "Not Selected")")
-                        .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
+                        .font(Theme.Typography.body(.subheadline, weight: .regular))
+                        .foregroundStyle(Theme.Colors.mutedText)
 
                     if let card = currentWord {
                         HStack {
@@ -61,10 +60,10 @@ struct FlashcardView: View {
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                    .fill(Theme.Colors.societyBlue)
+                                    .fill(Theme.Colors.cardHighlight)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 24, style: .continuous)
-                                            .stroke(Theme.Colors.lobbyBoyPurple, lineWidth: 6)
+                                            .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
                                     )
 
                                 if showSymbolSide {
@@ -75,8 +74,9 @@ struct FlashcardView: View {
                                         .transition(.opacity.combined(with: .scale))
                                 } else {
                                     Text(flashcardPrompt(for: card))
-                                        .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
-                                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                        .font(Theme.Typography.rounded(.title2, weight: .semibold))
+                                        .tracking(1)
+                                        .foregroundStyle(Theme.Colors.secondaryText)
                                         .multilineTextAlignment(.center)
                                         .minimumScaleFactor(0.5)
                                         .lineLimit(6)
@@ -89,11 +89,11 @@ struct FlashcardView: View {
                         .buttonStyle(.plain)
                     } else {
                         RoundedRectangle(cornerRadius: 24, style: .continuous)
-                            .fill(Theme.Colors.societyBlue.opacity(0.45))
+                            .fill(Theme.Colors.cardHighlight)
                             .overlay(
                                 Text("No vocabulary for selected level")
-                                    .font(Theme.Typography.rounded(.headline, weight: .medium))
-                                    .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                                    .font(Theme.Typography.body(.headline, weight: .regular))
+                                    .foregroundStyle(Theme.Colors.secondaryText)
                             )
                             .frame(maxWidth: .infinity, minHeight: 260)
                     }
@@ -105,11 +105,11 @@ struct FlashcardView: View {
                         .frame(height: 52)
                         .background(
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .fill(Theme.Colors.paperOverlay.opacity(0.7))
+                                .fill(Theme.Colors.cardHighlight)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .stroke(Theme.Colors.societyBlue, lineWidth: 2)
+                                .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
                         )
                         .multilineTextAlignment(.center)
                         .autocorrectionDisabled()
@@ -127,16 +127,16 @@ struct FlashcardView: View {
                         validateAnswer()
                     } label: {
                         Text("Check")
-                            .font(Theme.Typography.rounded(.headline, weight: .medium))
+                            .font(Theme.Typography.rounded(.headline, weight: .semibold))
                             .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                             .frame(maxWidth: .infinity, minHeight: 50)
                             .background(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .fill(Theme.Colors.paperOverlay.opacity(0.7))
+                                    .fill(Theme.Colors.cardHighlight)
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .stroke(Theme.Colors.societyBlue, lineWidth: 2)
+                                    .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
                             )
                     }
                     .buttonStyle(.plain)
@@ -146,16 +146,10 @@ struct FlashcardView: View {
                     feedbackAndNextColumn
                 }
                 .padding(24)
-                .background(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(Theme.Colors.paperOverlay.opacity(0.42))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
-                )
+                .vintageCard()
             }
         }
+        .vintageScreenBackground()
         .navigationTitle("Flashcards")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -220,7 +214,7 @@ struct FlashcardView: View {
         case .correct:
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 32, weight: .ultraLight))
-                .foregroundStyle(.green)
+                .foregroundStyle(Theme.Colors.mossGreen)
                 .scaleEffect(successScale)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .transition(.scale.combined(with: .opacity))
