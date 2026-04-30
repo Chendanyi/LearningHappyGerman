@@ -122,7 +122,7 @@ struct MainLobbyView: View {
 struct ClassroomHallwayView: View {
     @EnvironmentObject private var appState: AppState
 
-    private let classroomDoors: [ClassroomDoor] = [.flashcards, .tenses, .diceGame, .aiDialogue, .hangman]
+    private let classroomDoors: [ClassroomDoor] = [.flashcards, .tenses, .diceGame, .cityWalk, .hangman]
 
     var body: some View {
         ZStack {
@@ -189,7 +189,7 @@ enum ClassroomDoor: String, CaseIterable, Hashable {
     case flashcards = "Flashcards"
     case tenses = "Tenses"
     case diceGame = "Dice Game"
-    case aiDialogue = "AI Dialogue"
+    case cityWalk = "CityWalk"
     case hangman = "Hangman"
 
     var title: String { rawValue }
@@ -202,8 +202,8 @@ private func classroomDestination(for door: ClassroomDoor, level: CEFRLevel?) ->
         FlashcardView(level: level)
     case .tenses:
         GrammarQuizView()
-    case .aiDialogue:
-        SimpleLifeBakeryDialogueView()
+    case .cityWalk:
+        CityMapView()
     case .hangman:
         HangmanGameView()
     default:
