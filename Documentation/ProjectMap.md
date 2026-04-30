@@ -23,7 +23,7 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - **`Features/Flashcards/`** — `FlashcardView.swift`, `FlashcardView+Preview.swift`, `GermanFlashcardAnswerNormalization.swift`.
 - **`Features/Hangman/`** — `HangmanGameView.swift`.
 - **`Features/Grammar/`** — `GrammarQuizView.swift`, `SentenceTemplate.swift`, `GrammarRule.swift` (A1 tenses / cloze).
-- **`Features/Bakery/`** — `BakeryScenarioEngine.swift`, `SimpleLifeBakeryDialogueView.swift` (AI dialogue room).
+- **`Features/CityMap/`** — `CityMapView.swift`, `BakeryScenarioEngine.swift`, `SimpleLifeBakeryDialogueView.swift` (CityWalk map + bakery dialogue scene).
 - **`Features/Vocabulary/`** — `VocabularyWord.swift`, `DataSeeder.swift`, `LocalSeeder.swift` (SwiftData model + seeding).
 - **`Services/`** — `AudioService.swift`, `SyncService.swift`.
 - **Package root** — `LearnHappyGermanApp.swift`, assets, previews.
@@ -39,7 +39,7 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - **`Features/Flashcards/`** — `FlashcardRegressionTests.swift`.
 - **`Features/Hangman/`** — `HangmanLogicTests.swift`.
 - **`Features/Grammar/`** — `GrammarQuizTests.swift`.
-- **`Features/Bakery/`** — `BakeryScenarioTests.swift`.
+- **`Features/CityMap/`** — `BakeryScenarioTests.swift`.
 - **`Features/Vocabulary/`** — `VocabularyWordTests`, `VocabularyDataIntegrityTests`, `VocabularySymmetryLayoutTests`, `VocabularyA2FetchPerformanceTests`.
 - **`Features/Services/`** — `AudioServiceTests`, `SyncServiceTests`.
 
@@ -48,4 +48,4 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `Scripts/check_integrity.sh` — SwiftLint + `Scripts/audit_data.swift` + `xcodebuild test`.
 - `Scripts/pipeline.sh` — CI-style gate with fast-path; appends summaries to `Documentation/MEMORY.md`.
 
-Last updated: 2026-04-26 (removed template `Item` / `ContentView`; store `learnhappygerman-v11`; flashcard previews seed via `FlashcardView+Preview`)
+Last updated: 2026-04-30 (CityWalk module moved to `Features/CityMap`; interactive `CityMapView` hotspot routing)

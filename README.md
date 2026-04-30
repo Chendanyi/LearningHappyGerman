@@ -8,7 +8,7 @@ An iOS app for learning German with a simple **lobby → hallway → rooms** flo
 - **Flashcards** — study words for your level, hear German pronunciation, and mark progress as you go. The card front shows the English gloss when the vocabulary row has one; otherwise it shows a short “listen and type the German answer” hint (example sentences stay off the front so they don’t give away the target word or the wrong sense).
 - **Hangman** — guess letters for words at your level; nouns show the correct article (der / die / das) when relevant.
 - **Tenses** — fill-in exercises for beginner grammar (A1 present tense).
-- **AI Dialogue** — a short, guided bakery-style conversation for A1 practice.
+- **CityWalk** — an interactive city map with tappable buildings; Bakery hotspot opens the guided A1 dialogue scene.
 
 On first launch, the app merges **`german_vocabulary.json`** (Goethe-style list from `Data/scripts/extract_vocab.py`) into SwiftData and loads **`grammar_rules.json`** for the grammar room. Everything stays on your device unless you later use features that sync data (if enabled in a future build).
 
