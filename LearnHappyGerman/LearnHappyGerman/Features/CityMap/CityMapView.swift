@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct CityMapView: View {
+    @EnvironmentObject private var appState: AppState
+
     private enum CityBuilding: String, CaseIterable, Hashable {
         case trainStation = "Train Station"
         case bakery = "Bakery"
@@ -87,6 +89,7 @@ struct CityMapView: View {
         if building == .bakery {
             NavigationLink {
                 SimpleLifeBakeryDialogueView()
+                    .environmentObject(appState)
             } label: {
                 hotspotTarget(for: building)
             }
