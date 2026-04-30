@@ -20,37 +20,36 @@ struct MainLobbyView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Theme.Colors.mendlsPink
-                    .ignoresSafeArea()
-
                 VStack(spacing: 16) {
                     Image(systemName: "bell")
                         .font(.system(size: 17, weight: .ultraLight))
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                        .foregroundStyle(Theme.Colors.accentPrimary)
                         .doodleSymbolStyle()
 
-                    Text("Grand Budapest Deutsch")
+                    Text("GRAND BUDAPEST DEUTSCH")
                         .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
+                        .tracking(1.2)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                         .accessibilityIdentifier("mainLobby.title")
 
-                    Text("Select Your CEFR Level")
-                        .font(Theme.Typography.rounded(.headline, weight: .medium))
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.9))
+                    Text("SELECT YOUR CEFR LEVEL")
+                        .font(Theme.Typography.rounded(.headline, weight: .semibold))
+                        .tracking(1)
+                        .foregroundStyle(Theme.Colors.secondaryText)
 
                     if appState.isInitializingVocabulary {
                         VStack(spacing: 8) {
                             Text("Preparing Vocabulary \(Int((appState.initializationProgress * 100).rounded()))%")
-                                .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                                .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.88))
+                                .font(Theme.Typography.body(.subheadline, weight: .regular))
+                                .foregroundStyle(Theme.Colors.mutedText)
                                 .frame(maxWidth: .infinity, alignment: .center)
                             GeometryReader { proxy in
                                 ZStack(alignment: .leading) {
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(Theme.Colors.paperOverlay.opacity(0.7))
+                                        .fill(Theme.Colors.cardHighlight)
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(Theme.Colors.societyBlue)
+                                        .fill(Theme.Colors.accentPrimary)
                                         .frame(
                                             width: proxy.size.width
                                                 * max(0, min(1, appState.initializationProgress))
@@ -71,16 +70,16 @@ struct MainLobbyView: View {
                                 }
                             } label: {
                                 Text(level.rawValue)
-                                    .font(Theme.Typography.rounded(.title3, weight: .medium))
+                                    .font(Theme.Typography.rounded(.title3, weight: .semibold))
                                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                                     .frame(maxWidth: .infinity, minHeight: 56)
                                     .background(
                                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                            .fill(Theme.Colors.paperOverlay.opacity(0.66))
+                                            .fill(Theme.Colors.cardHighlight)
                                     )
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                            .stroke(Theme.Colors.societyBlue, lineWidth: 2)
+                                            .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
                                     )
                             }
                             .buttonStyle(.plain)
@@ -90,17 +89,11 @@ struct MainLobbyView: View {
                     }
                 }
                 .padding(24)
-                .background(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(Theme.Colors.paperOverlay.opacity(0.42))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
-                )
+                .vintageCard()
                 .accessibilityIdentifier("mainLobby.card")
                 .wesSymmetricLayout()
             }
+            .vintageScreenBackground()
             .navigationBarHidden(true)
             .navigationDestination(isPresented: $showHallway) {
                 ClassroomHallwayView()
@@ -126,17 +119,15 @@ struct ClassroomHallwayView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.mendlsPink
-                .ignoresSafeArea()
-
             VStack(spacing: 18) {
-                Text("Classroom Hallway")
+                Text("CLASSROOM HALLWAY")
                     .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
+                    .tracking(1.2)
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
 
                 Text("Current Level: \(appState.currentLevel?.rawValue ?? "Not Selected")")
-                    .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                    .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
+                    .font(Theme.Typography.body(.subheadline, weight: .regular))
+                    .foregroundStyle(Theme.Colors.mutedText)
 
                 ForEach(classroomDoors, id: \.self) { door in
                     NavigationLink {
@@ -147,7 +138,7 @@ struct ClassroomHallwayView: View {
                                 .font(.system(size: 16, weight: .ultraLight))
                                 .doodleSymbolStyle()
                             Text(door.title)
-                                .font(Theme.Typography.rounded(.headline, weight: .medium))
+                                .font(Theme.Typography.rounded(.headline, weight: .semibold))
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .font(.system(size: 12, weight: .ultraLight))
@@ -159,27 +150,21 @@ struct ClassroomHallwayView: View {
                     .frame(maxWidth: .infinity, minHeight: 52)
                     .background(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .fill(Theme.Colors.paperOverlay.opacity(0.66))
+                            .fill(Theme.Colors.cardHighlight)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .stroke(Theme.Colors.societyBlue, lineWidth: 2)
+                            .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
                     )
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("hallway.door.\(door.rawValue)")
                 }
             }
             .padding(24)
-            .background(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(Theme.Colors.paperOverlay.opacity(0.42))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
-            )
+            .vintageCard()
             .wesSymmetricLayout()
         }
+        .vintageScreenBackground()
         .navigationTitle("Hallway")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -217,32 +202,24 @@ struct ClassroomPlaceholderView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.mendlsPink
-                .ignoresSafeArea()
-
             VStack(spacing: 12) {
-                Text(door.title)
+                Text(door.title.uppercased())
                     .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
+                    .tracking(1)
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                 Text("Coming soon")
-                    .font(Theme.Typography.rounded(.title3, weight: .medium))
-                    .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.9))
+                    .font(Theme.Typography.body(.title3, weight: .regular))
+                    .foregroundStyle(Theme.Colors.secondaryText)
                 Text("Level Scope: \(appState.currentLevel?.rawValue ?? "Not Selected")")
-                    .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                    .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.8))
+                    .font(Theme.Typography.body(.subheadline, weight: .regular))
+                    .foregroundStyle(Theme.Colors.mutedText)
             }
             .padding(24)
             .frame(maxWidth: .infinity, minHeight: 220)
-            .background(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .fill(Theme.Colors.paperOverlay.opacity(0.46))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 24, style: .continuous)
-                    .stroke(Theme.Colors.societyBlue, lineWidth: 2)
-            )
+            .vintageCard()
             .wesSymmetricLayout()
         }
+        .vintageScreenBackground()
         .navigationTitle(door.title)
         .navigationBarTitleDisplayMode(.inline)
     }

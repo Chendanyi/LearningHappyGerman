@@ -17,9 +17,6 @@ struct GrammarQuizView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.mendlsPink
-                .ignoresSafeArea()
-
             Theme.VocabularyGrandBudapest.symmetricContent {
                 VStack(spacing: 20) {
                     Image(systemName: "text.book.closed")
@@ -27,8 +24,9 @@ struct GrammarQuizView: View {
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                         .doodleSymbolStyle()
 
-                    Text("Tenses — Fill in the verb")
+                    Text("TENSES — FILL IN THE VERB")
                         .font(Theme.Typography.rounded(.title2, weight: .medium))
+                        .tracking(1)
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                         .multilineTextAlignment(.center)
 
@@ -38,16 +36,16 @@ struct GrammarQuizView: View {
                                 + "Current: \(appState.currentLevel?.rawValue ?? "—")."
                         )
                             .font(Theme.Typography.rounded(.body, weight: .medium))
-                            .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                            .foregroundStyle(Theme.Colors.secondaryText)
                             .multilineTextAlignment(.center)
                             .padding(.vertical, 8)
                     } else if let template = current {
                         VStack(alignment: .center, spacing: 14) {
                             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                .fill(Theme.Colors.mendlsPink)
+                                .fill(Theme.Colors.cardHighlight)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                        .stroke(Theme.Colors.societyBlue, lineWidth: 2)
+                                        .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
                                 )
                                 .frame(minHeight: 120)
                                 .overlay(
@@ -59,11 +57,11 @@ struct GrammarQuizView: View {
                                             .accessibilityIdentifier("grammarQuiz.prompt")
                                         Text("(\(template.englishHint))")
                                             .font(Theme.Typography.rounded(.caption, weight: .medium))
-                                            .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
+                                            .foregroundStyle(Theme.Colors.mutedText)
                                             .multilineTextAlignment(.center)
                                         Text("Infinitive: \(template.infinitive)")
                                             .font(Theme.Typography.rounded(.caption, weight: .medium))
-                                            .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.75))
+                                            .foregroundStyle(Theme.Colors.mutedText)
                                     }
                                     .padding(16)
                                 )
@@ -78,11 +76,11 @@ struct GrammarQuizView: View {
                             .padding(14)
                             .background(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .fill(Theme.Colors.societyBlue.opacity(0.55))
+                                    .fill(Theme.Colors.cardHighlight)
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .stroke(Theme.Colors.societyBlue, lineWidth: 2)
+                                    .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
                             )
                             .accessibilityIdentifier("grammarQuiz.answerField")
 
@@ -102,13 +100,13 @@ struct GrammarQuizView: View {
                                     checkAnswer()
                                 }
                                 .buttonStyle(.borderedProminent)
-                                .tint(Theme.Colors.lobbyBoyPurple)
+                                .tint(Theme.Colors.accentPrimary)
 
                                 Button("Next") {
                                     advance()
                                 }
                                 .buttonStyle(.bordered)
-                                .tint(Theme.Colors.lobbyBoyPurple)
+                                .tint(Theme.Colors.accentSecondary)
                                 .disabled(templates.isEmpty)
                             }
                         }
@@ -118,8 +116,10 @@ struct GrammarQuizView: View {
                     }
                 }
                 .padding(.vertical, 8)
+                .vintageCard()
             }
         }
+        .vintageScreenBackground()
         .navigationTitle("Tenses")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {

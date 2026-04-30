@@ -40,23 +40,22 @@ struct HangmanGameView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.mendlsPink.ignoresSafeArea()
-
             Theme.VocabularyGrandBudapest.symmetricContent {
                 VStack(spacing: 18) {
                     Image(systemName: "birthday.cake")
                         .font(.system(size: 40, weight: .ultraLight))
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                        .foregroundStyle(Theme.Colors.accentPrimary)
                         .doodleSymbolStyle()
 
-                    Text("Hangman - Mendl's Cake Box")
+                    Text("HANGMAN — MENDL'S CAKE BOX")
                         .font(Theme.Typography.rounded(.title2, weight: .medium))
+                        .tracking(1)
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                         .multilineTextAlignment(.center)
 
                     Text("Level: \(appState.currentLevel?.rawValue ?? "A1")")
-                        .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.85))
+                        .font(Theme.Typography.body(.subheadline, weight: .regular))
+                        .foregroundStyle(Theme.Colors.mutedText)
 
                     if isWon {
                         conciergeCelebration
@@ -73,8 +72,8 @@ struct HangmanGameView: View {
                         .multilineTextAlignment(.center)
 
                     Text(statusMessage)
-                        .font(Theme.Typography.rounded(.headline, weight: .medium))
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                        .font(Theme.Typography.body(.headline, weight: .regular))
+                        .foregroundStyle(Theme.Colors.secondaryText)
                         .multilineTextAlignment(.center)
 
                     keyboardGrid
@@ -86,16 +85,10 @@ struct HangmanGameView: View {
                     .foregroundStyle(Theme.Colors.lobbyBoyPurple)
                 }
                 .padding(24)
-                .background(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(Theme.Colors.paperOverlay.opacity(0.42))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
-                )
+                .vintageCard()
             }
         }
+        .vintageScreenBackground()
         .navigationTitle("Hangman")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -219,11 +212,11 @@ struct HangmanGameView: View {
                         .frame(width: 28, height: 34)
                         .background(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(Theme.Colors.societyBlue.opacity(0.9))
+                                .fill(Theme.Colors.cardHighlight)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .stroke(Theme.Colors.lobbyBoyPurple.opacity(0.7), lineWidth: 1)
+                                .stroke(Theme.Colors.societyBlue, lineWidth: 1.1)
                         )
                         .buttonStyle(.plain)
                         .disabled(isWon || isLost || guessedLetters.contains(letter))

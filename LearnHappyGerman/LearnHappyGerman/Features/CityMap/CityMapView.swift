@@ -22,28 +22,22 @@ struct CityMapView: View {
         ScrollView {
             Theme.VocabularyGrandBudapest.symmetricContent {
                 VStack(spacing: 16) {
-                    Text("CityWalk")
+                    Text("CITYWALK")
                         .font(Theme.Typography.rounded(.largeTitle, weight: .medium))
+                        .tracking(1.2)
                         .foregroundStyle(Theme.Colors.lobbyBoyPurple)
 
                     Text("Tap a building to start a location scene")
-                        .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.86))
+                        .font(Theme.Typography.body(.subheadline, weight: .regular))
+                        .foregroundStyle(Theme.Colors.mutedText)
 
                     mapCanvas
                 }
                 .padding(24)
-                .background(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(Theme.Colors.paperOverlay.opacity(0.42))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .stroke(Theme.Colors.societyBlue.opacity(0.9), lineWidth: 2)
-                )
+                .vintageCard()
             }
         }
-        .background(Theme.Colors.mendlsPink.ignoresSafeArea())
+        .vintageScreenBackground()
         .navigationTitle("CityWalk")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -114,7 +108,7 @@ struct CityMapView: View {
             .frame(width: 72, height: 72)
             .overlay(
                 Circle()
-                    .stroke(Theme.Colors.societyBlue.opacity(0.35), lineWidth: 1)
+                    .stroke(Theme.Colors.accentPrimary.opacity(0.55), lineWidth: 1.2)
             )
             .contentShape(Circle())
             .accessibilityLabel("Open \(building.rawValue)")
@@ -126,27 +120,20 @@ private struct CityLocationPlaceholderView: View {
 
     var body: some View {
         ZStack {
-            Theme.Colors.mendlsPink.ignoresSafeArea()
-
             VStack(spacing: 10) {
-                Text(buildingName)
+                Text(buildingName.uppercased())
                     .font(Theme.Typography.rounded(.title2, weight: .medium))
+                    .tracking(0.8)
                 Text("Scene coming soon")
-                    .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                    .foregroundStyle(Theme.Colors.lobbyBoyPurple.opacity(0.82))
+                    .font(Theme.Typography.body(.subheadline, weight: .regular))
+                    .foregroundStyle(Theme.Colors.secondaryText)
             }
             .foregroundStyle(Theme.Colors.lobbyBoyPurple)
             .padding(24)
-            .background(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(Theme.Colors.paperOverlay.opacity(0.56))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(Theme.Colors.societyBlue, lineWidth: 2)
-            )
+            .vintageCard(cornerRadius: 20)
             .wesSymmetricLayout()
         }
+        .vintageScreenBackground()
         .navigationTitle(buildingName)
         .navigationBarTitleDisplayMode(.inline)
     }
