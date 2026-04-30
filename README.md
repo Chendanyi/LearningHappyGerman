@@ -4,7 +4,7 @@ An iOS app for learning German with a simple **lobby → hallway → rooms** flo
 
 ## What you can do in the app
 
-- **Choose your level** on the main screen (A1 through C2), styled like a hotel concierge board.
+- **Choose your level** on the main screen (A1 through C2), styled like a hotel concierge board with a vintage hand-drawn map look (warm paper background + minimalist line art).
 - **Flashcards** — study words for your level, hear German pronunciation, and mark progress as you go. The card front shows the English gloss when the vocabulary row has one; otherwise it shows a short “listen and type the German answer” hint (example sentences stay off the front so they don’t give away the target word or the wrong sense).
 - **Hangman** — guess letters for words at your level; nouns show the correct article (der / die / das) when relevant.
 - **Tenses** — fill-in exercises for beginner grammar (A1 present tense).
@@ -49,4 +49,4 @@ Maintainers use **`./check_integrity.sh`** (lint, **`Scripts/audit_data.swift`**
 
 ---
 
-*Last updated: 2026-04-26 (`grammar_rules.json` v3 + `learnhappygerman-v11.store`; legacy cleanup)*
+*Last updated: 2026-04-30 (global vintage map visual style + `learnhappygerman-v11.store`)*

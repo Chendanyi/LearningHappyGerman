@@ -44,10 +44,10 @@ Autonomous agents must **not** change `Package.swift`, run `brew install`, or us
 
 - Requirements freeze for visual language and UI consistency
   - Color Palette
-    - `MendlsPink` = `#F8C1C1` (main background)
-    - `SocietyBlue` = `#A7C7E7` (selection/active state)
-    - `LobbyBoyPurple` = `#6D4C7D` (accents/text)
-    - `PastelYellow` = `#FDFD96` (article highlighting)
+    - `MendlsPink` = `#E7D8BE` (warm paper background)
+    - `SocietyBlue` = `#6F8796` (map route / frame accents)
+    - `LobbyBoyPurple` = `#4A3A2A` (sepia ink text / line art)
+    - `PastelYellow` = `#D7C39A` (paper highlight patches)
   - Typography
     - Rounded minimalist baseline
     - Fallback: `design: .rounded`, `weight: .medium`

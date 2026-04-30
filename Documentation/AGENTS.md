@@ -50,9 +50,12 @@
 
 ### Visual Style Rules
 
-- Menu style follows a "Hotel Concierge Board" metaphor.
-- Icons must be thin-stroke doodles:
-  - SF Symbols with `.ultraLight` weight.
+- Global style follows a **vintage hand-drawn illustrated map** inspired by *The Grand Budapest Hotel*.
+- Visual baseline:
+  - Warm beige paper background on every screen (not only menu surfaces).
+  - Minimalist line-art framing with muted map-ink accents.
+  - Thin-stroke doodle iconography (`SF Symbols` with `.ultraLight` weight).
+  - Keep centered and symmetric composition while using layered paper cards instead of bright white panels.
 
 ## Required Loop Per Feature
 
