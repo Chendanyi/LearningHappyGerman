@@ -23,7 +23,7 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `**Features/Flashcards/**` — `FlashcardView.swift`, `FlashcardView+Preview.swift`, `GermanFlashcardAnswerNormalization.swift`.
 - `**Features/Hangman/**` — `HangmanGameView.swift`.
 - `**Features/Grammar/**` — `GrammarQuizView.swift`, `SentenceTemplate.swift`, `GrammarRule.swift` (A1 tenses / cloze).
-- `**Features/CityMap/**` — `CityMapView.swift`, `BakeryScenarioEngine.swift`, `SimpleLifeBakeryDialogueView.swift` (CityWalk; parchment layer is `Theme.VintagePaperBackground` in `Theme.swift`).
+- `**Features/CityMap/**` — `CityMapView.swift`, `CityMapHotspotLayout.swift`, `ScenarioConfig.swift`, `ScenarioCatalog.swift` (12 A1/A2 scripts), `CityScenarioEngine.swift`, `ScenarioDialogueView.swift` (CityWalk; parchment via `Theme`).
 - `**Features/Vocabulary/**` — `VocabularyWord.swift`, `DataSeeder.swift`, `LocalSeeder.swift` (SwiftData model + seeding).
 - `**Services/**` — `AudioService.swift`, `SyncService.swift`.
 - **Package root** — `LearnHappyGermanApp.swift`, assets, previews.
@@ -38,7 +38,7 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `**Features/Flashcards/`** — `FlashcardRegressionTests.swift`.
 - `**Features/Hangman/`** — `HangmanLogicTests.swift`.
 - `**Features/Grammar/**` — `GrammarQuizTests.swift`.
-- `**Features/CityMap/**` — `BakeryScenarioTests.swift`.
+- `**Features/CityMap/**` — `CityScenarioEngineTests.swift`, `CityMapHotspotLayoutTests.swift`.
 - `**Features/Vocabulary/**` — `VocabularyWordTests`, `VocabularyDataIntegrityTests`, `VocabularySymmetryLayoutTests`, `VocabularyA2FetchPerformanceTests`.
 - `**Features/Services/**` — `AudioServiceTests`, `SyncServiceTests`.
 
@@ -47,4 +47,4 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `Scripts/check_integrity.sh` — SwiftLint + `Scripts/audit_data.swift` + `xcodebuild test`.
 - `Scripts/pipeline.sh` — CI-style gate with fast-path; appends summaries to `Documentation/MEMORY.md`.
 
-Last updated: 2026-05-02 (Removed unused root SPM snapshot stub; test layout under `LearnHappyGermanTests/Features/`)
+Last updated: 2026-05-02 (CityWalk multi-scenario dialogue: `ScenarioCatalog`, `CityScenarioEngine`, `ScenarioDialogueView`)
