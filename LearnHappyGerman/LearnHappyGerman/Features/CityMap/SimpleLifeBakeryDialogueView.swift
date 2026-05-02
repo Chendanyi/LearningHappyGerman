@@ -55,7 +55,7 @@ struct SimpleLifeBakeryDialogueView: View {
                         HStack(alignment: .top) {
                             Text(turn.isUser ? "Sie" : "Verkäufer")
                                 .font(Theme.Typography.rounded(.caption, weight: .semibold))
-                                .foregroundStyle(Theme.Colors.accentPrimary)
+                                .foregroundStyle(Theme.Colors.accentUI)
                                 .frame(width: 72, alignment: .leading)
                             Text(turn.text)
                                 .font(Theme.Typography.body(.body, weight: .regular))
@@ -99,7 +99,7 @@ struct SimpleLifeBakeryDialogueView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(Theme.Typography.body(.caption, weight: .regular))
-                .foregroundStyle(Theme.Colors.mutedText)
+                .foregroundStyle(Theme.Colors.deepBrown)
             TextField("", text: text, axis: .vertical)
                 .font(Theme.Typography.rounded(.body, weight: .medium))
                 .foregroundStyle(Theme.Colors.lobbyBoyPurple)

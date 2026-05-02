@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// A1 present-tense fill-in (Grand Budapest layout: MendlsPink prompt card, SocietyBlue input).
+/// A1 present-tense fill-in (parchment card layout, societyBlue input borders).
 struct GrammarQuizView: View {
     @EnvironmentObject private var appState: AppState
 
@@ -57,11 +57,11 @@ struct GrammarQuizView: View {
                                             .accessibilityIdentifier("grammarQuiz.prompt")
                                         Text("(\(template.englishHint))")
                                             .font(Theme.Typography.rounded(.caption, weight: .medium))
-                                            .foregroundStyle(Theme.Colors.mutedText)
+                                            .foregroundStyle(Theme.Colors.deepBrown)
                                             .multilineTextAlignment(.center)
                                         Text("Infinitive: \(template.infinitive)")
                                             .font(Theme.Typography.rounded(.caption, weight: .medium))
-                                            .foregroundStyle(Theme.Colors.mutedText)
+                                            .foregroundStyle(Theme.Colors.deepBrown)
                                     }
                                     .padding(16)
                                 )
@@ -100,7 +100,7 @@ struct GrammarQuizView: View {
                                     checkAnswer()
                                 }
                                 .buttonStyle(.borderedProminent)
-                                .tint(Theme.Colors.accentPrimary)
+                                .tint(Theme.Colors.accentUI)
 
                                 Button("Next") {
                                     advance()

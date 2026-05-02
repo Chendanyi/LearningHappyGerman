@@ -124,7 +124,7 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 - **Validation Evidence:** 
   - Visual check: Lobby content remains centered and balanced.
   - State check: tapping `B1` sets `AppState.currentLevel = .b1` and hallway displays `Current Level: B1`.
-  - Color check: `MainLobbyView` uses `Theme.Colors.mendlsPink`, `Theme.Colors.lobbyBoyPurple`, and `Theme.Colors.societyBlue`, matching `Theme.swift` hex values (`#F8C1C1`, `#6D4C7D`, `#A7C7E7`).
+  - Color check (superseded): lobby now uses Rejuvenated Parchment tokens — `accentUI`, `lobbyBoyPurple`, `deepBrown`, `societyBlue` on controls; global background is tiled `paper_texture` via `vintageScreenBackground()`.
   - Scope note: vocabulary filtering is ready via `AppState.currentLevel`; module-level SwiftData query filtering is pending classroom implementation.
 
 ### [2026-04-07] SwiftData `ModelContainer` init failure / fatalError
@@ -439,3 +439,7 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ### [PIPELINE-20260430-152728] Automated Pipeline Run
 
 - [2026-04-30 15:27:28 +0200] Pipeline passed: 30 tests, 0 lint violations.
+
+### [PIPELINE-20260502-203248] Automated Pipeline Run
+
+- [2026-05-02 20:32:47 +0200] Pipeline failed: 0 tests, 0 lint violations.

@@ -2,23 +2,31 @@ import SwiftUI
 
 enum Theme {
     enum Colors {
-        // Warm paper + restrained vintage print palette.
-        static let mendlsPink = Color(hex: "EADCC8")
-        static let backgroundTop = Color(hex: "F3E8D6")
-        static let backgroundBottom = Color(hex: "E2D2BA")
-        static let societyBlue = Color(hex: "BFB6A8")       // System border / divider
-        static let lobbyBoyPurple = Color(hex: "2F2A26")    // Primary text
+        // Rejuvenated parchment palette — see project README / AGENTS for roles.
+        /// Primary ink / high-contrast text.
+        static let lobbyBoyPurple = Color(hex: "2F2A26")
+        /// Body text / secondary labels.
         static let secondaryText = Color(hex: "4A443E")
-        static let mutedText = Color(hex: "7A746B")
-        static let pastelYellow = Color(hex: "D7C39A")
-        static let paperOverlay = Color(hex: "F3E8D6")
-        static let cardHighlight = Color(hex: "EFE2CD")
-        static let accentPrimary = Color(hex: "C96A5A")
-        static let accentSecondary = Color(hex: "D98C7A")
-        static let mossGreen = Color(hex: "7A8F7A")
-        static let sageGreen = Color(hex: "A3B18A")
+        /// Tertiary text / hints (replaces former muted gray in UI).
         static let deepBrown = Color(hex: "8B6B4F")
+        /// Map-only highlights: hotspots, map markers (not general buttons).
+        static let accentPrimary = Color(hex: "C96A5A")
+        /// General UI buttons and interactive accents.
+        static let accentUI = Color(hex: "B05A4A")
+        /// Map road wash / warm map accent; optional card highlights.
+        static let pastelYellow = Color(hex: "D7C39A")
+        /// Warm accent / subtle outlines (optional; not used on `vintageCard` border).
         static let softBrown = Color(hex: "A1866F")
+        /// Success / correct answers.
+        static let mossGreen = Color(hex: "7A8F7A")
+        /// Primary card / panel fill (`vintageCard` uses at 0.9 opacity so `paper_texture` shows through).
+        static let cardFill = Color(hex: "EDD9B4")
+        /// Standard UI borders (non-card dividers, controls).
+        static let societyBlue = Color(hex: "BFB6A8")
+        /// Inset surfaces: text fields, selected panels, inner chrome.
+        static let cardHighlight = Color(hex: "F7F0E3")
+        /// Secondary accent (e.g. alternate toggle emphasis).
+        static let accentSecondary = Color(hex: "D98C7A")
     }
 
     enum Typography {
@@ -75,32 +83,27 @@ extension View {
             .symbolRenderingMode(Theme.IconStyle.renderingMode)
     }
 
-    /// Global warm paper background with soft top-down gradient.
+    /// Global tiled parchment background (`paper_texture`) behind main navigation content.
     func vintageScreenBackground() -> some View {
         ZStack {
-            LinearGradient(
-                colors: [Theme.Colors.backgroundTop, Theme.Colors.backgroundBottom],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            VintagePaperBackground()
             self
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
-    /// Shared card style with thin border and subtle vintage depth.
+    /// Shared card: translucent warm fill, organic deep-brown frame, warm shadow.
     func vintageCard(cornerRadius: CGFloat = 24) -> some View {
         self
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(Theme.Colors.paperOverlay)
+                    .fill(Theme.Colors.cardFill.opacity(0.9))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
+                    .stroke(Theme.Colors.deepBrown, lineWidth: 1.2)
             )
-            .shadow(color: Color.black.opacity(0.08), radius: 4, x: 0, y: 1)
+            .shadow(color: Color(hex: "5C4B37").opacity(0.15), radius: 4, x: 0, y: 2)
     }
 }
 
