@@ -48,12 +48,9 @@ struct CityMapView: View {
 
                 Spacer()
 
-                Button(action: {}, label: {
-                    Image(systemName: "gearshape")
-                        .foregroundStyle(Theme.Colors.lobbyBoyPurple)
-                })
-                .accessibilityLabel("Settings")
-                .accessibilityHint("Coming soon")
+                Color.clear
+                    .frame(width: 28, height: 28)
+                    .accessibilityHidden(true)
             }
             .padding(EdgeInsets(top: 10, leading: 20, bottom: 4, trailing: 20))
 

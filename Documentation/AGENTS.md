@@ -128,9 +128,9 @@ For every feature, execute in order:
   - `LearnHappyGerman/LearnHappyGermanUITests/.swiftlint.yml`
   - In tests, `force_unwrapping` is downgraded to warning for concise fixture setup.
 
-## Snapshot Testing (Prepared)
+## Snapshot testing (optional)
 
-- Root `Package.swift` declares the **pointfreeco/swift-snapshot-testing** dependency and a small `LearningHappyGermanSnapshots` library target for future visual regression tests (Lobby and classroom symmetry). The production app is still built from `LearnHappyGerman/LearnHappyGerman.xcodeproj`; resolve SPM with `swift package resolve` at the repo root when adding snapshot tests.
+- Visual snapshot regression is not wired in this repository. To add it later, attach **pointfreeco/swift-snapshot-testing** (or equivalent) via Xcode or a small SPM package and link it from a test target. The shipping app builds from `LearnHappyGerman/LearnHappyGerman.xcodeproj` only.
 
 ## Nightly Autonomous Protocol (Planner)
 

@@ -11,7 +11,7 @@
 - `check_integrity.sh` — thin wrapper; runs `Scripts/check_integrity.sh` from repo root.
 - `.cursorrules` — pre-task workflow constraints.
 - `.swiftlint.yml` — strict lint policy (main paths under `LearnHappyGerman/`).
-- `Package.swift` / `Package.resolved` — SPM tooling (e.g. snapshot testing); the iOS app builds from `LearnHappyGerman/LearnHappyGerman.xcodeproj`.
+- The iOS app builds from `LearnHappyGerman/LearnHappyGerman.xcodeproj` (optional SPM packages can be added in Xcode when needed).
 
 ## Xcode project directory (`LearnHappyGerman/`)
 
@@ -35,7 +35,6 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 
 ## Unit tests (`LearnHappyGerman/LearnHappyGermanTests/`)
 
-- `LearnHappyGermanTests.swift` — default XCTest template / harness entry.
 - `**Features/Flashcards/`** — `FlashcardRegressionTests.swift`.
 - `**Features/Hangman/`** — `HangmanLogicTests.swift`.
 - `**Features/Grammar/**` — `GrammarQuizTests.swift`.
@@ -48,4 +47,4 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `Scripts/check_integrity.sh` — SwiftLint + `Scripts/audit_data.swift` + `xcodebuild test`.
 - `Scripts/pipeline.sh` — CI-style gate with fast-path; appends summaries to `Documentation/MEMORY.md`.
 
-Last updated: 2026-05-02 (Parchment background: `Theme.VintagePaperBackground` in `Theme.swift`)
+Last updated: 2026-05-02 (Removed unused root SPM snapshot stub; test layout under `LearnHappyGermanTests/Features/`)
