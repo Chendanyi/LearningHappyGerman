@@ -44,7 +44,7 @@ struct HangmanGameView: View {
                 VStack(spacing: 18) {
                     Image(systemName: "birthday.cake")
                         .font(.system(size: 40, weight: .ultraLight))
-                        .foregroundStyle(Theme.Colors.accentPrimary)
+                        .foregroundStyle(Theme.Colors.accentUI)
                         .doodleSymbolStyle()
 
                     Text("HANGMAN — MENDL'S CAKE BOX")
@@ -55,7 +55,7 @@ struct HangmanGameView: View {
 
                     Text("Level: \(appState.currentLevel?.rawValue ?? "A1")")
                         .font(Theme.Typography.body(.subheadline, weight: .regular))
-                        .foregroundStyle(Theme.Colors.mutedText)
+                        .foregroundStyle(Theme.Colors.deepBrown)
 
                     if isWon {
                         conciergeCelebration

@@ -43,13 +43,15 @@ Autonomous agents must **not** change `Package.swift`, run `brew install`, or us
 ## Current Priority - Cross-Feature Design System (Planner)
 
 - Requirements freeze for visual language and UI consistency
-  - Color Palette
-    - `MendlsPink` = `#EADCC8` (warm paper background)
-    - `Background Gradient` = `#F3E8D6` (top) → `#E2D2BA` (bottom)
-    - `LobbyBoyPurple` = `#2F2A26` (primary text / ink)
-    - `SecondaryText` = `#4A443E`, `MutedText` = `#7A746B`
-    - `SocietyBlue` = `#BFB6A8` (soft border/line color)
-    - `AccentPrimary` = `#C96A5A`, `AccentSecondary` = `#D98C7A`
+  - Color Palette (see `Theme.swift` — Rejuvenated Parchment)
+    - Global screen background: tiled `paper_texture` via `vintageScreenBackground()`
+    - `lobbyBoyPurple` = `#2F2A26` (primary ink)
+    - `secondaryText` = `#4A443E`, `deepBrown` = `#8B6B4F` (tertiary / hints)
+    - `accentPrimary` = `#C96A5A` (map hotspots only); `accentUI` = `#B05A4A` (buttons / general UI)
+    - `pastelYellow` = `#D7C39A` (map road wash / accents), `softBrown` = `#A1866F` (optional accents)
+    - `cardFill` = `#EDD9B4` (`vintageCard` @ 0.9 opacity), `cardHighlight` = `#F7F0E3` (inputs / inner surfaces)
+    - `vintageCard` border = `deepBrown`; shadow = `#5C4B37` @ 0.15; `societyBlue` = `#BFB6A8` (standard UI borders)
+    - `mossGreen` = `#7A8F7A` (success); `accentSecondary` = `#D98C7A`; `cardHighlight` = `#EFE2CD`
   - Typography
     - Rounded minimalist baseline
     - Fallback: `design: .rounded`, `weight: .medium`

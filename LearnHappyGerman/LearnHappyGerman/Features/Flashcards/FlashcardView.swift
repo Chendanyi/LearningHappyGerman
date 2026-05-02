@@ -33,7 +33,7 @@ struct FlashcardView: View {
 
                     Text("Level: \(appState.currentLevel?.rawValue ?? "Not Selected")")
                         .font(Theme.Typography.body(.subheadline, weight: .regular))
-                        .foregroundStyle(Theme.Colors.mutedText)
+                        .foregroundStyle(Theme.Colors.deepBrown)
 
                     if let card = currentWord {
                         HStack {

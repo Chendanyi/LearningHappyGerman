@@ -52,11 +52,11 @@
 
 - Global style follows a **vintage hand-drawn illustrated map** inspired by *The Grand Budapest Hotel*.
 - Visual baseline:
-  - Background: primary `#EADCC8`; preferred gradient `#F3E8D6` → `#E2D2BA`; subtle paper grain only.
+  - Background: tiled `paper_texture` on all main screens (`vintageScreenBackground()`); no full-screen gradient behind content.
   - Typography: serif-forward (Playfair/Libre/Cormorant style), uppercase titles, slight title tracking (+2% to +5%).
-  - Text colors: primary `#2F2A26`, secondary `#4A443E`, muted `#7A746B`; never pure black.
-  - Accents: muted reds `#C96A5A` + `#D98C7A` used sparingly for active/highlight emphasis.
-  - Borders/lines: thin `#BFB6A8` strokes (1–1.5px equivalent), minimal organic softness.
+  - Text colors: primary `#2F2A26`, secondary `#4A443E`, tertiary/hints `#8B6B4F` (`deepBrown`); never pure black.
+  - Accents: `#C96A5A` (`accentPrimary`) **map-only** (hotspots); `#B05A4A` (`accentUI`) for buttons and general UI; `#D98C7A` (`accentSecondary`) where a second accent is needed.
+  - Cards: fill `#EDD9B4` (`cardFill`) at 0.9 opacity; border `#8B6B4F` (`deepBrown`); shadow `#5C4B37` @ 0.15. Standard control strokes use `#BFB6A8` (`societyBlue`).
   - Shadows: soft and minimal only (`rgba(0,0,0,0.08)` with tiny offset / blur).
   - Layout: generous negative space, refined asymmetry preferred over rigid grid repetition.
   - Avoid: highly saturated colors, thick borders, heavy modern shadows/effects.

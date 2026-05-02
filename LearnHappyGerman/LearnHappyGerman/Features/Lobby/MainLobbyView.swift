@@ -23,7 +23,7 @@ struct MainLobbyView: View {
                 VStack(spacing: 16) {
                     Image(systemName: "bell")
                         .font(.system(size: 17, weight: .ultraLight))
-                        .foregroundStyle(Theme.Colors.accentPrimary)
+                        .foregroundStyle(Theme.Colors.accentUI)
                         .doodleSymbolStyle()
 
                     Text("GRAND BUDAPEST DEUTSCH")
@@ -42,14 +42,14 @@ struct MainLobbyView: View {
                         VStack(spacing: 8) {
                             Text("Preparing Vocabulary \(Int((appState.initializationProgress * 100).rounded()))%")
                                 .font(Theme.Typography.body(.subheadline, weight: .regular))
-                                .foregroundStyle(Theme.Colors.mutedText)
+                                .foregroundStyle(Theme.Colors.deepBrown)
                                 .frame(maxWidth: .infinity, alignment: .center)
                             GeometryReader { proxy in
                                 ZStack(alignment: .leading) {
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                                         .fill(Theme.Colors.cardHighlight)
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(Theme.Colors.accentPrimary)
+                                        .fill(Theme.Colors.accentUI)
                                         .frame(
                                             width: proxy.size.width
                                                 * max(0, min(1, appState.initializationProgress))
@@ -127,7 +127,7 @@ struct ClassroomHallwayView: View {
 
                 Text("Current Level: \(appState.currentLevel?.rawValue ?? "Not Selected")")
                     .font(Theme.Typography.body(.subheadline, weight: .regular))
-                    .foregroundStyle(Theme.Colors.mutedText)
+                    .foregroundStyle(Theme.Colors.deepBrown)
 
                 ForEach(classroomDoors, id: \.self) { door in
                     NavigationLink {
@@ -212,7 +212,7 @@ struct ClassroomPlaceholderView: View {
                     .foregroundStyle(Theme.Colors.secondaryText)
                 Text("Level Scope: \(appState.currentLevel?.rawValue ?? "Not Selected")")
                     .font(Theme.Typography.body(.subheadline, weight: .regular))
-                    .foregroundStyle(Theme.Colors.mutedText)
+                    .foregroundStyle(Theme.Colors.deepBrown)
             }
             .padding(24)
             .frame(maxWidth: .infinity, minHeight: 220)
