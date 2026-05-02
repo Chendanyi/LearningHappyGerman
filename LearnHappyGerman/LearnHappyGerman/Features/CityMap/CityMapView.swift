@@ -71,21 +71,24 @@ struct CityMapView: View {
                 Image("CityWalkMap")
                     .resizable()
                     .scaledToFit()
-                    .padding(.horizontal, 16)
                     .overlay {
                         Theme.Colors.pastelYellow.opacity(0.08)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .allowsHitTesting(false)
                     }
-                    .overlay(alignment: .topLeading) {
+                    // Hotspots must live in an overlay on the image so `GeometryReader` matches the
+                    // actual drawn bitmap (a sibling `GeometryReader` in `ScrollView` often gets a
+                    // taller frame than `scaledToFit`, which skews every normalized coordinate).
+                    .overlay {
                         GeometryReader { proxy in
                             mapHotspots(
                                 width: proxy.size.width,
                                 height: proxy.size.height
                             )
                         }
-                        .allowsHitTesting(true)
                     }
-                    .shadow(color: .black.opacity(0.03), radius: 6, x: 0, y: 2)
+                .padding(.horizontal, 16)
+                .shadow(color: .black.opacity(0.03), radius: 6, x: 0, y: 2)
             }
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0))
         }
@@ -93,20 +96,21 @@ struct CityMapView: View {
         .background(Color.clear)
     }
 
+    /// Normalized centers (0…1, origin top-left) tuned to the current `CityWalkMap` illustration.
     private func mapHotspots(width: CGFloat, height: CGFloat) -> some View {
         ZStack {
-            hotspot(.trainStation, atX: 0.24, atY: 0.21, in: width, height: height)
-            hotspot(.bakery, atX: 0.43, atY: 0.19, in: width, height: height)
-            hotspot(.restaurant, atX: 0.73, atY: 0.18, in: width, height: height)
-            hotspot(.coffeeShop, atX: 0.42, atY: 0.34, in: width, height: height)
-            hotspot(.hospital, atX: 0.74, atY: 0.35, in: width, height: height)
-            hotspot(.centralHotel, atX: 0.27, atY: 0.52, in: width, height: height)
-            hotspot(.supermarket, atX: 0.69, atY: 0.52, in: width, height: height)
-            hotspot(.shoppingCenter, atX: 0.27, atY: 0.68, in: width, height: height)
-            hotspot(.postOffice, atX: 0.66, atY: 0.68, in: width, height: height)
-            hotspot(.cinema, atX: 0.19, atY: 0.86, in: width, height: height)
-            hotspot(.school, atX: 0.49, atY: 0.87, in: width, height: height)
-            hotspot(.townHall, atX: 0.75, atY: 0.87, in: width, height: height)
+            hotspot(.trainStation, atX: 0.30, atY: 0.10, in: width, height: height)
+            hotspot(.bakery, atX: 0.53, atY: 0.15, in: width, height: height)
+            hotspot(.restaurant, atX: 0.80, atY: 0.10, in: width, height: height)
+            hotspot(.coffeeShop, atX: 0.40, atY: 0.32, in: width, height: height)
+            hotspot(.hospital, atX: 0.78, atY: 0.35, in: width, height: height)
+            hotspot(.centralHotel, atX: 0.30, atY: 0.53, in: width, height: height)
+            hotspot(.supermarket, atX: 0.70, atY: 0.57, in: width, height: height)
+            hotspot(.shoppingCenter, atX: 0.32, atY: 0.73, in: width, height: height)
+            hotspot(.postOffice, atX: 0.70, atY: 0.74, in: width, height: height)
+            hotspot(.cinema, atX: 0.23, atY: 0.90, in: width, height: height)
+            hotspot(.school, atX: 0.50, atY: 0.90, in: width, height: height)
+            hotspot(.townHall, atX: 0.78, atY: 0.90, in: width, height: height)
         }
         .frame(width: width, height: height)
     }
@@ -142,13 +146,10 @@ struct CityMapView: View {
     }
 
     private func hotspotTarget(for building: CityBuilding) -> some View {
-        Circle()
+        let diameter: CGFloat = 88
+        return Circle()
             .fill(Color.clear)
-            .frame(width: 72, height: 72)
-            .overlay(
-                Circle()
-                    .stroke(Theme.Colors.accentPrimary.opacity(0.35), lineWidth: 1)
-            )
+            .frame(width: diameter, height: diameter)
             .contentShape(Circle())
             .accessibilityLabel("Open \(building.rawValue)")
     }

@@ -65,6 +65,16 @@ enum Theme {
             content().wesSymmetricLayout()
         }
     }
+
+    /// Full-screen tiled `paper_texture` asset (used by `vintageScreenBackground()`).
+    struct VintagePaperBackground: View {
+        var body: some View {
+            Image("paper_texture")
+                .resizable(resizingMode: .tile)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea()
+        }
+    }
 }
 
 extension View {
@@ -86,7 +96,7 @@ extension View {
     /// Global tiled parchment background (`paper_texture`) behind main navigation content.
     func vintageScreenBackground() -> some View {
         ZStack {
-            VintagePaperBackground()
+            Theme.VintagePaperBackground()
             self
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -131,4 +141,8 @@ extension Color {
 
         self.init(.sRGB, red: redChannel, green: greenChannel, blue: blueChannel, opacity: 1.0)
     }
+}
+
+#Preview("Parchment background") {
+    Theme.VintagePaperBackground()
 }

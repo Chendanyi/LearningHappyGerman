@@ -132,7 +132,7 @@ struct FlashcardView: View {
                             .frame(maxWidth: .infinity, minHeight: 50)
                             .background(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .fill(Theme.Colors.cardHighlight)
+                                    .fill(Theme.Colors.accentUI)
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -198,7 +198,7 @@ struct FlashcardView: View {
                     nextCard()
                 }
                 .font(Theme.Typography.rounded(.subheadline, weight: .medium))
-                .foregroundStyle(Theme.Colors.lobbyBoyPurple)
+                .foregroundStyle(Theme.Colors.accentUI)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .multilineTextAlignment(.center)
             }
