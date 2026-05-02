@@ -8,7 +8,7 @@ An iOS app for learning German with a simple **lobby → hallway → rooms** flo
 - **Flashcards** — study words for your level, hear German pronunciation, and mark progress as you go. The card front shows the English gloss when the vocabulary row has one; otherwise it shows a short “listen and type the German answer” hint (example sentences stay off the front so they don’t give away the target word or the wrong sense).
 - **Hangman** — guess letters for words at your level; nouns show the correct article (der / die / das) when relevant.
 - **Tenses** — fill-in exercises for beginner grammar (A1 present tense).
-- **CityWalk** — same global parchment as other rooms (`vintageScreenBackground`), **MY TOWN** header, map with `pastelYellow` road wash overlay and `accentPrimary` hotspot rings; Bakery opens the A1 dialogue scene (gear reserved).
+- **CityWalk** — same global parchment as other rooms (`vintageScreenBackground`), **MY TOWN** header, map with `pastelYellow` road wash overlay and invisible circular tap targets on buildings; Bakery opens the A1 dialogue scene (gear reserved).
 
 On first launch, the app merges **`german_vocabulary.json`** (Goethe-style list from `Data/scripts/extract_vocab.py`) into SwiftData and loads **`grammar_rules.json`** for the grammar room. Everything stays on your device unless you later use features that sync data (if enabled in a future build).
 
@@ -49,4 +49,4 @@ Maintainers use **`./check_integrity.sh`** (lint, **`Scripts/audit_data.swift`**
 
 ---
 
-*Last updated: 2026-05-02 (Rejuvenated Parchment theme: global `paper_texture`, `accentUI` vs `accentPrimary`, `Theme` token refresh)*
+*Last updated: 2026-05-02 (CityWalk map: invisible building tap targets; parchment theme tokens)*

@@ -23,7 +23,7 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `**Features/Flashcards/**` — `FlashcardView.swift`, `FlashcardView+Preview.swift`, `GermanFlashcardAnswerNormalization.swift`.
 - `**Features/Hangman/**` — `HangmanGameView.swift`.
 - `**Features/Grammar/**` — `GrammarQuizView.swift`, `SentenceTemplate.swift`, `GrammarRule.swift` (A1 tenses / cloze).
-- `**Features/CityMap/**` — `CityMapView.swift`, `VintagePaperBackground.swift`, `BakeryScenarioEngine.swift`, `SimpleLifeBakeryDialogueView.swift` (CityWalk map + bakery dialogue scene).
+- `**Features/CityMap/**` — `CityMapView.swift`, `BakeryScenarioEngine.swift`, `SimpleLifeBakeryDialogueView.swift` (CityWalk; parchment layer is `Theme.VintagePaperBackground` in `Theme.swift`).
 - `**Features/Vocabulary/**` — `VocabularyWord.swift`, `DataSeeder.swift`, `LocalSeeder.swift` (SwiftData model + seeding).
 - `**Services/**` — `AudioService.swift`, `SyncService.swift`.
 - **Package root** — `LearnHappyGermanApp.swift`, assets, previews.
@@ -48,4 +48,4 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `Scripts/check_integrity.sh` — SwiftLint + `Scripts/audit_data.swift` + `xcodebuild test`.
 - `Scripts/pipeline.sh` — CI-style gate with fast-path; appends summaries to `Documentation/MEMORY.md`.
 
-Last updated: 2026-05-02 (Rejuvenated Parchment: `Theme.Colors` refresh, `vintageScreenBackground` = tiled `paper_texture`, `VintagePaperBackground.swift` shared layer)
+Last updated: 2026-05-02 (Parchment background: `Theme.VintagePaperBackground` in `Theme.swift`)
