@@ -150,7 +150,7 @@ echo "==> Cleaning simulator environment"
 xcrun simctl shutdown all >/dev/null 2>&1 || true
 xcrun simctl erase all >/dev/null 2>&1 || true
 
-# Prefer Xcode tests when the iOS app project exists; root Package.swift is for tooling (e.g. SnapshotTesting).
+# Prefer Xcode tests when the iOS app project exists; otherwise run `swift test` if a root Package.swift is present.
 if [[ -f "Package.swift" ]] && [[ "${RUN_MODE}" == "full" ]] && [[ ! -f "LearnHappyGerman/LearnHappyGerman.xcodeproj/project.pbxproj" ]]; then
   echo "==> Running Swift tests with timeout (${TEST_TIMEOUT_SECONDS}s)"
   if ! run_with_timeout "${TEST_TIMEOUT_SECONDS}" swift test 2>&1 | tee "${TEST_LOG}"; then
