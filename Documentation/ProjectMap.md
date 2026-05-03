@@ -5,7 +5,7 @@
 - `README.md` — product overview, commands, and layout (GitHub landing).
 - `Documentation/` — `AGENTS.md`, `TODO.md`, `MEMORY.md`, `ProjectMap.md`, `HYBRID_DATA_ARCHITECTURE.md`, `NAVIGATION_ARCHITECTURE.md`.
 - `Scripts/` — `check_integrity.sh`, `pipeline.sh`, `audit_data.swift` (quality gate scripts for lint/data/tests).
-- `reference/vocabulary/` — optional Goethe PDF sources; see `reference/vocabulary/README.md`.
+- Optional Goethe PDF sources: `**04_LearningGerman/reference/vocabulary/**` (sibling of this repo; not tracked here).
 - `Data/scripts/` — `extract_vocab.py`, `cleanup_german_vocabulary.py`, `requirements-pdf-extract.txt` (PDF → `Data/german_vocabulary.json`; optional `--translate` / `--translate-only` fills `englishTranslation` via **googletrans**, needs network; cleanup script fixes plural/example leaks and strips CJK).
 - `Data/` — `**german_vocabulary.json`**, `**grammar_rules.json`** (A1 grammar, JSON `version` 3), `**README.md**` (bundle schema + grammar rule index), and `Data/scripts/`; Xcode copies the JSON into the app target at build time (`project.pbxproj` → `../Data/*.json`).
 - `check_integrity.sh` — thin wrapper; runs `Scripts/check_integrity.sh` from repo root.
@@ -37,7 +37,7 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 
 - `**Features/Flashcards/`** — `FlashcardRegressionTests.swift`.
 - `**Features/Hangman/`** — `HangmanLogicTests.swift`.
-- `**Features/Grammar/**` — `GrammarQuizTests.swift`.
+- `**Features/Grammar/`** — `GrammarQuizTests.swift`.
 - `**Features/CityMap/**` — `CityScenarioEngineTests.swift`, `CityMapHotspotLayoutTests.swift`.
 - `**Features/Vocabulary/**` — `VocabularyWordTests`, `VocabularyDataIntegrityTests`, `VocabularySymmetryLayoutTests`, `VocabularyA2FetchPerformanceTests`.
 - `**Features/Services/**` — `AudioServiceTests`, `SyncServiceTests`.

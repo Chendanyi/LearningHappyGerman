@@ -12,8 +12,7 @@ xcuserdata/
 DerivedData/
 .swiftpm/
 
-# Licensed Goethe / local word-list PDFs (keep on disk; do not commit)
-reference/vocabulary/*.pdf
+# Licensed Goethe PDFs live under ../reference/vocabulary/ (outside this repo); nothing to ignore here.
 
 # Python extractor bytecode / local venv for googletrans
 Data/scripts/__pycache__/
