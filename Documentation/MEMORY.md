@@ -327,8 +327,8 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 - **`VocabularyWord`:** Added optional `pluralSuffix` and `exampleSentence`; `VocabularySeedRecord` + `DataSeeder.importFullVocabularyFromBundle` upsert extended; `Scripts/audit_data.swift` enforces A2 example + plural for der/die/das rows.
 - **`full_vocabulary.json`:** **500** unique A2 lemmas (compound-heavy generator in `Scripts/build_a2_500.py`); total vocabulary rows **966** (466 A1 + 500 A2). Re-run script after manual edits to keep A2 count at 500.
 - **B1 leak guard:** `BundledData.json` B1 sample word replaced **`lernen` → `Voraussetzung`** (abstract noun); `Scripts/audit_level_overlap.py` passes (no B1 lemmas in `full_vocabulary.json` today).
-- **A1 bakery:** `SimpleLifeBakeryDialogueView` + `BakeryScenarioEngine` — multi-turn order / special / price / goodbye; Hallway **AI Dialogue** route.
-- **Tests:** `BakeryScenarioTests`, `VocabularyA2FetchPerformanceTests` (synthetic 500-row fetch measure).
+- **CityWalk dialogues:** `ScenarioDialogueView` + `CityScenarioEngine` + `ScenarioCatalog` — twelve locations (`CityMapHotspotLayout.Building`), data-driven A1/A2 German; optional `backgroundImageName` per `ScenarioConfig` falls back to SF Symbol.
+- **Tests:** `CityScenarioEngineTests`, `CityMapHotspotLayoutTests`, `VocabularyA2FetchPerformanceTests` (synthetic 500-row fetch measure).
 
 ### [PIPELINE-20260408-230648] Automated Pipeline Run
 
