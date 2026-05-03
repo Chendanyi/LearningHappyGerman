@@ -26,7 +26,8 @@ SCRIPT_PATH = Path(__file__).resolve()
 REPO_ROOT = SCRIPT_PATH.parents[2]
 DATA_DIR = REPO_ROOT / "Data"
 DEFAULT_JSON = DATA_DIR / "german_vocabulary.json"
-VOCAB_REF_DIR = REPO_ROOT / "reference" / "vocabulary"
+# Licensed PDFs live outside this repo clone (sibling `reference/vocabulary/` under `04_LearningGerman/`).
+VOCAB_REF_DIR = REPO_ROOT.parent / "reference" / "vocabulary"
 
 
 class GermanVocabProcessor:

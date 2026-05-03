@@ -384,9 +384,9 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 
 ### PDF vocabulary extractor — 2026-04-08
 
-- **Tool:** `python3 Data/scripts/extract_vocab.py` (deps: `Data/scripts/requirements-pdf-extract.txt`, **`pypdf`**). PDFs under repo or parent `reference/vocabulary/`; output `Data/german_vocabulary.json`.
+- **Tool:** `python3 Data/scripts/extract_vocab.py` (deps: `Data/scripts/requirements-pdf-extract.txt`, **`pypdf`**). PDFs under parent tree **`04_LearningGerman/reference/vocabulary/`** (`REPO_ROOT.parent / "reference" / "vocabulary"`); output `Data/german_vocabulary.json`.
 - **Verification run (no PDFs present):** Pass — script exits 0, writes `[]`, integrity report printed, duplicate-headword assertion skipped on empty list.
-- **Empty output cause:** `extract_vocab.py` uses **`pypdf`** and looks under **`LearningHappyGerman/reference/vocabulary/`** and **`04_LearningGerman/reference/vocabulary/`** (parent). If no PDFs are found, that directory contained no matching `*.pdf` (wrong folder, wrong filename, or PDFs not synced into this clone). The script prints **resolved repo root**, **PDF dirs**, and **directory listings** to compare with Finder.
+- **Empty output cause:** `extract_vocab.py` uses **`pypdf`** and looks under **`04_LearningGerman/reference/vocabulary/`** only (no in-repo `reference/`). If no PDFs are found, that directory contained no matching `*.pdf` (wrong folder, wrong filename, or PDFs not synced). The script prints **`File skipped`** for each missing PDF path.
 
 ### [PIPELINE-20260420-003038] Automated Pipeline Run
 
@@ -443,3 +443,7 @@ Update this file whenever a bug, failed test, or validation issue is discovered.
 ### [PIPELINE-20260502-203248] Automated Pipeline Run
 
 - [2026-05-02 20:32:47 +0200] Pipeline failed: 0 tests, 0 lint violations.
+
+### [PIPELINE-20260503-005626] Automated Pipeline Run
+
+- [2026-05-03 00:56:26 +0200] Pipeline passed: 37 tests, 0 lint violations.

@@ -29,4 +29,3 @@ The app uses a single SwiftData store with two complementary model families:
 ## Design notes
 
 - Grammar rules persist paired German/English example lines (`exampleGermanLines` / `exampleEnglishLines` from JSON `examples` with `de` / `en`). Extend the model if you need per-example audio, links, or richer filtering.
-
