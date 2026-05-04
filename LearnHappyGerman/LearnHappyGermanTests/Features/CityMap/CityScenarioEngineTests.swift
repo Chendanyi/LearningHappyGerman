@@ -3,51 +3,56 @@ import XCTest
 
 @MainActor
 final class CityScenarioEngineTests: XCTestCase {
-    func testBakeryScenarioCompletesFullDialogue() {
+
+    func testBakerySendsUserLineAndAppendsAIReply() async {
+        let mock = MockCityScenarioAI(replies: ["Gern, hier sind Ihre Brötchen."])
         let config = ScenarioCatalog.config(for: .bakery)
-        let engine = CityScenarioEngine(config: config)
+        let engine = CityScenarioEngine(config: config, aiClient: mock)
         engine.startScenario()
-        XCTAssertEqual(engine.turns.count, 1)
+        XCTAssertEqual(engine.conversationHistory.count, 1)
 
-        engine.submitUserLine("Drei Brötchen, bitte.")
-        XCTAssertGreaterThanOrEqual(engine.turns.count, 3)
-
-        engine.submitUserLine("Nein, danke. Das ist alles.")
-        XCTAssertTrue(engine.isComplete)
-        XCTAssertEqual(engine.turns.count, 5)
-    }
-
-    func testEmptyLineDoesNotAdvance() {
-        let engine = CityScenarioEngine(config: ScenarioCatalog.config(for: .bakery))
-        engine.startScenario()
-        let before = engine.turns.count
-        engine.submitUserLine("   ")
-        XCTAssertEqual(engine.turns.count, before)
-    }
-
-    func testWrongPhraseDoesNotAdvance() {
-        let engine = CityScenarioEngine(config: ScenarioCatalog.config(for: .bakery))
-        engine.startScenario()
-        let before = engine.turns.count
-        engine.submitUserLine("Ich kaufe ein Auto.")
-        XCTAssertEqual(engine.turns.count, before)
-    }
-
-    func testSecondValidOrderIgnoredAfterFirstRound() {
-        let engine = CityScenarioEngine(config: ScenarioCatalog.config(for: .bakery))
-        engine.startScenario()
-        engine.submitUserLine("Drei Brötchen, bitte.")
-        let countAfterFirst = engine.turns.count
-        engine.submitUserLine("Drei Brötchen, bitte.")
-        XCTAssertEqual(engine.turns.count, countAfterFirst)
-    }
-
-    func testTrainStationFirstRound() {
-        let engine = CityScenarioEngine(config: ScenarioCatalog.config(for: .trainStation))
-        engine.startScenario()
-        engine.submitUserLine("Nach München, bitte.")
+        await engine.submitUserLine("Drei Brötchen, bitte.")
+        XCTAssertFalse(engine.isAwaitingAI)
+        XCTAssertEqual(engine.conversationHistory.count, 3)
+        XCTAssertEqual(engine.conversationHistory.last?.text, "Gern, hier sind Ihre Brötchen.")
         XCTAssertEqual(engine.turns.count, 3)
+        XCTAssert(mock.invocations >= 1)
+    }
+
+    func testEmptyLineDoesNotAdvance() async {
+        let mock = MockCityScenarioAI(replies: [])
+        let engine = CityScenarioEngine(config: ScenarioCatalog.config(for: .bakery), aiClient: mock)
+        engine.startScenario()
+        let before = engine.conversationHistory.count
+        await engine.submitUserLine("   ")
+        XCTAssertEqual(engine.conversationHistory.count, before)
+        XCTAssertEqual(mock.invocations, 0)
+    }
+
+    func testAnyUserPhraseAcceptedWithAI() async {
+        let mock = MockCityScenarioAI(replies: ["Verstanden."])
+        let engine = CityScenarioEngine(config: ScenarioCatalog.config(for: .bakery), aiClient: mock)
+        engine.startScenario()
+        await engine.submitUserLine("Ich hätte gern etwas Ungewöhnliches.")
+        XCTAssertEqual(engine.conversationHistory.count, 3)
+    }
+
+    func testTrainStationAddsReply() async {
+        let mock = MockCityScenarioAI(replies: ["Wohin möchten Sie fahren?"])
+        let engine = CityScenarioEngine(config: ScenarioCatalog.config(for: .trainStation), aiClient: mock)
+        engine.startScenario()
+        await engine.submitUserLine("Nach Berlin, bitte.")
+        XCTAssertGreaterThanOrEqual(engine.conversationHistory.count, 3)
         XCTAssertFalse(engine.isComplete)
+    }
+
+    func testSystemInstructionMentionsA1A2() async {
+        let mock = MockCityScenarioAI(replies: ["OK"])
+        let engine = CityScenarioEngine(config: ScenarioCatalog.config(for: .bakery), aiClient: mock)
+        engine.startScenario()
+        await engine.submitUserLine("Hallo")
+        XCTAssertTrue(mock.lastSystemInstruction?.contains("A1") == true)
+        XCTAssertTrue(mock.lastSystemInstruction?.contains("A2") == true)
     }
 
     func testScenarioPhraseMatchingContainsLongerUtterance() {
@@ -66,5 +71,26 @@ final class CityScenarioEngineTests: XCTestCase {
                 acceptablePhrases: ["Nach München, bitte."]
             )
         )
+    }
+}
+
+// MARK: - Test double
+
+private final class MockCityScenarioAI: CityScenarioAIClient, @unchecked Sendable {
+    private let replies: [String]
+    private var index = 0
+    private(set) var invocations = 0
+    private(set) var lastSystemInstruction: String?
+
+    init(replies: [String]) {
+        self.replies = replies.isEmpty ? ["Standard-Antwort."] : replies
+    }
+
+    func generateAIResponse(prompt: String, systemInstruction: String) async throws -> String {
+        invocations += 1
+        lastSystemInstruction = systemInstruction
+        defer { index += 1 }
+        let replyIndex = min(index, replies.count - 1)
+        return replies[max(0, replyIndex)]
     }
 }

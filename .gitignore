@@ -17,3 +17,10 @@ DerivedData/
 # Python extractor bytecode / local venv for googletrans
 Data/scripts/__pycache__/
 .venv/
+
+# --- Secrets.xcconfig (Google AI / local xcconfig) ---
+# Do NOT commit API keys. Copy LearnHappyGerman/Secrets.xcconfig.example →
+# LearnHappyGerman/Secrets.xcconfig and set GOOGLE_AI_API_KEY. Build injects the key into
+# Info.plist via AppSecrets.xcconfig → INFOPLIST_KEY_GOOGLE_AI_API_KEY → $(GOOGLE_AI_API_KEY).
+# Swift reads the key only from Info.plist (see GoogleGenerativeAIConfiguration).
+LearnHappyGerman/Secrets.xcconfig

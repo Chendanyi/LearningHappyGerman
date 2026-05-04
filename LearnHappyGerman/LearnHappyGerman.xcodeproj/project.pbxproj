@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CF49D7A22F84EEBB0004A815 /* german_vocabulary.json in Resources */ = {isa = PBXBuildFile; fileRef = CF49D7A02F84EEBB0004A815 /* german_vocabulary.json */; };
 		CF49D7A32F84EEBB0004A815 /* grammar_rules.json in Resources */ = {isa = PBXBuildFile; fileRef = CF49D7A12F84EEBB0004A815 /* grammar_rules.json */; };
+		CF49E4EF2FA768010004A815 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = CF49E4F02FA768020004A815 /* GoogleGenerativeAI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,9 @@
 		CF49D75B2F84EEBD0004A814 /* LearnHappyGermanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnHappyGermanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF49D7A02F84EEBB0004A815 /* german_vocabulary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = german_vocabulary.json; sourceTree = "<group>"; };
 		CF49D7A12F84EEBB0004A815 /* grammar_rules.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = grammar_rules.json; sourceTree = "<group>"; };
+		CF49E4EA2FA767BE0004A814 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		CF49E4EC2FA767CC0004A814 /* AppSecrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppSecrets.xcconfig; sourceTree = "<group>"; };
+		CF49E4ED2FA767CD0004A814 /* Secrets.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Secrets.xcconfig.example; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -59,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF49E4EF2FA768010004A815 /* GoogleGenerativeAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +87,9 @@
 		CF49D7362F84EEBB0004A814 = {
 			isa = PBXGroup;
 			children = (
+				CF49E4EC2FA767CC0004A814 /* AppSecrets.xcconfig */,
+				CF49E4EA2FA767BE0004A814 /* Secrets.xcconfig */,
+				CF49E4ED2FA767CD0004A814 /* Secrets.xcconfig.example */,
 				CF49D7412F84EEBB0004A814 /* LearnHappyGerman */,
 				CF49D7A42F84EEBB0004A815 /* ../Data */,
 				CF49D7542F84EEBD0004A814 /* LearnHappyGermanTests */,
@@ -129,6 +137,7 @@
 			);
 			name = LearnHappyGerman;
 			packageProductDependencies = (
+				CF49E4F02FA768020004A815 /* GoogleGenerativeAI */,
 			);
 			productName = LearnHappyGerman;
 			productReference = CF49D73F2F84EEBB0004A814 /* LearnHappyGerman.app */;
@@ -212,6 +221,9 @@
 			);
 			mainGroup = CF49D7362F84EEBB0004A814;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CF49E4EE2FA768000004A815 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CF49D7402F84EEBB0004A814 /* Products */;
 			projectDirPath = "";
@@ -409,6 +421,7 @@
 		};
 		CF49D7662F84EEBD0004A814 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF49E4EC2FA767CC0004A814 /* AppSecrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -419,6 +432,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AppInfoAdditions.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -440,6 +454,7 @@
 		};
 		CF49D7672F84EEBD0004A814 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF49E4EC2FA767CC0004A814 /* AppSecrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -450,6 +465,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AppInfoAdditions.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -577,6 +593,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CF49E4EE2FA768000004A815 /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CF49E4F02FA768020004A815 /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF49E4EE2FA768000004A815 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CF49D7372F84EEBB0004A814 /* Project object */;
 }

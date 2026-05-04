@@ -11,7 +11,7 @@
 - `check_integrity.sh` — thin wrapper; runs `Scripts/check_integrity.sh` from repo root.
 - `.cursorrules` — pre-task workflow constraints.
 - `.swiftlint.yml` — strict lint policy (main paths under `LearnHappyGerman/`).
-- The iOS app builds from `LearnHappyGerman/LearnHappyGerman.xcodeproj` (optional SPM packages can be added in Xcode when needed).
+- The iOS app builds from `LearnHappyGerman/LearnHappyGerman.xcodeproj` (optional SPM packages can be added in Xcode when needed). **Secrets:** tracked **`AppSecrets.xcconfig`** (base config), **`AppInfoAdditions.plist`** (merges `$(GOOGLE_AI_API_KEY)` into Info.plist via `INFOPLIST_FILE`); copy **`Secrets.xcconfig.example`** → **`Secrets.xcconfig`** (gitignored) for `GOOGLE_AI_API_KEY`.
 
 ## Xcode project directory (`LearnHappyGerman/`)
 
@@ -23,9 +23,9 @@ Bundled JSON (`*.json`) lives next to `LearnHappyGerman.xcodeproj`. SwiftUI sour
 - `**Features/Flashcards/**` — `FlashcardView.swift`, `FlashcardView+Preview.swift`, `GermanFlashcardAnswerNormalization.swift`.
 - `**Features/Hangman/**` — `HangmanGameView.swift`.
 - `**Features/Grammar/**` — `GrammarQuizView.swift`, `SentenceTemplate.swift`, `GrammarRule.swift` (A1 tenses / cloze).
-- `**Features/CityMap/**` — `CityMapView.swift`, `CityMapHotspotLayout.swift`, `ScenarioConfig.swift`, `ScenarioCatalog.swift` (12 A1/A2 scripts), `CityScenarioEngine.swift`, `ScenarioDialogueView.swift` (CityWalk; parchment via `Theme`).
+- `**Features/CityMap/**` — `CityMapView.swift`, `CityMapHotspotLayout.swift`, `ScenarioConfig.swift`, `ScenarioCatalog.swift` (opening lines / vocabulary), `ScenarioPromptProvider.swift` (global + 12 hotspot AI personalities), `CityScenarioAIClient.swift` (Gemini abstraction + live client), `CityScenarioEngine.swift` (Gemini + transcript), `ScenarioDialogueView.swift` (CityWalk, German TTS via `AudioService`; parchment via `Theme`).
 - `**Features/Vocabulary/**` — `VocabularyWord.swift`, `DataSeeder.swift`, `LocalSeeder.swift` (SwiftData model + seeding).
-- `**Services/**` — `AudioService.swift`, `SyncService.swift`.
+- `**Services/**` — `AudioService.swift`, `SyncService.swift`, `APIConfig.swift` (Info.plist key), `GoogleGenerativeAIConfiguration.swift` (API key + default model id e.g. `gemini-2.5-flash`), `GenerativeAIService.swift` (Gemini `generateAIResponse`), `GeminiGenerativeModelFactory.swift` (**GoogleGenerativeAI** SPM).
 - **Package root** — `LearnHappyGermanApp.swift`, assets, previews.
 
 ### Data next to the `.xcodeproj`

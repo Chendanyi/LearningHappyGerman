@@ -1,11 +1,12 @@
 import SwiftUI
 import UIKit
 
-/// Multi-location A1/A2 scripted dialogue (content from `ScenarioCatalog`).
+/// Multi-location A1/A2 AI dialogue (`ScenarioPromptProvider` + `ScenarioCatalog` topics).
 struct ScenarioDialogueView: View {
     let building: CityMapHotspotLayout.Building
 
     @EnvironmentObject private var appState: AppState
+    @StateObject private var audioService = AudioService()
     @StateObject private var engine: CityScenarioEngine
     @State private var userLine: String = ""
 
@@ -54,12 +55,14 @@ struct ScenarioDialogueView: View {
             if canPlayScenario {
                 engine.startScenario()
                 userLine = engine.suggestedUserPhrase
+                speakGermanTTSLatestClerkLine()
             }
         }
         .onChange(of: appState.currentLevel) {
             if canPlayScenario {
                 engine.startScenario()
                 userLine = engine.suggestedUserPhrase
+                speakGermanTTSLatestClerkLine()
             }
         }
     }
@@ -131,6 +134,13 @@ struct ScenarioDialogueView: View {
             }
             .frame(minHeight: 160)
 
+            if let err = engine.lastErrorMessage {
+                Text(err)
+                    .font(Theme.Typography.body(.caption, weight: .regular))
+                    .foregroundStyle(.red.opacity(0.85))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
             if engine.canSubmit {
                 inputColumn
             } else if engine.isComplete {
@@ -144,7 +154,7 @@ struct ScenarioDialogueView: View {
 
     private var inputColumn: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Ihre Antwort")
+            Text(building == .school ? "Deine Antwort" : "Ihre Antwort")
                 .font(Theme.Typography.body(.caption, weight: .regular))
                 .foregroundStyle(Theme.Colors.deepBrown)
             TextField("A1/A2 Antwort", text: $userLine, axis: .vertical)
@@ -158,10 +168,13 @@ struct ScenarioDialogueView: View {
                 .lineLimit(2 ... 4)
                 .accessibilityIdentifier("scenario.dialogue.answerField")
             Button("Senden") {
-                let countBefore = engine.turns.count
-                engine.submitUserLine(userLine)
-                if engine.turns.count > countBefore {
-                    userLine = engine.suggestedUserPhrase
+                let outgoing = userLine
+                Task {
+                    await engine.submitUserLine(outgoing)
+                    if engine.lastErrorMessage == nil {
+                        userLine = ""
+                        speakGermanTTSLatestClerkLine()
+                    }
                 }
             }
             .font(Theme.Typography.rounded(.headline, weight: .medium))
@@ -176,7 +189,20 @@ struct ScenarioDialogueView: View {
                     .stroke(Theme.Colors.societyBlue, lineWidth: 1.2)
             )
             .buttonStyle(.plain)
+            .disabled(engine.isAwaitingAI)
+
+            if engine.isAwaitingAI {
+                ProgressView()
+                    .frame(maxWidth: .infinity)
+                    .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
+            }
         }
+    }
+
+    /// Speaks the latest non-user line (opening greeting or AI reply) with German TTS.
+    private func speakGermanTTSLatestClerkLine() {
+        guard let last = engine.conversationHistory.last, !last.isUser else { return }
+        audioService.speakGerman(last.text)
     }
 }
 

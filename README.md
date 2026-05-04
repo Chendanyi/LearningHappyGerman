@@ -17,7 +17,7 @@
 | Feature | Description | Status |
 | :--- | :--- | :--- |
 | **📍 CityWalk Map** | Interactive 2D map with **12** real-life scenarios (bakery, train station, hotel, and more). | ✅ Live |
-| **🤖 Scenario Dialogues** | Multi-turn, scripted roleplay via **`CityScenarioEngine`** and **`ScenarioCatalog`** (A1/A2 German). | ✅ Live |
+| **🤖 Scenario Dialogues** | Multi-turn roleplay via **`CityScenarioEngine`**, **`ScenarioCatalog`**, and **`ScenarioPromptProvider`** (12 hotspot-specific AI personas + German TTS after each clerk line). | ✅ Live |
 | **🗂️ Smart Flashcards** | Audio-first vocabulary with English glosses and SwiftData persistence. | ✅ Live |
 | **🕹️ Classroom Games** | Hangman and grammar tense quizzes for **A1**. | ✅ Live |
 | **🎧 Audio Service** | **`AVSpeechSynthesizer`** for German pronunciation. | ✅ Live |
@@ -30,6 +30,8 @@
 2. **Open**: `LearnHappyGerman/LearnHappyGerman.xcodeproj`.
 3. **Target**: Select the **`LearnHappyGerman`** scheme and a simulator (or device).
 4. **Execute**: Press **⌘ R**.
+
+**API keys (local only):** Copy **`LearnHappyGerman/Secrets.xcconfig.example`** to **`LearnHappyGerman/Secrets.xcconfig`** (gitignored) and set **`GOOGLE_AI_API_KEY`**. **`AppInfoAdditions.plist`** merges that build setting into the app Info.plist (via **`INFOPLIST_FILE`** + **`GENERATE_INFOPLIST_FILE`**); **`AppSecrets.xcconfig`** `#include?` **`Secrets.xcconfig`**. **`GoogleGenerativeAIConfiguration`** reads **`GOOGLE_AI_API_KEY`** from **`Bundle.main`** and sets the default **`GenerativeModel`** name (currently **`gemini-2.5-flash`**, the model your Google AI key must support for `generateContent`); **`GeminiGenerativeModelFactory`** and **`GenerativeAIService`** use that name. SPM: **`https://github.com/google/generative-ai-swift`** (`GoogleGenerativeAI`).
 
 > **Note**: If data looks broken after an update, reset simulator storage (**Simulator → Erase All Content and Settings**) or delete and reinstall the app.
 
@@ -72,4 +74,4 @@ Before merging, maintainers run **`./check_integrity.sh`** (SwiftLint, **`Script
 
 ---
 
-*Last updated: 2026-05-03 | Built with ❤️ for German learners.*
+*Last updated: 2026-05-06 (default Gemini model `gemini-2.5-flash`) | Built with ❤️ for German learners.*
